@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultations NovaWave Inc.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#04090f;--dark2:#070f1e;--dark3:#0b1628;
+  --cyan:#00d4f0;--green:#00f0a0;--purple:#8b5cf6;--amber:#f59e0b;
+  --off:#f2f6ff;--muted:#c8d8ee;--border:rgba(0,212,240,0.13);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--off);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+a{text-decoration:none}
+
+nav{position:fixed;top:0;width:100%;z-index:500;padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(4,9,15,0.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.70)}
+.nb{display:flex;flex-direction:column;gap:1px}
+.nb-main{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:#fff}
+.nb-url{font-size:0.6rem;color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase}
+.nl{display:flex;gap:2rem;align-items:center}
+.nl a{color:#a8b8d0;font-size:0.79rem;font-weight:500;transition:color .2s}
+.nl a:hover{color:#fff}
+.ncta{background:linear-gradient(135deg,var(--cyan),var(--green));color:#04090f;font-family:'Syne',sans-serif;font-weight:800;font-size:0.78rem;padding:0.52rem 1.3rem;border-radius:999px;transition:opacity .2s,transform .2s}
+.ncta:hover{opacity:.88;transform:translateY(-1px)}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 3rem 5rem;position:relative;overflow:hidden}
+canvas#bg{position:absolute;inset:0;width:100%;height:100%}
+.hero-noise{position:absolute;inset:0;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:150px}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,240,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,240,0.04) 1px,transparent 1px);background-size:70px 70px;z-index:0}
+.hero-inner{position:relative;z-index:1;max-width:900px}
+.live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,240,0.08);border:1px solid rgba(0,212,240,0.22);color:var(--cyan);font-size:0.7rem;font-weight:700;padding:0.38rem 1rem;border-radius:999px;margin-bottom:2.2rem;letter-spacing:0.1em;text-transform:uppercase}
+.badge-pulse{width:7px;height:7px;background:var(--cyan);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 0 0 rgba(0,212,240,0.4)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,212,240,0.4)}70%{box-shadow:0 0 0 8px rgba(0,212,240,0)}100%{box-shadow:0 0 0 0 rgba(0,212,240,0)}}
+.hero h1{font-size:clamp(2.4rem,4vw,4rem);font-weight:800;line-height:1.1;color:#fff;letter-spacing:-0.025em;margin-bottom:1.4rem;max-width:600px}
+.grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--green) 60%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 .line3{display:block;color:rgba(255,255,255,0.82)}
+.hero-desc{font-size:1.12rem;color:#a8b8d0;line-height:1.9;max-width:660px;margin-bottom:2.8rem}
+.hero-desc strong{color:var(--off);font-weight:500}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.btn-main{background:linear-gradient(135deg,var(--cyan),var(--green));color:#04090f;font-family:'Syne',sans-serif;font-weight:800;font-size:0.92rem;padding:1rem 2.4rem;border-radius:999px;transition:transform .2s,box-shadow .2s}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,212,240,0.32)}
+.btn-sec{border:1.5px solid rgba(255,255,255,0.70);color:#fff;font-family:'Syne',sans-serif;font-weight:600;font-size:0.92rem;padding:1rem 2.4rem;border-radius:999px;transition:border-color .2s,color .2s}
+.btn-sec:hover{border-color:var(--cyan);color:var(--cyan)}
+.hero-trust{display:flex;gap:2rem;align-items:center;flex-wrap:wrap;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.70)}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#a8b8d0;font-weight:500}
+.trust-dot{width:5px;height:5px;background:var(--green);border-radius:50%}
+.scroll-stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.70);margin-top:5rem}
+.ss-item{padding:2.2rem 2rem;border-right:1px solid rgba(255,255,255,0.70);position:relative;overflow:hidden}
+.ss-item:last-child{border-right:none}
+.ss-item::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--green));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.ss-item:hover::before{transform:scaleX(1)}
+.ss-n{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;color:#fff;line-height:1}
+.ss-n em{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.ss-l{font-size:0.75rem;color:#a8b8d0;margin-top:6px;text-transform:uppercase;letter-spacing:0.09em;font-weight:600;line-height:1.5}
+
+#reach{padding:8rem 3rem;background:var(--dark2);position:relative;overflow:hidden}
+.reach-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:400px;background:radial-gradient(ellipse,rgba(0,212,240,0.05) 0%,transparent 65%);pointer-events:none}
+.reach-layout{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.reach-eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem}
+.reach-left h2{font-size:clamp(2rem,3.2vw,2.8rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1.2rem}
+.reach-left p{font-size:0.97rem;color:#a8b8d0;line-height:1.88;margin-bottom:2rem}
+.reg-cards{display:flex;flex-direction:column;gap:0.85rem}
+.reg-card{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:1.1rem 1.4rem;transition:background .2s,border-color .2s}
+.reg-card:hover{background:rgba(0,212,240,0.05);border-color:rgba(0,212,240,0.3)}
+.reg-card-header{display:flex;align-items:center;gap:10px;margin-bottom:0.45rem}
+.reg-flag{font-size:1.1rem}
+.reg-region{font-size:0.88rem;font-weight:700;color:#fff}
+.reg-card p{font-size:0.81rem;color:#a8b8d0;line-height:1.7}
+.reg-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:0.6rem}
+.rchip{font-size:0.65rem;background:rgba(0,212,240,0.08);color:var(--cyan);padding:0.18rem 0.55rem;border-radius:4px;font-weight:600;border:1px solid rgba(0,212,240,0.12)}
+.geo-map{background:rgba(4,9,15,0.6);border:1px solid rgba(0,212,240,0.12);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden}
+.geo-map h4{font-size:0.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-bottom:1.2rem}
+.geo-highlight{background:rgba(0,212,240,0.06);border:1px solid rgba(0,212,240,0.18);border-radius:10px;padding:1.1rem 1.3rem;margin-top:1.2rem;display:flex;gap:1rem;align-items:flex-start}
+.geo-highlight-icon{font-size:1.3rem;flex-shrink:0}
+.geo-highlight h5{font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:0.3rem}
+.geo-highlight p{font-size:0.8rem;color:#a8b8d0;line-height:1.65}
+
+#problem{padding:8rem 3rem;background:var(--dark);position:relative;overflow:hidden}
+.prob-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,212,240,0.05) 0%,transparent 65%);pointer-events:none}
+.prob-inner{position:relative;z-index:1;max-width:900px;margin:0 auto;text-align:center}
+.prob-eyebrow{font-size:0.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:1rem}
+.prob-inner h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:1.5rem}
+.prob-inner>p{font-size:1.05rem;color:#a8b8d0;line-height:1.9;max-width:680px;margin:0 auto 3rem}
+.prob-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;text-align:left}
+.pc{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:14px;padding:2rem}
+.pc-num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;line-height:1;margin-bottom:0.6rem;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pc h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.5rem}
+.pc p{font-size:0.84rem;color:#a8b8d0;line-height:1.75}
+
+#services{padding:8rem 3rem;background:var(--dark2)}
+.svc-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:5rem}
+.svc-header h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem}
+.svc-header-right p{font-size:1rem;color:#a8b8d0;line-height:1.85}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.sv{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:16px;padding:2rem;transition:border-color .25s,transform .25s;position:relative;overflow:hidden}
+.sv::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--green));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.sv:hover::before{transform:scaleX(1)}
+.sv:hover{border-color:rgba(0,212,240,0.28);transform:translateY(-5px)}
+.sv-ico{font-size:2rem;margin-bottom:1.2rem;display:block}
+.sv-num{position:absolute;top:1.5rem;right:1.5rem;font-family:'Syne',sans-serif;font-size:0.65rem;color:rgba(255,255,255,0.70);font-weight:700;letter-spacing:0.1em}
+.sv h3{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:0.6rem;line-height:1.3}
+.sv p{font-size:0.84rem;color:#a8b8d0;line-height:1.78}
+.sv-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:1.1rem}
+.chip{font-size:0.67rem;background:rgba(0,212,240,0.08);color:var(--cyan);padding:0.22rem 0.6rem;border-radius:4px;font-weight:600;border:1px solid rgba(0,212,240,0.12)}
+
+#ai{background:linear-gradient(160deg,#060d1c 0%,#0a1528 50%,#060d1c 100%);padding:8rem 3rem;position:relative;overflow:hidden}
+.ai-grid-bg{position:absolute;inset:0;background-image:radial-gradient(rgba(0,212,240,0.06) 1px,transparent 1px);background-size:28px 28px}
+.ai-orb1{position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,240,0.09) 0%,transparent 65%);border-radius:50%;animation:flt 10s ease-in-out infinite}
+.ai-orb2{position:absolute;bottom:-80px;left:10%;width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.07) 0%,transparent 65%);border-radius:50%;animation:flt 14s ease-in-out infinite reverse}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.ai-header{position:relative;z-index:1;text-align:center;max-width:700px;margin:0 auto 5rem}
+.ai-eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem}
+.ai-header h2{font-size:clamp(2.2rem,4vw,3.4rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:1rem}
+.ai-header h2 span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ai-header p{font-size:1rem;color:#a8b8d0;line-height:1.88}
+.ai-layout{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start}
+.ai-cards{display:flex;flex-direction:column;gap:1rem}
+.acard{background:rgba(255,255,255,0.70);border:1px solid rgba(0,212,240,0.1);border-radius:14px;padding:1.6rem;display:flex;gap:1.1rem;transition:border-color .25s,background .25s}
+.acard:hover{border-color:rgba(0,212,240,0.3);background:rgba(0,212,240,0.05)}
+.acard-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,rgba(0,212,240,0.18),rgba(0,240,160,0.08));display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.acard h3{font-size:0.98rem;font-weight:700;color:#fff;margin-bottom:0.4rem}
+.acard p{font-size:0.83rem;color:#a8b8d0;line-height:1.72}
+.at-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:0.75rem}
+.at{font-size:0.67rem;background:rgba(0,212,240,0.1);color:var(--cyan);padding:0.2rem 0.55rem;border-radius:4px;font-weight:600}
+.mcp-box{background:rgba(4,9,15,0.65);border:1px solid rgba(0,212,240,0.14);border-radius:16px;padding:1.5rem}
+.mcp-title{font-size:0.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.13em;font-weight:700;margin-bottom:1.2rem}
+
+#defense{background:var(--dark2);padding:8rem 3rem}
+.def-eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem}
+.def-header{margin-bottom:4rem}
+.def-header h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:#fff;margin-bottom:1rem;line-height:1.15}
+.def-header p{font-size:1rem;color:#a8b8d0;line-height:1.85;max-width:580px}
+.def-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.dcard{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:16px;padding:2.4rem;transition:border-color .25s,transform .25s}
+.dcard:hover{border-color:rgba(0,212,240,0.28);transform:translateY(-4px)}
+.dcard-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgba(0,212,240,0.12),rgba(0,240,160,0.06));display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:1.4rem}
+.dcard h3{font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:0.7rem}
+.dcard-lead{font-size:0.97rem;color:var(--off);line-height:1.8;margin-bottom:1.4rem;font-style:italic;font-weight:300}
+.dlist{display:flex;flex-direction:column;gap:0.5rem}
+.dli{display:flex;gap:8px;font-size:0.84rem;color:#a8b8d0;line-height:1.6;align-items:flex-start}
+.dli-dot{color:var(--cyan);font-size:0.5rem;flex-shrink:0;margin-top:5px}
+
+#results{background:var(--dark);padding:8rem 3rem}
+.res-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;gap:2rem;flex-wrap:wrap}
+.res-header h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:#fff;line-height:1.15}
+.res-header h2 span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.res-header p{font-size:0.97rem;color:#a8b8d0;line-height:1.8;max-width:420px}
+.charts-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.cbox{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:16px;padding:2rem}
+.cbox h4{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:0.3rem}
+.cbox-sub{font-size:0.78rem;color:#a8b8d0;margin-bottom:1.6rem}
+.ch{position:relative;height:220px}
+.ibar-row{display:flex;align-items:center;gap:1rem;margin-bottom:0.65rem}
+.ibar-lbl{font-size:0.76rem;color:var(--off);width:175px;flex-shrink:0;font-weight:500}
+.ibar-track{flex:1;height:6px;background:rgba(255,255,255,0.70);border-radius:99px;overflow:hidden}
+.ibar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.ibar-val{font-size:0.72rem;color:var(--cyan);font-weight:700;width:32px;text-align:right}
+
+#frameworks{background:var(--dark2);padding:8rem 3rem}
+.fw-eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem}
+.fw-h{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:#fff;margin-bottom:1rem;line-height:1.15}
+.fw-sub{font-size:1rem;color:#a8b8d0;line-height:1.85;max-width:560px;margin-bottom:3.5rem}
+.fw-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.5rem}
+.fw-btn{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:10px;padding:1rem 0.5rem;text-align:center;cursor:pointer;transition:all .22s}
+.fw-btn:hover{border-color:rgba(0,212,240,0.3);background:rgba(0,212,240,0.06)}
+.fw-btn.on{background:linear-gradient(135deg,rgba(0,212,240,0.2),rgba(0,240,160,0.1));border-color:var(--cyan)}
+.fw-sc{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--cyan);line-height:1}
+.fw-btn.on .fw-sc{color:#fff}
+.fw-nm{font-size:0.7rem;font-weight:700;color:var(--off);margin-top:4px}
+.fw-lv{font-size:0.6rem;color:#a8b8d0;margin-top:2px}
+.fw-det{background:rgba(255,255,255,0.70);border:1px solid rgba(0,212,240,0.14);border-radius:12px;padding:1.6rem;display:none}
+.fw-det.show{display:block}
+.fw-det h5{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:0.55rem}
+.fw-det p{font-size:0.87rem;color:#a8b8d0;line-height:1.8}
+.fw-dtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
+.dtag{font-size:0.7rem;background:rgba(0,212,240,0.1);color:var(--cyan);padding:0.25rem 0.65rem;border-radius:4px;font-weight:600}
+
+#industries{background:var(--dark);padding:8rem 3rem}
+.ind-h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:#fff;margin-bottom:1rem;line-height:1.15}
+.ind-sub{font-size:1rem;color:#a8b8d0;line-height:1.85;max-width:560px;margin-bottom:3.5rem}
+.ind-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.icard{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:14px;padding:1.5rem 1.6rem;display:flex;align-items:center;gap:12px;transition:border-color .2s,background .2s,transform .2s}
+.icard:hover{border-color:rgba(0,212,240,0.28);background:rgba(0,212,240,0.05);transform:translateY(-3px)}
+.icard-em{font-size:1.5rem}
+.icard-name{font-size:0.95rem;font-weight:700;color:#fff}
+.icard-desc{font-size:0.75rem;color:#a8b8d0;margin-top:2px}
+
+#team{background:var(--dark2);padding:8rem 3rem}
+.team-wrap{display:grid;grid-template-columns:320px 1fr;gap:5rem;align-items:start}
+.team-photo-box{width:100%;aspect-ratio:3/4;border-radius:20px;background:linear-gradient(160deg,rgba(0,212,240,0.06),rgba(0,240,160,0.03));border:1px solid rgba(0,212,240,0.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;position:relative;overflow:hidden}
+.team-photo-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,212,240,0.05) 0%,transparent 50%);animation:flt 12s ease-in-out infinite}
+.tphoto-circle{width:90px;height:90px;border-radius:50%;background:rgba(0,212,240,0.1);border:2px dashed rgba(0,212,240,0.3)}
+.tphoto-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#fff}
+.tphoto-role{font-size:0.75rem;color:var(--cyan);text-align:center;padding:0 1.5rem;line-height:1.5}
+.tphoto-flag{font-size:0.75rem;color:#a8b8d0;margin-top:4px}
+.team-right h2{font-size:clamp(1.8rem,2.8vw,2.5rem);font-weight:800;color:#fff;margin-bottom:0.3rem}
+.t-role{font-size:0.82rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-bottom:1.4rem}
+.t-bio{font-size:0.97rem;color:#a8b8d0;line-height:1.9;margin-bottom:1.8rem}
+.t-bio strong{color:var(--off);font-weight:500}
+.cert-grid{display:flex;flex-wrap:wrap;gap:0.65rem;margin-bottom:1.8rem}
+.cbadge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.70);border:1px solid rgba(0,212,240,0.13);border-radius:8px;padding:0.6rem 0.9rem}
+.ccode{font-family:'Syne',sans-serif;font-weight:800;font-size:0.73rem;color:var(--cyan);background:rgba(0,212,240,0.1);padding:0.22rem 0.48rem;border-radius:4px;white-space:nowrap}
+.cname{font-size:0.79rem;color:#e8f0ff;font-weight:500}
+.lang-row{display:flex;gap:0.55rem;flex-wrap:wrap}
+.ltag{font-size:0.75rem;background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);color:#e8f0ff;padding:0.3rem 0.75rem;border-radius:6px;font-weight:500}
+
+#contact{background:var(--dark);padding:10rem 3rem;position:relative;overflow:hidden;text-align:center}
+.contact-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,212,240,0.09) 0%,transparent 60%)}
+.contact-inner{position:relative;z-index:1;max-width:660px;margin:0 auto}
+.contact-eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:1rem}
+.contact-inner h2{font-size:clamp(2.4rem,4.5vw,4rem);font-weight:800;color:#fff;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.02em}
+.contact-inner h2 span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.contact-inner p{font-size:1.05rem;color:#a8b8d0;line-height:1.88;margin-bottom:2.5rem}
+.contact-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.cbtn-main{background:linear-gradient(135deg,var(--cyan),var(--green));color:#04090f;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;padding:1.1rem 2.6rem;border-radius:999px;transition:transform .2s,box-shadow .2s}
+.cbtn-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,212,240,0.32)}
+.cbtn-cal{border:1.5px solid rgba(0,212,240,0.28);color:var(--cyan);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;padding:1.1rem 2.6rem;border-radius:999px;transition:border-color .2s,background .2s}
+.cbtn-cal:hover{border-color:var(--cyan);background:rgba(0,212,240,0.05)}
+
+footer{background:rgba(4,9,15,0.98);border-top:1px solid rgba(255,255,255,0.70);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.fb{font-family:'Syne',sans-serif;font-weight:800;font-size:0.92rem;color:#fff}
+.fb span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fm{font-size:0.7rem;color:#a8b8d0;margin-top:3px}
+.ftags{display:flex;gap:0.45rem;flex-wrap:wrap}
+.ftag{font-size:0.65rem;background:rgba(0,212,240,0.09);color:var(--cyan);padding:0.18rem 0.5rem;border-radius:4px;font-weight:700;border:1px solid rgba(0,212,240,0.13)}
+
+@media(max-width:960px){
+nav{padding:0 1.5rem}.nl,.ncta{display:none}
+section,.hero,#reach,#problem,#services,#ai,#defense,#results,#frameworks,#industries,#team,#contact{padding:5rem 1.5rem!important}
+.reach-layout,.svc-header,.def-grid,.ai-layout,.charts-2,.team-wrap,.ind-grid,.prob-cards,.svc-grid{grid-template-columns:1fr!important}
+.scroll-stats{grid-template-columns:repeat(2,1fr)}
+.fw-grid{grid-template-columns:repeat(3,1fr)}
+.res-header{flex-direction:column}
+footer{padding:2rem 1.5rem;flex-direction:column}
+}
+
+.demo-cta{margin-top:1.1rem;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:var(--cyan);letter-spacing:0.06em;padding:0.4rem 0;border-bottom:1px solid rgba(0,212,240,0.3);transition:border-color .2s,color .2s}
+.sv:hover .demo-cta{border-color:var(--cyan)}
+.sv:hover{box-shadow:0 8px 32px rgba(0,212,240,0.12)}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(4,9,15,0.92);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:#070f1e;border:1px solid rgba(0,212,240,0.2);border-radius:18px;width:100%;max-width:860px;max-height:88vh;overflow-y:auto;position:relative}
+.modal-header{padding:1.8rem 2rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.70);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;position:sticky;top:0;background:#070f1e;z-index:2;border-radius:18px 18px 0 0}
+.modal-title{font-family:"Syne",sans-serif;font-size:1.2rem;font-weight:800;color:#fff}
+.modal-sub{font-size:0.8rem;color:#a8b8d0;margin-top:3px}
+.modal-close{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+.modal-close:hover{background:rgba(0,212,240,0.15);border-color:var(--cyan)}
+.modal-body{padding:2rem}
+.demo-section{margin-bottom:2rem}
+.demo-label{font-size:0.68rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.15em;font-weight:700;margin-bottom:0.8rem}
+/* demo UI pieces */
+.prog-row{display:flex;align-items:center;gap:1rem;margin-bottom:0.6rem}
+.prog-name{font-size:0.82rem;color:var(--off);width:180px;flex-shrink:0}
+.prog-track{flex:1;height:8px;background:rgba(255,255,255,0.70);border-radius:99px;overflow:hidden}
+.prog-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width 1.4s ease}
+.prog-val{font-size:0.75rem;color:var(--cyan);font-weight:700;width:36px;text-align:right}
+.req-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.req-item{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:8px;padding:0.8rem;text-align:center;cursor:pointer;transition:all .2s}
+.req-item.pass{border-color:rgba(0,240,160,0.4);background:rgba(0,240,160,0.07)}
+.req-item.fail{border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.07)}
+.req-item.warn{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07)}
+.req-num{font-family:"Syne",sans-serif;font-size:1rem;font-weight:800;color:#fff}
+.req-lbl{font-size:0.65rem;color:#a8b8d0;margin-top:3px;line-height:1.4}
+.req-status{font-size:0.65rem;font-weight:700;margin-top:5px}
+.pass .req-status{color:#00f0a0}.fail .req-status{color:#f87171}.warn .req-status{color:#fbbf24}
+.reg-flags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.2rem}
+.reg-flag-btn{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:8px;padding:0.6rem 1rem;font-size:0.82rem;color:var(--off);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px}
+.reg-flag-btn.active{border-color:var(--cyan);background:rgba(0,212,240,0.1);color:#fff}
+.reg-laws{display:flex;flex-direction:column;gap:8px}
+.reg-law{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:8px;padding:0.75rem 1rem;font-size:0.83rem;color:var(--off)}
+.reg-law-badge{font-size:0.65rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:4px;flex-shrink:0}
+.reg-law-badge.active{background:rgba(0,240,160,0.15);color:#00f0a0}
+.reg-law-badge.inactive{background:rgba(255,255,255,0.70);color:#a8b8d0}
+.gap-meter{display:flex;flex-direction:column;gap:10px}
+.gap-row{display:flex;align-items:center;gap:1rem}
+.gap-lbl{font-size:0.8rem;color:var(--off);width:160px;flex-shrink:0}
+.gap-bar-wrap{flex:1;height:22px;background:rgba(255,255,255,0.70);border-radius:6px;overflow:hidden;position:relative}
+.gap-before{height:100%;border-radius:6px;background:rgba(239,68,68,0.5);display:flex;align-items:center;padding-left:8px;font-size:0.68rem;color:#fff;font-weight:600;transition:width 1.2s ease}
+.gap-after-overlay{position:absolute;top:0;left:0;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--cyan),var(--green));opacity:0;transition:opacity 1s ease,width 1.4s ease}
+.gap-after-overlay.show{opacity:1}
+.migration-flow{display:flex;align-items:center;gap:0;margin-bottom:1.5rem}
+.mig-box{flex:1;background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:10px;padding:1.2rem;text-align:center}
+.mig-box.highlight{border-color:rgba(0,212,240,0.4);background:rgba(0,212,240,0.07)}
+.mig-arrow{font-size:1.4rem;color:var(--cyan);padding:0 0.6rem;flex-shrink:0}
+.mig-icon{font-size:1.8rem;margin-bottom:0.4rem}
+.mig-title{font-size:0.82rem;font-weight:700;color:#fff}
+.mig-sub{font-size:0.72rem;color:#a8b8d0;margin-top:2px}
+.vendor-table{width:100%;border-collapse:collapse}
+.vendor-table th{font-size:0.7rem;color:#a8b8d0;text-transform:uppercase;letter-spacing:0.1em;padding:0.6rem 0.8rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.70)}
+.vendor-table td{padding:0.75rem 0.8rem;font-size:0.83rem;color:var(--off);border-bottom:1px solid rgba(255,255,255,0.70)}
+.risk-badge{font-size:0.68rem;font-weight:700;padding:0.22rem 0.6rem;border-radius:4px}
+.risk-high{background:rgba(239,68,68,0.15);color:#f87171}
+.risk-med{background:rgba(245,158,11,0.15);color:#fbbf24}
+.risk-low{background:rgba(0,240,160,0.15);color:#00f0a0}
+.scan-list{display:flex;flex-direction:column;gap:8px}
+.scan-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:8px;padding:0.75rem 1rem}
+.scan-sev{font-size:0.65rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:4px;width:52px;text-align:center;flex-shrink:0}
+.sev-c{background:rgba(239,68,68,0.15);color:#f87171}
+.sev-h{background:rgba(245,158,11,0.15);color:#fbbf24}
+.sev-m{background:rgba(99,102,241,0.15);color:#a5b4fc}
+.scan-name{font-size:0.83rem;color:var(--off);flex:1}
+.scan-status{font-size:0.72rem;font-weight:600}
+.scan-status.fixed{color:#00f0a0}.scan-status.open{color:#f87171}.scan-status.prog{color:#fbbf24}
+.scenario-btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.2rem}
+.scenario-btn{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:8px;padding:0.55rem 1rem;font-size:0.8rem;color:var(--off);cursor:pointer;transition:all .2s}
+.scenario-btn.active{border-color:var(--cyan);background:rgba(0,212,240,0.1);color:#fff}
+.ttx-phases{display:flex;flex-direction:column;gap:8px}
+.ttx-phase{display:flex;gap:1rem;align-items:flex-start;background:rgba(255,255,255,0.70);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;padding:0.9rem 1rem}
+.ttx-phase-num{font-family:"Syne",sans-serif;font-size:0.8rem;font-weight:800;color:var(--cyan);flex-shrink:0;width:24px}
+.ttx-phase-text{font-size:0.82rem;color:var(--off);line-height:1.65}
+.ttx-phase-text strong{color:#fff}
+.mcp-nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.mcp-node{background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);border-radius:10px;padding:1rem;text-align:center;transition:border-color .25s,background .25s}
+.mcp-node.lit{border-color:var(--cyan);background:rgba(0,212,240,0.1)}
+.mcp-node-icon{font-size:1.3rem;margin-bottom:0.4rem}
+.mcp-node-name{font-size:0.78rem;font-weight:700;color:#fff}
+.mcp-node-sub{font-size:0.68rem;color:#a8b8d0;margin-top:2px}
+.demo-btn{background:linear-gradient(135deg,var(--cyan),var(--green));color:#04090f;font-family:"Syne",sans-serif;font-weight:700;font-size:0.82rem;padding:0.6rem 1.4rem;border-radius:7px;border:none;cursor:pointer;transition:opacity .2s}
+.demo-btn:hover{opacity:.85}
+.demo-btn-ghost{background:transparent;border:1px solid rgba(0,212,240,0.3);color:var(--cyan);font-family:"Syne",sans-serif;font-weight:600;font-size:0.82rem;padding:0.6rem 1.4rem;border-radius:7px;cursor:pointer;transition:border-color .2s}
+.demo-btn-ghost:hover{border-color:var(--cyan)}
+.demo-actions{display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap;align-items:center}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" style="display:flex;align-items:center;text-decoration:none">
+    <svg viewBox="0 0 300 64" xmlns="http://www.w3.org/2000/svg" height="44" style="display:block">
+      <defs>
+        <linearGradient id="nlg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00d4f0"/>
+          <stop offset="100%" stop-color="#00f0a0"/>
+        </linearGradient>
+        <linearGradient id="nlg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00eeff"/>
+          <stop offset="100%" stop-color="#00ffb3"/>
+        </linearGradient>
+      </defs>
+      <!-- Hexagon icon -->
+      <polygon points="32,2 56,15 56,43 32,56 8,43 8,15" fill="rgba(0,212,240,0.12)" stroke="url(#nlg)" stroke-width="1.5"/>
+      <polygon points="32,11 48,20 48,38 32,47 16,38 16,20" fill="none" stroke="url(#nlg)" stroke-width="0.6" opacity="0.22"/>
+      <!-- Wave lines — bright, fully visible -->
+      <path d="M13 36 Q18 28 24 32 Q30 36 32 29 Q35 22 41 27 Q47 32 53 24" fill="none" stroke="url(#nlg)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M13 44 Q18 36 24 40 Q30 44 32 37 Q35 30 41 35 Q47 40 53 32" fill="none" stroke="url(#nlg)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+      <!-- Lock -->
+      <circle cx="32" cy="17" r="4" fill="url(#nlg)" opacity="0.95"/>
+      <path d="M29 17 L29 23 Q29 26 32 26 Q35 26 35 23 L35 17" fill="none" stroke="url(#nlg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- CONSULTATIONS — bright cyan, always visible -->
+      <text x="68" y="14" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="7" fill="#00d4f0" letter-spacing="3">CONSULTATIONS</text>
+      <!-- nova — bright gradient, NOT white, fully visible on dark -->
+      <text x="67" y="41" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="27" fill="url(#nlg2)" letter-spacing="-0.5">nova</text>
+      <!-- wave — same gradient, slightly offset stop -->
+      <text x="152" y="41" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="27" fill="url(#nlg)" letter-spacing="-0.5">wave</text>
+      <!-- Inc. — visible muted -->
+      <text x="238" y="41" font-family="Arial,Helvetica,sans-serif" font-weight="400" font-size="12" fill="rgba(255,255,255,0.9)">Inc.</text>
+      <!-- Tagline -->
+      <text x="68" y="55" font-family="Arial,Helvetica,sans-serif" font-weight="400" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="2">GRC · CYBERSECURITY · AI</text>
+    </svg>
+  </a>
+  <div class="nl">
+    <a href="#reach">Global Reach</a>
+    <a href="#services">Services</a>
+    <a href="#ai">AI Engineering</a>
+    <a href="#defense">Cyber Defense</a>
+    <a href="#team">About</a>
+  </div>
+  <a href="#contact" class="ncta">Work With Us</a>
+</nav>
+
+<section class="hero">
+  <canvas id="bg"></canvas>
+  <div class="hero-noise"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="live-badge"><span class="badge-pulse"></span>Accepting New Clients · Worldwide</div>
+    <h1>Your Organization.<br><span class="grad">Secured. Compliant.</span><br><span class="line3">Wherever You Operate.</span></h1>
+    <p class="hero-desc"><strong>Consultations NovaWave Inc.</strong> is a specialized GRC and cybersecurity firm serving regulated organizations across North America, Europe, and beyond. From PCI DSS to DORA to the EU AI Act — we speak the language of every regulator your business answers to.</p>
+    <div class="hero-ctas">
+      <a href="#services" class="btn-main">Explore Our Services →</a>
+      <a href="#contact" class="btn-sec">Book a Free Consultation</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><span class="trust-dot"></span>🇨🇦 Canada · 🇺🇸 USA · 🇪🇺 European Union</div>
+      <div class="trust-item"><span class="trust-dot"></span>PCI DSS · DORA · NIS2 · GDPR · EU AI Act · CIRO</div>
+      <div class="trust-item"><span class="trust-dot"></span>English · French · Spanish</div>
+    </div>
+  </div>
+  <div class="scroll-stats">
+    <div class="ss-item"><div class="ss-n">85<em>%</em></div><div class="ss-l">Average compliance gap reduction per engagement</div></div>
+    <div class="ss-item"><div class="ss-n">3</div><div class="ss-l">Regulatory frameworks fluency — EU, North America &amp; Canada</div></div>
+    <div class="ss-item"><div class="ss-n">10<em>+</em></div><div class="ss-l">Compliance frameworks mastered in depth</div></div>
+    <div class="ss-item"><div class="ss-n">6<em>+</em></div><div class="ss-l">Years securing regulated organizations</div></div>
+  </div>
+</section>
+
+<section id="reach">
+  <div class="reach-glow"></div>
+  <div class="reach-layout">
+    <div class="reach-left">
+      <div class="reach-eyebrow">Global Regulatory Reach</div>
+      <h2>We know the rules<br><span class="grad">wherever you do business.</span></h2>
+      <p>Operating across borders means answering to multiple regulators — each with their own frameworks, timelines, and enforcement priorities. NovaWave has worked with firms on both sides of the Atlantic and understands what compliance actually looks like on the ground in each jurisdiction.</p>
+      <div class="reg-cards">
+        <div class="reg-card">
+          <div class="reg-card-header"><span class="reg-flag">🇪🇺</span><span class="reg-region">European Union</span></div>
+          <p>Deep experience with EU-regulated fintechs, payment processors, and financial entities — navigating DORA, NIS2, GDPR, and the EU AI Act. We've helped EU-based organizations achieve and maintain PCI DSS compliance through major infrastructure transformations.</p>
+          <div class="reg-chips"><span class="rchip">DORA</span><span class="rchip">NIS2</span><span class="rchip">GDPR</span><span class="rchip">EU AI Act</span><span class="rchip">PCI DSS</span><span class="rchip">ISO 27001</span></div>
+        </div>
+        <div class="reg-card">
+          <div class="reg-card-header"><span class="reg-flag">🇨🇦</span><span class="reg-region">Canada</span></div>
+          <p>Extensive work with Canadian financial institutions and technology firms — including compliance under CIRO guidelines, PIPEDA/privacy law, and SOX/ITGC requirements. Headquartered in Gatineau, QC — we understand the Canadian regulatory landscape intimately.</p>
+          <div class="reg-chips"><span class="rchip">CIRO</span><span class="rchip">PIPEDA</span><span class="rchip">SOX/ITGC</span><span class="rchip">PCI DSS</span><span class="rchip">ISO 27001</span></div>
+        </div>
+        <div class="reg-card">
+          <div class="reg-card-header"><span class="reg-flag">🇺🇸</span><span class="reg-region">United States</span></div>
+          <p>Advisory and audit engagements delivered for US-based organizations — covering NIST CSF/RMF, HIPAA, SOC 2, CCPA, and PCI DSS across finance, healthcare, and technology. NovaWave brings US regulatory fluency to every cross-border engagement.</p>
+          <div class="reg-chips"><span class="rchip">NIST CSF</span><span class="rchip">SOC 2</span><span class="rchip">HIPAA</span><span class="rchip">CCPA</span><span class="rchip">PCI DSS</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="geo-map">
+        <h4>Engagement Footprint</h4>
+        <svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+          <defs>
+            <radialGradient id="gca" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(0,212,240,0.35)"/><stop offset="100%" stop-color="rgba(0,212,240,0)"/></radialGradient>
+            <radialGradient id="geu" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(0,240,160,0.35)"/><stop offset="100%" stop-color="rgba(0,240,160,0)"/></radialGradient>
+            <radialGradient id="gsa" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(245,158,11,0.35)"/><stop offset="100%" stop-color="rgba(245,158,11,0)"/></radialGradient>
+          </defs>
+          <path d="M 30 55 Q 40 45 70 50 Q 110 43 140 53 Q 160 50 175 60 Q 180 75 170 90 Q 160 110 150 120 Q 140 135 130 143 Q 118 153 115 165 Q 108 175 102 180 Q 90 173 78 160 Q 60 145 50 133 Q 35 115 30 95 Z" fill="rgba(255,255,255,0.70)" stroke="rgba(255,255,255,0.70)" stroke-width="0.8"/>
+          <ellipse cx="105" cy="108" rx="55" ry="40" fill="url(#gca)" opacity="0.7"/>
+          <path d="M 242 52 Q 255 47 270 52 Q 282 49 290 57 Q 295 67 288 79 Q 280 89 270 93 Q 258 97 248 92 Q 238 85 236 73 Q 234 62 242 52 Z" fill="rgba(255,255,255,0.70)" stroke="rgba(255,255,255,0.70)" stroke-width="0.8"/>
+          <ellipse cx="265" cy="72" rx="40" ry="28" fill="url(#geu)" opacity="0.7"/>
+          <path d="M 248 102 Q 258 99 270 105 Q 278 115 275 132 Q 270 149 262 159 Q 252 165 244 159 Q 236 147 238 132 Q 240 115 248 102 Z" fill="rgba(255,255,255,0.70)" stroke="rgba(255,255,255,0.70)" stroke-width="0.7"/>
+          <path d="M 115 180 Q 128 177 140 183 Q 152 191 155 210 Q 158 233 150 253 Q 140 267 128 270 Q 115 267 108 253 Q 100 235 102 213 Q 104 193 115 180 Z" fill="rgba(255,255,255,0.70)" stroke="rgba(255,255,255,0.70)" stroke-width="0.8"/>
+          <ellipse cx="128" cy="223" rx="30" ry="35" fill="url(#gsa)" opacity="0.6"/>
+          <path d="M 300 47 Q 330 42 370 52 Q 400 62 410 77 Q 415 92 400 102 Q 380 112 360 109 Q 340 105 320 97 Q 305 87 298 73 Q 295 60 300 47 Z" fill="rgba(255,255,255,0.70)" stroke="rgba(255,255,255,0.70)" stroke-width="0.7"/>
+          <line x1="105" y1="108" x2="265" y2="72" stroke="rgba(0,212,240,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="105" y1="108" x2="128" y2="180" stroke="rgba(245,158,11,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="265" y1="72" x2="128" y2="180" stroke="rgba(0,240,160,0.12)" stroke-width="1" stroke-dasharray="4,3"/>
+          <circle cx="105" cy="108" r="8" fill="rgba(0,212,240,0.15)" stroke="rgba(0,212,240,0.7)" stroke-width="1.5"/>
+          <circle cx="105" cy="108" r="3.5" fill="#00d4f0"/>
+          <circle cx="105" cy="108" r="12" fill="none" stroke="rgba(0,212,240,0.3)" stroke-width="1" stroke-dasharray="2,2"><animateTransform attributeName="transform" type="rotate" from="0 105 108" to="360 105 108" dur="8s" repeatCount="indefinite"/></circle>
+          <circle cx="265" cy="72" r="8" fill="rgba(0,240,160,0.15)" stroke="rgba(0,240,160,0.7)" stroke-width="1.5"/>
+          <circle cx="265" cy="72" r="3.5" fill="#00f0a0"/>
+          <circle cx="265" cy="72" r="12" fill="none" stroke="rgba(0,240,160,0.3)" stroke-width="1" stroke-dasharray="2,2"><animateTransform attributeName="transform" type="rotate" from="0 265 72" to="360 265 72" dur="10s" repeatCount="indefinite"/></circle>
+          <circle cx="128" cy="223" r="7" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.65)" stroke-width="1.5"/>
+          <circle cx="128" cy="223" r="3" fill="#f59e0b"/>
+          <circle cx="128" cy="223" r="11" fill="none" stroke="rgba(245,158,11,0.25)" stroke-width="1" stroke-dasharray="2,2"><animateTransform attributeName="transform" type="rotate" from="0 128 223" to="360 128 223" dur="12s" repeatCount="indefinite"/></circle>
+          <text x="72" y="97" fill="#00d4f0" font-size="8" font-weight="700" font-family="Inter">🇨🇦 Canada</text>
+          <text x="72" y="108" fill="rgba(0,212,240,0.6)" font-size="7" font-family="Inter">+ 🇺🇸 USA</text>
+          <text x="276" y="67" fill="#00f0a0" font-size="8" font-weight="700" font-family="Inter">🇪🇺 EU</text>
+          <text x="276" y="78" fill="rgba(0,240,160,0.6)" font-size="7" font-family="Inter">Multiple countries</text>
+          <text x="138" y="219" fill="#f59e0b" font-size="8" font-weight="700" font-family="Inter">🌎 South</text>
+          <text x="138" y="230" fill="rgba(245,158,11,0.7)" font-size="7.5" font-weight="700" font-family="Inter">America</text>
+          <circle cx="14" cy="290" r="4" fill="rgba(0,212,240,0.6)"/><text x="22" y="294" fill="rgba(255,255,255,0.85)" font-size="7.5" font-family="Inter">Canada / USA</text>
+          <circle cx="102" cy="290" r="4" fill="rgba(0,240,160,0.6)"/><text x="110" y="294" fill="rgba(255,255,255,0.85)" font-size="7.5" font-family="Inter">European Union</text>
+          <circle cx="210" cy="290" r="4" fill="rgba(245,158,11,0.6)"/><text x="218" y="294" fill="rgba(255,255,255,0.85)" font-size="7.5" font-family="Inter">South America</text>
+        </svg>
+        <div class="geo-highlight">
+          <span class="geo-highlight-icon">🌎</span>
+          <div>
+            <h5>Cross-Border PCI DSS — South America</h5>
+            <p>NovaWave has audited subsidiary retail operations in South America for a Canadian parent company — ensuring PCI DSS compliance was consistent across every storefront, regardless of geography. When your compliance program needs to cross borders, we've already been there.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="prob-glow"></div>
+  <div class="prob-inner">
+    <div class="prob-eyebrow">The Reality</div>
+    <h2>Most organizations are one audit away from a crisis.</h2>
+    <p>Compliance gaps, outdated policies, unpatched vulnerabilities, and AI deployments without guardrails — these aren't hypotheticals. They're the environments we walk into every day. NovaWave exists to change that.</p>
+    <div class="prob-cards">
+      <div class="pc"><div class="pc-num">60%</div><h3>of breaches exploit known vulnerabilities</h3><p>Yet most teams lack automated processes to track, prioritize, and remediate them before they become incidents.</p></div>
+      <div class="pc"><div class="pc-num">3×</div><h3>more regulators are auditing AI systems</h3><p>The EU AI Act and DORA are reshaping what compliance means. Organizations that aren't ready will feel it first.</p></div>
+      <div class="pc"><div class="pc-num">$4.9M</div><h3>average cost of a data breach in 2024</h3><p>That's the cost of not having a tested incident response plan, a compliant environment, and clear accountability.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="svc-header">
+    <div><div style="font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem">What We Do</div><h2>Security &amp; compliance,<br><span class="grad">end to end.</span></h2></div>
+    <div class="svc-header-right"><p>We don't hand you a framework checklist and wish you luck. NovaWave embeds alongside your team — building programs, remediating gaps, facilitating audits, and automating what shouldn't require a human every time.</p></div>
+  </div>
+  <div class="svc-grid">
+    <div class="sv" onclick="openDemo(0)" style="cursor:pointer"><span class="sv-ico">🛡️</span><span class="sv-num">01</span><h3>GRC Program Design &amp; Advisory</h3><p>We build governance, risk, and compliance programs that actually work — tailored to your industry, your regulators, and your team's capacity. Policy libraries, risk registers, compliance calendars, and board reporting included.</p><div class="sv-chips"><span class="chip">ISO 27001</span><span class="chip">NIST RMF</span><span class="chip">CIS Controls</span><span class="chip">SOX/ITGC</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(1)" style="cursor:pointer"><span class="sv-ico">💳</span><span class="sv-num">02</span><h3>PCI DSS Compliance</h3><p>From Level 1 service providers to multi-country merchant operations — we own the entire compliance journey. SAQ and ROC preparation, internal audits, gap remediation, and we sit in the room with your QSA so your team doesn't have to.</p><div class="sv-chips"><span class="chip">PCI DSS v4</span><span class="chip">SAQ/ROC</span><span class="chip">QSA Liaison</span><span class="chip">Level 1 SP</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(2)" style="cursor:pointer"><span class="sv-ico">🌍</span><span class="sv-num">03</span><h3>EU &amp; Multi-Jurisdiction Compliance</h3><p>DORA, NIS2, GDPR, EU AI Act — we translate European and North American regulatory requirements into what your organization actually needs to do. We've operated in both jurisdictions and know where the landmines are.</p><div class="sv-chips"><span class="chip">DORA</span><span class="chip">NIS2</span><span class="chip">GDPR</span><span class="chip">EU AI Act</span><span class="chip">CIRO</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(3)" style="cursor:pointer"><span class="sv-ico">📋</span><span class="sv-num">04</span><h3>Audits &amp; Readiness Assessments</h3><p>Internal and external security audits — SOC 2 readiness, breach readiness assessments, ISO 27001 gap analysis. We prepare your evidence, validate your controls, and present findings to your security committee.</p><div class="sv-chips"><span class="chip">SOC 1 &amp; 2</span><span class="chip">BRA</span><span class="chip">ISO 27001</span><span class="chip">CISA-led</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(4)" style="cursor:pointer"><span class="sv-ico">☁️</span><span class="sv-num">05</span><h3>Cloud Migration &amp; Compliance</h3><p>Moving to the cloud without losing compliance is hard. We've done it — migrating EU-based fintechs from on-premises to cloud while achieving PCI DSS compliance two years running, cutting gaps by 85%.</p><div class="sv-chips"><span class="chip">Azure</span><span class="chip">AWS</span><span class="chip">PCI DSS</span><span class="chip">Architecture Review</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(5)" style="cursor:pointer"><span class="sv-ico">🔒</span><span class="sv-num">06</span><h3>Vendor Risk &amp; Third-Party Management</h3><p>Your compliance posture is only as strong as your weakest vendor. We assess your entire third-party ecosystem — reviewing SOC 2 Type II, AoC, ISO 27001 attestations and surfacing the risks your contracts are hiding.</p><div class="sv-chips"><span class="chip">SOC 2 Type II</span><span class="chip">AoC Review</span><span class="chip">Third-Party Risk</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(6)" style="cursor:pointer"><span class="sv-ico">🔍</span><span class="sv-num">07</span><h3>Vulnerability Management Automation</h3><p>We automate your vulnerability lifecycle — scanning, prioritization by risk and compliance impact, and remediation tracking — so critical vulnerabilities get fixed before auditors or attackers find them first.</p><div class="sv-chips"><span class="chip">Qualys</span><span class="chip">CrowdStrike</span><span class="chip">Pen Testing</span><span class="chip">SIEM/SOAR</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(7)" style="cursor:pointer"><span class="sv-ico">🎯</span><span class="sv-num">08</span><h3>Tabletop Exercises</h3><p>Real scenarios. Real pressure. Ransomware, data breach, supply chain compromise — we design and facilitate exercises that expose gaps in your IRP, BCP, and DRP before a real incident does. Post-exercise roadmap included.</p><div class="sv-chips"><span class="chip">IRP/BCP/DRP</span><span class="chip">DORA Testing</span><span class="chip">Exec Debrief</span></div><div class="demo-cta">▶ View Demo</div></div>
+    <div class="sv" onclick="openDemo(8)" style="cursor:pointer"><span class="sv-ico">🤖</span><span class="sv-num">09</span><h3>AI Governance &amp; Secure Deployment</h3><p>We help engineering teams ship AI systems that are secure, explainable, and compliant — from MCP-based agent architectures to EU AI Act conformity. Security doesn't slow you down when it's built in from the start.</p><div class="sv-chips"><span class="chip">EU AI Act</span><span class="chip">MCP</span><span class="chip">AI Security</span><span class="chip">Azure AI</span></div><div class="demo-cta">▶ View Demo</div></div>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="ai-grid-bg"></div><div class="ai-orb1"></div><div class="ai-orb2"></div>
+  <div class="ai-header">
+    <div class="ai-eyebrow">AI Engineering Capability</div>
+    <h2>We don't just audit AI.<br><span>We build it. Securely.</span></h2>
+    <p>NovaWave works alongside your engineering teams to design, deploy, and govern AI systems — ensuring every agentic workflow is architected with security controls, compliance guardrails, and full audit trails from day one.</p>
+  </div>
+  <div class="ai-layout">
+    <div class="ai-cards">
+      <div class="acard"><div class="acard-icon">🏗️</div><div><h3>AI System Architecture</h3><p>Secure-by-design AI architectures — data flow design, model governance, access control tiers, and EU AI Act risk classification baked in before a single line of code is deployed.</p><div class="at-row"><span class="at">EU AI Act</span><span class="at">Risk Classification</span><span class="at">Azure AI</span><span class="at">Architecture Review</span></div></div></div>
+      <div class="acard"><div class="acard-icon">🤖</div><div><h3>AI Agent &amp; MCP Deployment</h3><p>We lead the deployment of AI agents using Model Context Protocol (MCP) — defining tool scopes, enforcing least-privilege, and maintaining full audit trails across every agent action in your environment.</p><div class="at-row"><span class="at">MCP Protocol</span><span class="at">Agent Frameworks</span><span class="at">Least Privilege</span><span class="at">NIST AI RMF</span></div></div></div>
+      <div class="acard"><div class="acard-icon">⚙️</div><div><h3>Compliance &amp; Security Automation</h3><p>Automating vulnerability management, evidence collection, and security monitoring — reducing the manual work that bogs down your team while ensuring continuous audit-readiness and real-time risk signals.</p><div class="at-row"><span class="at">Python</span><span class="at">Workflow Automation</span><span class="at">SIEM/SOAR</span><span class="at">Audit Trails</span></div></div></div>
+    </div>
+    <div>
+      <div class="mcp-box">
+        <div class="mcp-title">MCP-Based Agent Architecture</div>
+        <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+          <defs>
+            <marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="rgba(0,212,240,0.7)"/></marker>
+            <marker id="a2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="rgba(0,240,160,0.6)"/></marker>
+            <marker id="a3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="rgba(139,92,246,0.7)"/></marker>
+          </defs>
+          <rect x="135" y="8" width="130" height="42" rx="8" fill="rgba(0,212,240,0.1)" stroke="rgba(0,212,240,0.45)" stroke-width="1.5"/>
+          <text x="200" y="25" text-anchor="middle" fill="#00d4f0" font-size="9" font-weight="700" font-family="Inter">USER / CLIENT</text>
+          <text x="200" y="40" text-anchor="middle" fill="rgba(0,212,240,0.55)" font-size="7.5" font-family="Inter">Web App · API · Internal Tool</text>
+          <line x1="200" y1="50" x2="200" y2="80" stroke="rgba(0,212,240,0.45)" stroke-width="1.5" marker-end="url(#a1)" stroke-dasharray="4,3"/>
+          <rect x="105" y="82" width="190" height="52" rx="10" fill="rgba(139,92,246,0.15)" stroke="rgba(139,92,246,0.55)" stroke-width="1.5"/>
+          <text x="200" y="103" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="700" font-family="Inter">MCP HOST</text>
+          <text x="200" y="120" text-anchor="middle" fill="rgba(167,139,250,0.6)" font-size="7.5" font-family="Inter">Orchestration · Auth · Security Controls</text>
+          <line x1="155" y1="134" x2="66" y2="168" stroke="rgba(139,92,246,0.45)" stroke-width="1.5" marker-end="url(#a3)" stroke-dasharray="4,3"/>
+          <line x1="200" y1="134" x2="200" y2="168" stroke="rgba(139,92,246,0.45)" stroke-width="1.5" marker-end="url(#a3)" stroke-dasharray="4,3"/>
+          <line x1="245" y1="134" x2="334" y2="168" stroke="rgba(139,92,246,0.45)" stroke-width="1.5" marker-end="url(#a3)" stroke-dasharray="4,3"/>
+          <rect x="6" y="170" width="118" height="46" rx="8" fill="rgba(0,212,240,0.09)" stroke="rgba(0,212,240,0.38)" stroke-width="1.5"/>
+          <text x="65" y="189" text-anchor="middle" fill="#00d4f0" font-size="9" font-weight="700" font-family="Inter">AI MODEL</text>
+          <text x="65" y="204" text-anchor="middle" fill="rgba(0,212,240,0.55)" font-size="7.5" font-family="Inter">LLM · Azure AI · Claude</text>
+          <rect x="140" y="170" width="120" height="46" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.38)" stroke-width="1.5"/>
+          <text x="200" y="189" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="700" font-family="Inter">COMPLIANCE</text>
+          <text x="200" y="204" text-anchor="middle" fill="rgba(251,191,36,0.55)" font-size="7.5" font-family="Inter">Guardrails · Policy · Audit Log</text>
+          <rect x="276" y="170" width="118" height="46" rx="8" fill="rgba(0,240,160,0.08)" stroke="rgba(0,240,160,0.38)" stroke-width="1.5"/>
+          <text x="335" y="189" text-anchor="middle" fill="#00f0a0" font-size="9" font-weight="700" font-family="Inter">MCP SERVERS</text>
+          <text x="335" y="204" text-anchor="middle" fill="rgba(0,240,160,0.55)" font-size="7.5" font-family="Inter">Tools · Resources · Prompts</text>
+          <line x1="300" y1="216" x2="50" y2="262" stroke="rgba(0,240,160,0.28)" stroke-width="1" marker-end="url(#a2)" stroke-dasharray="3,3"/>
+          <line x1="320" y1="216" x2="148" y2="262" stroke="rgba(0,240,160,0.28)" stroke-width="1" marker-end="url(#a2)" stroke-dasharray="3,3"/>
+          <line x1="350" y1="216" x2="248" y2="262" stroke="rgba(0,240,160,0.28)" stroke-width="1" marker-end="url(#a2)" stroke-dasharray="3,3"/>
+          <line x1="370" y1="216" x2="348" y2="262" stroke="rgba(0,240,160,0.28)" stroke-width="1" marker-end="url(#a2)" stroke-dasharray="3,3"/>
+          <rect x="6" y="264" width="86" height="34" rx="6" fill="rgba(255,255,255,0.70)" stroke="rgba(0,240,160,0.22)" stroke-width="1"/>
+          <text x="49" y="278" text-anchor="middle" fill="rgba(0,240,160,0.8)" font-size="7.5" font-weight="700" font-family="Inter">SIEM / SOAR</text>
+          <text x="49" y="291" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Inter">Alert Automation</text>
+          <rect x="102" y="264" width="86" height="34" rx="6" fill="rgba(255,255,255,0.70)" stroke="rgba(0,240,160,0.22)" stroke-width="1"/>
+          <text x="145" y="278" text-anchor="middle" fill="rgba(0,240,160,0.8)" font-size="7.5" font-weight="700" font-family="Inter">VULN SCANNER</text>
+          <text x="145" y="291" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Inter">Qualys · CrowdStrike</text>
+          <rect x="198" y="264" width="86" height="34" rx="6" fill="rgba(255,255,255,0.70)" stroke="rgba(0,240,160,0.22)" stroke-width="1"/>
+          <text x="241" y="278" text-anchor="middle" fill="rgba(0,240,160,0.8)" font-size="7.5" font-weight="700" font-family="Inter">GRC PLATFORM</text>
+          <text x="241" y="291" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Inter">ServiceNow · Eramba</text>
+          <rect x="294" y="264" width="96" height="34" rx="6" fill="rgba(255,255,255,0.70)" stroke="rgba(0,240,160,0.22)" stroke-width="1"/>
+          <text x="342" y="278" text-anchor="middle" fill="rgba(0,240,160,0.8)" font-size="7.5" font-weight="700" font-family="Inter">EVIDENCE STORE</text>
+          <text x="342" y="291" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Inter">Audit · Compliance Docs</text>
+          <rect x="6" y="320" width="384" height="44" rx="9" fill="rgba(220,38,38,0.06)" stroke="rgba(220,38,38,0.25)" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <text x="198" y="340" text-anchor="middle" fill="rgba(252,165,165,0.8)" font-size="8" font-weight="700" font-family="Inter">SECURITY &amp; COMPLIANCE WRAPPER</text>
+          <text x="198" y="355" text-anchor="middle" fill="rgba(252,165,165,0.42)" font-size="7" font-family="Inter">PCI DSS · GDPR · EU AI Act · ISO 27001 · DORA · Access Control · Audit Trail</text>
+          <circle cx="11" cy="393" r="4" fill="rgba(0,212,240,0.4)"/><text x="20" y="396" fill="rgba(255,255,255,0.75)" font-size="7" font-family="Inter">Data Flow</text>
+          <circle cx="78" cy="393" r="4" fill="rgba(139,92,246,0.4)"/><text x="87" y="396" fill="rgba(255,255,255,0.75)" font-size="7" font-family="Inter">Orchestration</text>
+          <circle cx="155" cy="393" r="4" fill="rgba(0,240,160,0.4)"/><text x="164" y="396" fill="rgba(255,255,255,0.75)" font-size="7" font-family="Inter">MCP Tools</text>
+          <circle cx="228" cy="393" r="4" fill="rgba(220,38,38,0.35)"/><text x="237" y="396" fill="rgba(255,255,255,0.75)" font-size="7" font-family="Inter">Compliance Wrapper</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="defense">
+  <div class="def-header">
+    <div class="def-eyebrow">Proactive Security</div>
+    <h2>Don't wait for the incident.<br><span class="grad">We prepare you for it.</span></h2>
+    <p>Beyond compliance checkboxes — NovaWave keeps your organization operationally ready through automated vulnerability management and pressure-tested incident readiness exercises.</p>
+  </div>
+  <div class="def-grid">
+    <div class="dcard"><div class="dcard-icon">🔍</div><h3>Vulnerability Management Automation</h3><p class="dcard-lead">"We found the gap — in our scan, not in your breach report."</p><div class="dlist"><div class="dli"><span class="dli-dot">◆</span>Automated internal and external scanning with Qualys and CrowdStrike Falcon</div><div class="dli"><span class="dli-dot">◆</span>AI-driven prioritization by exploitability, asset criticality, and compliance impact</div><div class="dli"><span class="dli-dot">◆</span>Remediation workflows integrated with Jira and ServiceNow — nothing falls through</div><div class="dli"><span class="dli-dot">◆</span>Patch management oversight and penetration testing coordination</div><div class="dli"><span class="dli-dot">◆</span>Compliance-aligned reporting for PCI DSS, ISO 27001, DORA, and NIST</div></div></div>
+    <div class="dcard"><div class="dcard-icon">🎯</div><h3>Tabletop Exercises (TTX)</h3><p class="dcard-lead">"Your plan looks great on paper. Let's see how it holds under pressure."</p><div class="dlist"><div class="dli"><span class="dli-dot">◆</span>Custom scenarios: ransomware, data breach, supply chain compromise, cloud outage</div><div class="dli"><span class="dli-dot">◆</span>Multi-team facilitation — IT, legal, executive, communications in the same room</div><div class="dli"><span class="dli-dot">◆</span>IRP, BCP, and DRP stress-testing against NIST, ISO 27001, and DORA requirements</div><div class="dli"><span class="dli-dot">◆</span>Post-exercise gap report with a prioritized remediation roadmap</div><div class="dli"><span class="dli-dot">◆</span>Executive debrief with maturity improvement recommendations for the board</div></div></div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="res-header">
+    <div><div style="font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem">Proven Results</div><h2>Numbers that<br><span>speak for themselves.</span></h2></div>
+    <p>Every engagement we take on is measured. These charts reflect real outcomes from NovaWave's compliance and security engagements — framework depth, industry reach, and the gap we close.</p>
+  </div>
+  <div class="charts-2">
+    <div class="cbox"><h4>Framework Expertise</h4><div class="cbox-sub">Depth of hands-on proficiency across key standards</div><div class="ch"><canvas id="radar"></canvas></div></div>
+    <div class="cbox"><h4>Compliance Gap: Before vs. After</h4><div class="cbox-sub">% open gaps remaining — illustrative benchmark per engagement</div><div class="ch"><canvas id="bar"></canvas></div></div>
+  </div>
+  <div class="charts-2">
+    <div class="cbox"><h4>Industry Engagement Depth</h4><div class="cbox-sub">Relative depth across all sectors NovaWave has served</div><div id="ibars" style="margin-top:0.4rem"></div></div>
+    <div class="cbox"><h4>Service Mix</h4><div class="cbox-sub">Distribution of NovaWave's core service engagements</div><div class="ch"><canvas id="donut"></canvas></div></div>
+  </div>
+</section>
+
+<section id="frameworks">
+  <div class="fw-eyebrow">Interactive Explorer</div>
+  <div class="fw-h">Our Framework <span class="grad">Depth</span></div>
+  <div class="fw-sub">Click any standard to see how NovaWave has applied it across client engagements.</div>
+  <div class="fw-grid" id="fwg"></div>
+  <div class="fw-det" id="fwd"><h5 id="dt"></h5><p id="dd"></p><div class="fw-dtags" id="dta"></div></div>
+</section>
+
+<section id="industries">
+  <div style="font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:0.8rem">Sectors We Serve</div>
+  <div class="ind-h2">Where compliance<br><span class="grad">cannot fail.</span></div>
+  <div class="ind-sub">NovaWave operates in the industries where the cost of a compliance failure is highest — and where our cross-jurisdictional experience matters most.</div>
+  <div class="ind-grid">
+    <div class="icard"><span class="icard-em">💳</span><div><div class="icard-name">Fintech</div><div class="icard-desc">Payment platforms, digital banking, crypto</div></div></div>
+    <div class="icard"><span class="icard-em">🏦</span><div><div class="icard-name">Payment Processing</div><div class="icard-desc">Level 1 SPs, acquirers, gateways, merchants</div></div></div>
+    <div class="icard"><span class="icard-em">🤖</span><div><div class="icard-name">AI Systems</div><div class="icard-desc">LLMs, agentic platforms, automation tools</div></div></div>
+    <div class="icard"><span class="icard-em">🚛</span><div><div class="icard-name">Transportation &amp; Logistics</div><div class="icard-desc">Fleet, supply chain, freight technology</div></div></div>
+    <div class="icard"><span class="icard-em">🏛️</span><div><div class="icard-name">Regulated Financial Services</div><div class="icard-desc">Insurance, asset management, banking</div></div></div>
+    <div class="icard"><span class="icard-em">🎓</span><div><div class="icard-name">Higher Education</div><div class="icard-desc">Universities, research institutions</div></div></div>
+    <div class="icard"><span class="icard-em">📡</span><div><div class="icard-name">Radiotelecommunications</div><div class="icard-desc">Licensed spectrum, broadcast, comms</div></div></div>
+    <div class="icard"><span class="icard-em">☁️</span><div><div class="icard-name">Cloud &amp; SaaS</div><div class="icard-desc">SaaS providers, IaaS, managed services</div></div></div>
+    <div class="icard"><span class="icard-em">🏢</span><div><div class="icard-name">Enterprise IT</div><div class="icard-desc">Large-scale corporate environments</div></div></div>
+  </div>
+</section>
+
+<section id="team">
+  <div style="font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:3.5rem">The People Behind NovaWave</div>
+  <div class="team-wrap">
+    <div>
+      <div class="team-photo-box">
+        <div class="tphoto-circle"></div>
+        <div class="tphoto-name">Christian Antoine</div>
+        <div class="tphoto-role">Founder &amp; Lead Security Consultant<br>GRC · AI Security · Cloud</div>
+        <div class="tphoto-flag">📍 Gatineau, QC, Canada</div>
+      </div>
+    </div>
+    <div>
+      <h2>Christian Antoine</h2>
+      <div class="t-role">Founder · GRC Expert · AI Security Engineer</div>
+      <div class="t-bio">
+        <p>Christian built NovaWave on a single belief: <strong>compliance should be a competitive advantage, not a liability.</strong> With 6+ years embedded inside some of the most complex regulated environments across North America and Europe — from Level 1 payment processors to EU-regulated fintechs to Canadian financial institutions — he brings practitioner-grade expertise that generalist consultants simply can't replicate.</p>
+        <br>
+        <p>His work spans three regulatory jurisdictions. In <strong>Europe</strong>, he has navigated DORA, NIS2, GDPR, and EU AI Act compliance for fintech and financial entities. In <strong>Canada</strong>, he has worked under CIRO guidelines and led compliance programs for organizations governed by Canadian financial regulations. For <strong>US-based clients</strong>, he has delivered NIST, SOC 2, HIPAA, and PCI DSS engagements across finance, healthcare, and technology — bringing full US regulatory fluency without borders. He has even extended PCI DSS compliance programs across borders — auditing South American retail operations for a Canadian parent company to ensure consistent compliance across every storefront.</p>
+        <br>
+        <p>Fluent in <strong>English, French, and Spanish</strong>, Christian advises organizations where language and jurisdiction intersect — and where getting it wrong has real consequences.</p>
+      </div>
+      <div class="cert-grid">
+        <div class="cbadge"><span class="ccode">PCIP</span><span class="cname">PCI Industry Professional</span></div>
+        <div class="cbadge"><span class="ccode">CISA</span><span class="cname">Certified Info Systems Auditor</span></div>
+        <div class="cbadge"><span class="ccode">SEC+</span><span class="cname">CompTIA Security+</span></div>
+        <div class="cbadge"><span class="ccode">AZ-500</span><span class="cname">Azure AI Security Engineer</span></div>
+        <div class="cbadge"><span class="ccode">AZ-900</span><span class="cname">Azure Fundamentals</span></div>
+      </div>
+      <div class="lang-row">
+        <span class="ltag">🇨🇦 English</span><span class="ltag">🇫🇷 French</span><span class="ltag">🇪🇸 Spanish</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="contact-inner">
+    <div class="contact-eyebrow">Start the Conversation</div>
+    <h2>Let's secure<br><span>what matters most.</span></h2>
+    <p>Whether you're staring down an audit, deploying AI in a regulated environment, expanding across borders, or just want a second opinion on your security posture — we're ready.</p>
+    <div class="contact-btns">
+      <a href="/cdn-cgi/l/email-protection#f29a979e9e9db2919c9d849385938497dc919d9f" class="cbtn-main"><span class="__cf_email__" data-cfemail="3f575a5353507f5c5150495e485e495a115c5052">[email&#160;protected]</span></a>
+      <a href="https://calendly.com/christianantoineinfosec/availability" class="cbtn-cal">📅 Book a Free Call</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <svg viewBox="0 0 280 62" xmlns="http://www.w3.org/2000/svg" height="38" style="display:block;margin-bottom:4px">
+      <defs>
+        <linearGradient id="flg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00d4f0"/>
+          <stop offset="100%" stop-color="#00f0a0"/>
+        </linearGradient>
+        <linearGradient id="flg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00eeff"/>
+          <stop offset="100%" stop-color="#00ffb3"/>
+        </linearGradient>
+      </defs>
+      <polygon points="30,2 52,14 52,40 30,52 8,40 8,14" fill="rgba(0,212,240,0.1)" stroke="url(#flg)" stroke-width="1.4"/>
+      <path d="M13 34 Q18 27 23 31 Q28 34 30 28 Q33 21 38 26 Q44 30 49 24" fill="none" stroke="url(#flg)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M13 41 Q18 34 23 38 Q28 41 30 35 Q33 28 38 33 Q44 37 49 31" fill="none" stroke="url(#flg)" stroke-width="1.1" stroke-linecap="round" opacity="0.35"/>
+      <circle cx="30" cy="16" r="3.5" fill="url(#flg)" opacity="0.92"/>
+      <path d="M27 16 L27 22 Q27 25 30 25 Q33 25 33 22 L33 16" fill="none" stroke="url(#flg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="62" y="13" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="6" fill="#00d4f0" letter-spacing="2.5">CONSULTATIONS</text>
+      <!-- nova — bright gradient, fully visible -->
+      <text x="61" y="38" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="24" fill="url(#flg2)" letter-spacing="-0.5">nova</text>
+      <text x="136" y="38" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="24" fill="url(#flg)" letter-spacing="-0.5">wave</text>
+      <text x="213" y="38" font-family="Arial,Helvetica,sans-serif" font-weight="400" font-size="11" fill="rgba(255,255,255,0.85)">Inc.</text>
+    </svg>
+    <div class="fm">cnovawave.com · GRC &amp; Cybersecurity · Est. 2019 · Gatineau, QC, Canada · 🇨🇦 🇺🇸 🇪🇺 🌎</div>
+  </div>
+  <div class="ftags"><span class="ftag">PCIP</span><span class="ftag">CISA</span><span class="ftag">SEC+</span><span class="ftag">AZ-500</span><span class="ftag">AZ-900</span></div>
+  <div style="font-size:0.73rem;color:#a8b8d0">© 2025 Consultations NovaWave Inc.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+<!-- ═══ SERVICE DEMO MODAL ═══ -->
+<div id="demoModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(4,9,15,0.93);backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:1.5rem" onclick="if(event.target===this)closeDemo()">
+  <div style="background:#070f1e;border:1px solid rgba(0,212,240,0.22);border-radius:18px;width:100%;max-width:860px;max-height:88vh;overflow-y:auto;position:relative">
+    <div id="modalHeader" style="padding:1.6rem 2rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.70);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;position:sticky;top:0;background:#070f1e;z-index:2;border-radius:18px 18px 0 0">
+      <div>
+        <div id="modalTitle" style="font-family:Syne,sans-serif;font-size:1.2rem;font-weight:800;color:#fff"></div>
+        <div id="modalSub" style="font-size:0.8rem;color:#a8b8d0;margin-top:3px"></div>
+      </div>
+      <button onclick="closeDemo()" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.70);border:1px solid rgba(255,255,255,0.70);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+    </div>
+    <div id="modalBody" style="padding:2rem"></div>
+  </div>
+</div>
+
+<script>
+// ── OPEN / CLOSE ──
+function openDemo(i){
+  var d=DEMOS[i];
+  document.getElementById('modalTitle').textContent=d.title;
+  document.getElementById('modalSub').textContent=d.sub;
+  document.getElementById('modalBody').innerHTML=d.html;
+  var m=document.getElementById('demoModal');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+  setTimeout(function(){d.init();},80);
+}
+function closeDemo(){
+  document.getElementById('demoModal').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDemo();});
+
+// ── SHARED STYLES injected inline to avoid CSS conflicts ──
+var _s=document.createElement('style');
+_s.textContent=[
+'.d-label{font-size:.68rem;color:#00d4f0;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:.8rem}',
+'.d-sec{margin-bottom:1.6rem}',
+'.prow{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem}',
+'.pname{font-size:.82rem;color:#eef2ff;width:175px;flex-shrink:0}',
+'.ptrack{flex:1;height:8px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}',
+'.pbar{height:100%;border-radius:99px;background:linear-gradient(90deg,#00d4f0,#00f0a0);transition:width 1.3s ease}',
+'.pval{font-size:.75rem;color:#00d4f0;font-weight:700;width:36px;text-align:right}',
+'.rq{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:.8rem;text-align:center;cursor:pointer;transition:all .2s}',
+'.rq.pass{border-color:rgba(0,240,160,.4);background:rgba(0,240,160,.07)}',
+'.rq.warn{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.07)}',
+'.rq.fail{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.07)}',
+'.rqn{font-family:Syne,sans-serif;font-size:1rem;font-weight:800;color:#fff}',
+'.rql{font-size:.64rem;color:#a8b8d0;margin-top:3px;line-height:1.4}',
+'.rqs{font-size:.64rem;font-weight:700;margin-top:5px}',
+'.pass .rqs{color:#00f0a0}.warn .rqs{color:#fbbf24}.fail .rqs{color:#f87171}',
+'.rfb{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.55rem 1rem;font-size:.82rem;color:#eef2ff;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;margin:0 6px 6px 0}',
+'.rfb.on{border-color:#00d4f0;background:rgba(0,212,240,.1);color:#fff}',
+'.rlw{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:.75rem 1rem;font-size:.83rem;color:#eef2ff;margin-bottom:7px}',
+'.rlb{font-size:.64rem;font-weight:700;padding:.2rem .55rem;border-radius:4px;flex-shrink:0}',
+'.rlb.on{background:rgba(0,240,160,.15);color:#00f0a0}.rlb.off{background:rgba(255,255,255,.06);color:#a8b8d0}',
+'.mfb{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.1rem;text-align:center;transition:all .4s}',
+'.mfb.lit{border-color:rgba(0,212,240,.4);background:rgba(0,212,240,.07)}',
+'.mfa{font-size:1.3rem;color:#00d4f0;padding:0 .5rem;flex-shrink:0}',
+'.vt{width:100%;border-collapse:collapse}',
+'.vt th{font-size:.7rem;color:#a8b8d0;text-transform:uppercase;letter-spacing:.1em;padding:.6rem .8rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.07)}',
+'.vt td{padding:.7rem .8rem;font-size:.82rem;color:#eef2ff;border-bottom:1px solid rgba(255,255,255,.04)}',
+'.rb{font-size:.67rem;font-weight:700;padding:.2rem .55rem;border-radius:4px}',
+'.rh{background:rgba(239,68,68,.15);color:#f87171}.rm{background:rgba(245,158,11,.15);color:#fbbf24}.rl{background:rgba(0,240,160,.15);color:#00f0a0}',
+'.si{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:.75rem 1rem;margin-bottom:7px;color:#eaf2ff}',
+'.ss{font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:4px;width:54px;text-align:center;flex-shrink:0}',
+'.sc{background:rgba(239,68,68,.15);color:#f87171}.sh{background:rgba(245,158,11,.15);color:#fbbf24}.sm{background:rgba(99,102,241,.15);color:#a5b4fc}',
+'.sfx{color:#00f0a0;font-size:.72rem;font-weight:600}.sop{color:#f87171;font-size:.72rem;font-weight:600}.spr{color:#fbbf24;font-size:.72rem;font-weight:600}',
+'.scb{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.55rem 1rem;font-size:.8rem;color:#eef2ff;cursor:pointer;transition:all .2s;margin:0 6px 6px 0;display:inline-block}',
+'.scb.on{border-color:#00d4f0;background:rgba(0,212,240,.1);color:#fff}',
+'.tp{display:flex;gap:1rem;align-items:flex-start;background:rgba(255,255,255,.03);border-left:3px solid #00d4f0;border-radius:0 8px 8px 0;padding:.9rem 1rem;margin-bottom:7px}',
+'.tpn{font-family:Syne,sans-serif;font-size:.8rem;font-weight:800;color:#00d4f0;flex-shrink:0;width:20px}',
+'.tpt{font-size:.82rem;color:#eef2ff;line-height:1.65}',
+'.mn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s}',
+'.mn.lit{border-color:#00d4f0;background:rgba(0,212,240,.1)}',
+'.mni{font-size:1.3rem;margin-bottom:.4rem}',
+'.mnn{font-size:.78rem;font-weight:700;color:#fff}',
+'.mns{font-size:.68rem;color:#a8b8d0;margin-top:2px}',
+'.dbtn{background:linear-gradient(135deg,#00d4f0,#00f0a0);color:#04090f;font-family:Syne,sans-serif;font-weight:700;font-size:.82rem;padding:.6rem 1.4rem;border-radius:7px;border:none;cursor:pointer;margin-right:.6rem}',
+'.dbtng{background:transparent;border:1px solid rgba(0,212,240,.3);color:#00d4f0;font-family:Syne,sans-serif;font-weight:600;font-size:.82rem;padding:.6rem 1.4rem;border-radius:7px;cursor:pointer}',
+'.stat{text-align:center;display:inline-block;margin-right:1.5rem}',
+'.stn{font-family:Syne,sans-serif;font-size:1.6rem;font-weight:800}',
+'.stl{font-size:.7rem;color:#a8b8d0;text-transform:uppercase;letter-spacing:.08em}',
+'.ot{height:10px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;margin-top:6px}',
+'.ob{height:100%;border-radius:99px;background:linear-gradient(90deg,#00d4f0,#00f0a0);transition:width .6s ease}',
+'.ph{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:.85rem 1rem;margin-bottom:7px;display:flex;gap:1rem;align-items:flex-start;transition:opacity .5s}',
+'.phc{width:22px;height:22px;border-radius:50%;background:rgba(0,212,240,.15);border:1px solid #00d4f0;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#00d4f0;flex-shrink:0}',
+'.pht{font-size:.8rem;font-weight:700;color:#fff}',
+'.phd{font-size:.7rem;color:#00d4f0;margin-top:1px}',
+'.phi{font-size:.77rem;color:#a8b8d0;margin-top:3px}',
+'.gb{display:flex;align-items:center;gap:1rem;margin-bottom:8px}',
+'.gl{font-size:.8rem;color:#eef2ff;width:155px;flex-shrink:0}',
+'.gt{flex:1;height:22px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;position:relative}',
+'.gbf{position:absolute;top:0;left:0;height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:.68rem;color:#fff;font-weight:600;transition:width 1.3s ease}',
+'.gaf{position:absolute;top:0;left:0;height:100%;border-radius:6px;background:linear-gradient(90deg,#00d4f0,#00f0a0);opacity:0;transition:opacity 1s,width 1.4s ease}',
+].join('');
+document.head.appendChild(_s);
+
+// ── DEMOS DATA ──
+var DEMOS=[
+
+// 0 GRC
+{title:'GRC Program Design & Advisory',sub:'Watch compliance maturity transform across 6 domains',
+html:'<div class="d-sec"><div class="d-label">Compliance Maturity — Before vs After NovaWave</div><div id="gd"></div></div><div class="d-sec"><div class="d-label">12-Month Program Roadmap</div><div id="gr"></div></div><div style="margin-top:1.2rem"><button class="dbtn" onclick="runGRC()">&#9658; Run Transformation</button><button class="dbtng" onclick="resetGRC()">Reset</button><span style="font-size:.78rem;color:#a8b8d0;margin-left:.8rem">Watch gaps close in real time</span></div>',
+init:function(){
+  var D=[{n:'Risk Register',b:22,a:91},{n:'Policy Library',b:18,a:95},{n:'Incident Response',b:35,a:88},{n:'Vendor Management',b:28,a:84},{n:'Access Controls',b:45,a:92},{n:'Board Reporting',b:10,a:87}];
+  window._gD=D;
+  document.getElementById('gd').innerHTML=D.map(function(d,i){return '<div class="gb"><div class="gl">'+d.n+'</div><div class="gt"><div class="gbf" id="gbf'+i+'" style="width:'+d.b+'%;background:rgba(239,68,68,.5)">'+d.b+'%</div><div class="gaf" id="gaf'+i+'" style="width:'+d.a+'%"></div></div><div class="pval" id="gv'+i+'" style="width:36px;text-align:right;font-size:.75rem;color:#00d4f0;font-weight:700">'+d.b+'%</div></div>';}).join('');
+  var P=[{t:'Phase 1 — Foundation',d:'Months 1–2',i:'Risk register · Policy templates · Asset inventory'},{t:'Phase 2 — Controls',d:'Months 3–5',i:'Access controls · Incident response · Change management'},{t:'Phase 3 — Assurance',d:'Months 6–9',i:'Internal audits · Vendor assessments · Gap remediation'},{t:'Phase 4 — Sustain',d:'Months 10–12',i:'Board reporting · Continuous monitoring · Annual review'}];
+  document.getElementById('gr').innerHTML=P.map(function(p,i){return '<div class="ph" id="ph'+i+'" style="opacity:.35"><div class="phc">'+(i+1)+'</div><div><div class="pht">'+p.t+'</div><div class="phd">'+p.d+'</div><div class="phi">'+p.i+'</div></div></div>';}).join('');
+}},
+
+// 1 PCI
+{title:'PCI DSS Compliance',sub:'Click any requirement tile to toggle compliance status',
+html:'<div class="d-sec"><div class="d-label">PCI DSS v4.0 — All 12 Requirements (click to toggle)</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="pg"></div></div><div class="d-sec" style="margin-top:1rem"><div style="margin-bottom:.5rem"><span class="stat"><div class="stn" id="pp" style="color:#00f0a0">0</div><div class="stl">Compliant</div></span><span class="stat"><div class="stn" id="pw" style="color:#fbbf24">0</div><div class="stl">In Progress</div></span><span class="stat"><div class="stn" id="pf" style="color:#f87171">0</div><div class="stl">Gap</div></span></div><div style="font-size:.72rem;color:#a8b8d0;margin-bottom:5px">Overall</div><div class="ot"><div id="po" class="ob" style="width:0%"></div></div><div id="ppct" style="font-size:.8rem;color:#00d4f0;font-weight:700;margin-top:4px">0%</div></div><div style="margin-top:1rem"><button class="dbtn" onclick="pciAll()">Mark All Compliant</button><button class="dbtng" onclick="pciReset()">Reset</button></div>',
+init:function(){
+  var R=[{n:'Req 1',l:'Network Security',s:'warn'},{n:'Req 2',l:'Secure Configs',s:'pass'},{n:'Req 3',l:'Stored Data',s:'fail'},{n:'Req 4',l:'Data Transit',s:'pass'},{n:'Req 5',l:'Anti-Malware',s:'pass'},{n:'Req 6',l:'Secure Systems',s:'warn'},{n:'Req 7',l:'Access Control',s:'fail'},{n:'Req 8',l:'Authentication',s:'warn'},{n:'Req 9',l:'Physical Access',s:'pass'},{n:'Req 10',l:'Logging',s:'fail'},{n:'Req 11',l:'Testing',s:'warn'},{n:'Req 12',l:'Security Policy',s:'pass'}];
+  window._pR=R.map(function(r){return Object.assign({},r);});
+  document.getElementById('pg').innerHTML=R.map(function(r,i){return '<div class="rq '+r.s+'" id="rq'+i+'" onclick="tPCI('+i+')"><div class="rqn">'+r.n+'</div><div class="rql">'+r.l+'</div><div class="rqs">'+(r.s==='pass'?'&#10003; Pass':r.s==='warn'?'&#9888; In Prog':'&#10007; Gap')+'</div></div>';}).join('');
+  uPCI();
+}},
+
+// 2 EU Jurisdiction
+{title:'EU & Multi-Jurisdiction Compliance',sub:'Select your regions — see applicable regulations update live',
+html:'<div class="d-sec"><div class="d-label">Select jurisdiction(s)</div><div id="rfl"></div></div><div class="d-sec"><div class="d-label">Applicable Regulations</div><div id="rlw"></div></div>',
+init:function(){
+  window._rg=new Set(['eu']);
+  document.getElementById('rfl').innerHTML=['🇪🇺 European Union|eu','🇨🇦 Canada|ca','🇺🇸 United States|us','🇬🇧 United Kingdom|uk','🌎 South America|sa'].map(function(x){var p=x.split('|');return '<span class="rfb'+(p[1]==='eu'?' on':'')+'" onclick="tReg(this,''+p[1]+'')">'+p[0]+'</span>';}).join('');
+  rReg();
+}},
+
+// 3 Audit
+{title:'Audits & Readiness Assessments',sub:'Run a live gap assessment across 8 control domains',
+html:'<div class="d-sec"><div class="d-label">Control Domain Scores</div><div id="ab"></div></div><div class="d-sec"><div class="d-label">Findings</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="af"></div></div><div style="margin-top:1rem"><button class="dbtn" onclick="runAudit()">&#9658; Run Assessment</button><button class="dbtng" onclick="resetAudit()">Reset</button></div>',
+init:function(){
+  window._aD=[{n:'Access Management',v:0},{n:'Change Management',v:0},{n:'Incident Response',v:0},{n:'Data Protection',v:0},{n:'Vendor Oversight',v:0},{n:'Security Awareness',v:0},{n:'Business Continuity',v:0},{n:'Patch Management',v:0}];
+  rAudit();
+}},
+
+// 4 Cloud Migration
+{title:'Cloud Migration & Compliance',sub:'Simulate a full on-premises to cloud compliance migration',
+html:'<div class="d-sec"><div class="d-label">Migration Stages</div><div style="display:flex;align-items:center;gap:0;margin-bottom:1.2rem" id="mf"><div class="mfb" id="ms0"><div style="font-size:1.8rem;margin-bottom:.4rem">&#127962;</div><div style="font-size:.82rem;font-weight:700;color:#fff">On-Premises</div><div style="font-size:.72rem;color:#a8b8d0">Legacy infra</div></div><div class="mfa">&#8594;</div><div class="mfb" id="ms1"><div style="font-size:1.8rem;margin-bottom:.4rem">&#128269;</div><div style="font-size:.82rem;font-weight:700;color:#fff">Assessment</div><div style="font-size:.72rem;color:#a8b8d0">Scope &amp; gaps</div></div><div class="mfa">&#8594;</div><div class="mfb" id="ms2"><div style="font-size:1.8rem;margin-bottom:.4rem">&#128737;</div><div style="font-size:.82rem;font-weight:700;color:#fff">Remediation</div><div style="font-size:.72rem;color:#a8b8d0">Controls &amp; policy</div></div><div class="mfa">&#8594;</div><div class="mfb" id="ms3"><div style="font-size:1.8rem;margin-bottom:.4rem">&#9729;</div><div style="font-size:.82rem;font-weight:700;color:#fff">Cloud</div><div style="font-size:.72rem;color:#a8b8d0">Compliant &#10003;</div></div></div></div><div class="d-sec"><div class="d-label">Compliance Progress</div><div id="mb"></div></div><div style="margin-top:.8rem"><button class="dbtn" onclick="runMig()">&#9658; Simulate Migration</button><button class="dbtng" onclick="resetMig()">Reset</button></div>',
+init:function(){
+  window._mD=[{n:'PCI DSS Requirements',b:28,a:97},{n:'ISO 27001 Controls',b:31,a:89},{n:'Network Segmentation',b:15,a:95},{n:'Encryption Coverage',b:42,a:99},{n:'Audit Logging',b:20,a:94},{n:'Access Reviews',b:35,a:91}];
+  document.getElementById('mb').innerHTML=window._mD.map(function(d,i){return '<div class="prow"><div class="pname">'+d.n+'</div><div class="ptrack"><div class="pbar" id="mb'+i+'" style="width:'+d.b+'%"></div></div><div class="pval" id="mv'+i+'">'+d.b+'%</div></div>';}).join('');
+}},
+
+// 5 Vendor Risk
+{title:'Vendor Risk & Third-Party Management',sub:'Live vendor risk dashboard across your third-party ecosystem',
+html:'<div class="d-sec"><div class="d-label">Vendor Risk Dashboard</div><table class="vt"><thead><tr><th>Vendor</th><th>Criticality</th><th>SOC 2</th><th>ISO 27001</th><th>Risk</th><th>Action</th></tr></thead><tbody id="vb"></tbody></table></div><div class="d-sec" style="margin-top:.5rem"><span class="stat"><div class="stn" id="vh" style="color:#f87171">0</div><div class="stl">High Risk</div></span><span class="stat"><div class="stn" id="vm" style="color:#fbbf24">0</div><div class="stl">Medium</div></span><span class="stat"><div class="stn" id="vl" style="color:#00f0a0">0</div><div class="stl">Low Risk</div></span></div>',
+init:function(){
+  var V=[{n:'Payment Gateway',t:'Critical',s:'&#10003; Type II',iso:'&#10003; Certified',r:'l'},{n:'Cloud Storage',t:'High',s:'&#10003; Type II',iso:'In Progress',r:'m'},{n:'HR Platform',t:'Medium',s:'&#10007; Missing',iso:'&#10007; None',r:'h'},{n:'Email Provider',t:'High',s:'&#10003; Type II',iso:'&#10003; Certified',r:'l'},{n:'Analytics Tool',t:'Low',s:'Type I only',iso:'&#10007; None',r:'m'},{n:'Payroll System',t:'High',s:'&#10007; Missing',iso:'&#10007; None',r:'h'}];
+  document.getElementById('vb').innerHTML=V.map(function(v,i){return '<tr><td style="font-weight:600;color:#fff">'+v.n+'</td><td>'+v.t+'</td><td style="color:'+(v.s.includes('10003')?'#00f0a0':'#f87171')+'">'+v.s+'</td><td style="color:'+(v.iso.includes('10003')?'#00f0a0':'#f87171')+'">'+v.iso+'</td><td><span class="rb r'+v.r+'">'+{l:'LOW',m:'MED',h:'HIGH'}[v.r]+'</span></td><td><span style="font-size:.73rem;color:#00d4f0;cursor:pointer" onclick="this.textContent='&#10003; Queued'">Request AoC</span></td></tr>';}).join('');
+  document.getElementById('vh').textContent=V.filter(function(v){return v.r==='h';}).length;
+  document.getElementById('vm').textContent=V.filter(function(v){return v.r==='m';}).length;
+  document.getElementById('vl').textContent=V.filter(function(v){return v.r==='l';}).length;
+}},
+
+// 6 Vulnerability Management
+{title:'Vulnerability Management Automation',sub:'Click Auto-Remediate to watch vulnerabilities close in real time',
+html:'<div class="d-sec"><div class="d-label">Open Vulnerabilities — AI-Prioritized</div><div id="sl"></div></div><div class="d-sec" style="margin-top:.5rem"><span class="stat"><div class="stn" id="vc" style="color:#f87171">0</div><div class="stl">Critical</div></span><span class="stat"><div class="stn" id="vhh" style="color:#fbbf24">0</div><div class="stl">High</div></span><span class="stat"><div class="stn" id="vmed" style="color:#a5b4fc">0</div><div class="stl">Medium</div></span><span class="stat"><div class="stn" id="vfix" style="color:#00f0a0">0</div><div class="stl">Remediated</div></span></div><div style="margin-top:1rem"><button class="dbtn" onclick="fixVulns()">&#9658; Auto-Remediate</button><button class="dbtng" onclick="initVulns()">Re-Scan</button></div>',
+init:function(){initVulns();}},
+
+// 7 Tabletop
+{title:'Tabletop Exercises (TTX)',sub:'Choose a scenario and walk through a live exercise playbook',
+html:'<div class="d-sec"><div class="d-label">Select Scenario</div><div id="sb"></div></div><div class="d-sec"><div class="d-label" id="ttxl">Exercise Phases</div><div id="tp"></div></div>',
+init:function(){
+  document.getElementById('sb').innerHTML=['&#128272; Ransomware','&#128190; Data Breach','&#128279; Supply Chain','&#9729; Cloud Outage'].map(function(s,i){return '<span class="scb'+(i===0?' on':'')+'" onclick="selTTX(this,'+i+')">'+s+'</span>';}).join('');
+  rTTX(0);
+}},
+
+// 8 AI Governance
+{title:'AI Governance & Secure Deployment',sub:'Click any architecture node to understand its security role',
+html:'<div class="d-sec"><div class="d-label">MCP-Based Agent Architecture — Click a node</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem" id="mnodes"></div><div id="mdet" style="background:rgba(0,212,240,.05);border:1px solid rgba(0,212,240,.15);border-radius:10px;padding:1.1rem;display:none"><div style="font-size:.85rem;font-weight:700;color:#fff;margin-bottom:.4rem" id="mdt"></div><div style="font-size:.82rem;color:#a8b8d0;line-height:1.7" id="mdb"></div></div></div><div class="d-sec"><div class="d-label">EU AI Act — Risk Tiers</div><div style="display:flex;gap:8px;flex-wrap:wrap" id="airt"></div></div>',
+init:function(){
+  var N=[{i:'&#128100;',n:'User / App',s:'Web · API · Internal',d:'The user-facing interface. All input is validated before reaching the MCP Host. No direct access to tools or data.'},{i:'&#127917;',n:'MCP Host',s:'Orchestration · Auth',d:'Central orchestration layer. Routes requests, enforces authentication, applies security policies, coordinates all components.'},{i:'&#129302;',n:'AI Model',s:'LLM · Azure AI',d:'The language model. Operates within strict context limits. Cannot take actions directly — all tool calls flow through the MCP Host.'},{i:'&#128203;',n:'Compliance Engine',s:'Policy · Audit Log',d:'Enforces regulatory guardrails in real time. Logs every action to an immutable audit trail. Blocks non-compliant outputs instantly.'},{i:'&#128295;',n:'MCP Servers',s:'Tools · Resources',d:'Modular capability servers. Each scoped to one integration (SIEM, GRC, databases). Least-privilege access only — no over-permissioning.'},{i:'&#128274;',n:'Compliance Wrapper',s:'PCI · GDPR · DORA',d:'The outer security perimeter. Enforces PCI DSS, GDPR, DORA, EU AI Act, and ISO 27001 at infrastructure level across the entire system.'}];
+  window._mN=N;
+  document.getElementById('mnodes').innerHTML=N.map(function(n,i){return '<div class="mn" id="mn'+i+'" onclick="insMCP('+i+')"><div class="mni">'+n.i+'</div><div class="mnn">'+n.n+'</div><div class="mns">'+n.s+'</div></div>';}).join('');
+  document.getElementById('airt').innerHTML=[{l:'Unacceptable',c:'rgba(239,68,68,.15)',tc:'#f87171',e:'Social scoring AI'},{l:'High Risk',c:'rgba(245,158,11,.15)',tc:'#fbbf24',e:'Credit scoring · Hiring'},{l:'Limited Risk',c:'rgba(99,102,241,.15)',tc:'#a5b4fc',e:'Chatbots · Recommenders'},{l:'Minimal Risk',c:'rgba(0,240,160,.12)',tc:'#00f0a0',e:'Spam filters · Games'}].map(function(r){return '<div style="background:'+r.c+';border-radius:8px;padding:.75rem 1rem;flex:1;min-width:130px"><div style="font-size:.74rem;font-weight:700;color:'+r.tc+';margin-bottom:3px">'+r.l+'</div><div style="font-size:.7rem;color:#a8b8d0">'+r.e+'</div></div>';}).join('');
+}}
+
+]; // end DEMOS
+
+// ── HELPER FUNCTIONS ──
+
+// GRC
+function runGRC(){
+  window._gD.forEach(function(d,i){
+    setTimeout(function(){
+      document.getElementById('gaf'+i).style.opacity='1';
+      document.getElementById('gv'+i).textContent=d.a+'%';
+      document.getElementById('gv'+i).style.color='#00f0a0';
+      var ph=document.getElementById('ph'+i);if(ph)ph.style.opacity='1';
+    },i*300);
+  });
+}
+function resetGRC(){
+  window._gD.forEach(function(d,i){
+    document.getElementById('gaf'+i).style.opacity='0';
+    document.getElementById('gv'+i).textContent=d.b+'%';
+    document.getElementById('gv'+i).style.color='#00d4f0';
+    var ph=document.getElementById('ph'+i);if(ph)ph.style.opacity='0.35';
+  });
+}
+
+// PCI
+function tPCI(i){
+  var states=['pass','warn','fail'];
+  var cur=states.indexOf(window._pR[i].s);
+  window._pR[i].s=states[(cur+1)%3];
+  var el=document.getElementById('rq'+i);
+  el.className='rq '+window._pR[i].s;
+  el.querySelector('.rqs').innerHTML=window._pR[i].s==='pass'?'&#10003; Pass':window._pR[i].s==='warn'?'&#9888; In Prog':'&#10007; Gap';
+  uPCI();
+}
+function pciAll(){window._pR.forEach(function(_,i){window._pR[i].s='pass';var el=document.getElementById('rq'+i);el.className='rq pass';el.querySelector('.rqs').innerHTML='&#10003; Pass';});uPCI();}
+function pciReset(){var st=['warn','pass','fail','pass','pass','warn','fail','warn','pass','fail','warn','pass'];window._pR.forEach(function(_,i){window._pR[i].s=st[i];var el=document.getElementById('rq'+i);el.className='rq '+st[i];el.querySelector('.rqs').innerHTML=st[i]==='pass'?'&#10003; Pass':st[i]==='warn'?'&#9888; In Prog':'&#10007; Gap';});uPCI();}
+function uPCI(){
+  var r=window._pR,p=r.filter(function(x){return x.s==='pass';}).length,w=r.filter(function(x){return x.s==='warn';}).length,f=r.filter(function(x){return x.s==='fail';}).length;
+  document.getElementById('pp').textContent=p;document.getElementById('pw').textContent=w;document.getElementById('pf').textContent=f;
+  var pct=Math.round(p/12*100);
+  document.getElementById('po').style.width=pct+'%';
+  document.getElementById('ppct').textContent=pct+'%';
+}
+
+// Regions
+var _REGS={eu:[{n:'GDPR',d:'Data Protection & Privacy'},{n:'DORA',d:'Digital Operational Resilience'},{n:'NIS2',d:'Network & Information Security'},{n:'EU AI Act',d:'AI Governance & Risk'}],ca:[{n:'PIPEDA',d:'Privacy & Data Protection'},{n:'CIRO',d:'Investment Regulation'},{n:'SOX/ITGC',d:'Financial Controls'}],us:[{n:'NIST CSF',d:'Cybersecurity Framework'},{n:'SOC 2',d:'Service Organization Controls'},{n:'HIPAA',d:'Health Data Privacy'},{n:'CCPA',d:'California Privacy Act'}],uk:[{n:'UK GDPR',d:'Data Protection (post-Brexit)'},{n:'FCA Rules',d:'Financial Conduct Authority'}],sa:[{n:'PCI DSS',d:'Payment Card Security'},{n:'Local Data Laws',d:'Country-specific regulations'}]};
+function tReg(btn,r){btn.classList.toggle('on');if(btn.classList.contains('on'))window._rg.add(r);else window._rg.delete(r);rReg();}
+function rReg(){
+  var all=[];window._rg.forEach(function(r){(_REGS[r]||[]).forEach(function(l){all.push(l);});});
+  document.getElementById('rlw').innerHTML=all.map(function(l){return '<div class="rlw"><span class="rlb on">ACTIVE</span><div><strong style="color:#fff">'+l.n+'</strong> — '+l.d+'</div></div>';}).join('')+(all.length===0?'<div style="color:#a8b8d0;font-size:.85rem;padding:.5rem">Select a region above</div>':'');
+}
+
+// Audit
+function rAudit(){
+  document.getElementById('ab').innerHTML=window._aD.map(function(d,i){var c=d.v<50?'linear-gradient(90deg,#ef4444,#f87171)':d.v<75?'linear-gradient(90deg,#f59e0b,#fbbf24)':'linear-gradient(90deg,#00d4f0,#00f0a0)';return '<div class="prow"><div class="pname">'+d.n+'</div><div class="ptrack"><div class="pbar" id="ab'+i+'" style="width:'+d.v+'%;background:'+c+'"></div></div><div class="pval" id="av'+i+'">'+d.v+'%</div></div>';}).join('');
+}
+function runAudit(){
+  var s=[88,72,45,91,63,78,55,84];
+  window._aD.forEach(function(d,i){setTimeout(function(){d.v=s[i];var el=document.getElementById('ab'+i);var c=s[i]<50?'linear-gradient(90deg,#ef4444,#f87171)':s[i]<75?'linear-gradient(90deg,#f59e0b,#fbbf24)':'linear-gradient(90deg,#00d4f0,#00f0a0)';el.style.width=s[i]+'%';el.style.background=c;document.getElementById('av'+i).textContent=s[i]+'%';},i*220);});
+  setTimeout(function(){
+    var hi=window._aD.filter(function(d){return d.v>=75;}).length,md=window._aD.filter(function(d){return d.v>=50&&d.v<75;}).length,lo=window._aD.filter(function(d){return d.v<50;}).length;
+    document.getElementById('af').innerHTML=['<div style="background:rgba(0,240,160,.07);border:1px solid rgba(0,240,160,.2);border-radius:8px;padding:1rem;text-align:center"><div style="font-family:Syne,sans-serif;font-size:1.6rem;font-weight:800;color:#00f0a0">'+hi+'</div><div style="font-size:.72rem;color:#a8b8d0">Satisfactory</div></div>','<div style="background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:1rem;text-align:center"><div style="font-family:Syne,sans-serif;font-size:1.6rem;font-weight:800;color:#fbbf24">'+md+'</div><div style="font-size:.72rem;color:#a8b8d0">Needs Work</div></div>','<div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:1rem;text-align:center"><div style="font-family:Syne,sans-serif;font-size:1.6rem;font-weight:800;color:#f87171">'+lo+'</div><div style="font-size:.72rem;color:#a8b8d0">Critical Gap</div></div>'].join('');
+  },window._aD.length*220+300);
+}
+function resetAudit(){window._aD.forEach(function(d){d.v=0;});rAudit();document.getElementById('af').innerHTML='';}
+
+// Migration
+function runMig(){
+  ['ms0','ms1','ms2','ms3'].forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add('lit');},i*500);});
+  window._mD.forEach(function(d,i){setTimeout(function(){document.getElementById('mb'+i).style.width=d.a+'%';document.getElementById('mv'+i).textContent=d.a+'%';},i*280+500);});
+}
+function resetMig(){
+  ['ms0','ms1','ms2','ms3'].forEach(function(id){document.getElementById(id).classList.remove('lit');});
+  window._mD.forEach(function(d,i){document.getElementById('mb'+i).style.width=d.b+'%';document.getElementById('mv'+i).textContent=d.b+'%';});
+}
+
+// Vulns
+function initVulns(){
+  window._vl=[{s:'c',n:'OpenSSL CVE-2024-1234 — Remote Code Execution',st:'open'},{s:'c',n:'Apache Log4j — JNDI Injection (PCI Req 6)',st:'open'},{s:'h',n:'Unpatched Windows Server — Privilege Escalation',st:'open'},{s:'h',n:'Exposed Admin Interface — No MFA (PCI Req 8)',st:'open'},{s:'h',n:'TLS 1.0 Active — Transmission Risk',st:'open'},{s:'m',n:'Missing Security Headers — XSS Risk',st:'open'},{s:'m',n:'Default Credentials — 3 Internal Systems',st:'open'},{s:'m',n:'Outdated npm Dependencies',st:'open'}];
+  rVulns();
+}
+function rVulns(){
+  var v=window._vl;
+  document.getElementById('sl').innerHTML=v.map(function(x){return '<div class="si"><span class="ss s'+x.s+'">'+(x.s==='c'?'CRITICAL':x.s==='h'?'HIGH':'MEDIUM')+'</span><span style="flex:1;font-size:.83rem;color:#eef2ff">'+x.n+'</span><span class="'+(x.st==='fixed'?'sfx':x.st==='prog'?'spr':'sop')+'">'+(x.st==='fixed'?'&#10003; Fixed':x.st==='prog'?'Remediating&#8230;':'&#9679; Open')+'</span></div>';}).join('');
+  document.getElementById('vc').textContent=v.filter(function(x){return x.s==='c'&&x.st!=='fixed';}).length;
+  document.getElementById('vhh').textContent=v.filter(function(x){return x.s==='h'&&x.st!=='fixed';}).length;
+  document.getElementById('vmed').textContent=v.filter(function(x){return x.s==='m'&&x.st!=='fixed';}).length;
+  document.getElementById('vfix').textContent=v.filter(function(x){return x.st==='fixed';}).length;
+}
+function fixVulns(){
+  window._vl.forEach(function(v,i){setTimeout(function(){v.st='prog';rVulns();},i*380);setTimeout(function(){v.st='fixed';rVulns();},i*380+650);});
+}
+
+// TTX
+var _TTX=[
+  {n:'Ransomware Attack',p:[{n:1,t:'Detection',b:'Security alerts fire — encrypted files spreading. Who activates the incident commander? Who calls legal?'},{n:2,t:'Containment',b:'Isolate affected systems. Activate <strong>IRP Sec 4.2</strong>. Notify CISO. Preserve forensic evidence immediately.'},{n:3,t:'Communication',b:'Internal stakeholder notify. Regulatory timeline: DORA requires 4-hour initial report for financial entities.'},{n:4,t:'Recovery',b:'Restore from verified clean backups. Validate integrity. Phased re-entry. Document full lessons learned.'}]},
+  {n:'Data Breach',p:[{n:1,t:'Discovery',b:'Unauthorized access to customer PII detected. Scope: how many records? Which data classes were exposed?'},{n:2,t:'Containment',b:'Revoke compromised credentials. Patch exploitation vector. Preserve all forensic artifacts for investigation.'},{n:3,t:'Regulatory Notice',b:'GDPR: 72-hour supervisory authority notification. PCI DSS: Card brand & acquirer notification within 24 hours.'},{n:4,t:'Customer Notice',b:'Draft customer notification. Legal review required. Offer credit monitoring. Coordinate with PR team.'}]},
+  {n:'Supply Chain Compromise',p:[{n:1,t:'Identification',b:'Malicious update from trusted vendor detected. Which systems ingested it? Blast radius assessment — now.'},{n:2,t:'Vendor Engagement',b:'Contact vendor security team. Request IOCs. Review all vendor-supplied updates from last 90 days.'},{n:3,t:'Containment',b:'Block malicious domains/IPs. Rollback affected systems. Audit all third-party access permissions.'},{n:4,t:'Post-Incident',b:'Vendor due diligence overhaul. Update vendor risk program. File DORA third-party incident report.'}]},
+  {n:'Cloud Outage',p:[{n:1,t:'Detection',b:'Primary cloud region down. Activate BCP immediately. Assess business-critical system impact — check RTO/RPO.'},{n:2,t:'Failover',b:'Trigger DR runbook. Activate secondary region. Validate data integrity. Update DNS and traffic routing.'},{n:3,t:'Communication',b:'Status page updates. Client SLA monitoring. Regulatory notification if financial services thresholds breached.'},{n:4,t:'Recovery',b:'Root cause analysis with cloud provider. Update BCP based on gaps exposed. Monthly failover testing mandatory.'}]}
+];
+function selTTX(btn,i){document.querySelectorAll('.scb').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');rTTX(i);}
+function rTTX(i){
+  var s=_TTX[i];
+  document.getElementById('ttxl').textContent=s.n+' — Exercise Phases';
+  document.getElementById('tp').innerHTML=s.p.map(function(p){return '<div class="tp"><div class="tpn">'+p.n+'</div><div class="tpt"><strong>'+p.t+':</strong> '+p.b+'</div></div>';}).join('');
+}
+
+// MCP
+function insMCP(i){
+  document.querySelectorAll('.mn').forEach(function(n){n.classList.remove('lit');});
+  document.getElementById('mn'+i).classList.add('lit');
+  var n=window._mN[i];
+  document.getElementById('mdt').textContent=n.i+' '+n.n;
+  document.getElementById('mdb').textContent=n.d;
+  document.getElementById('mdet').style.display='block';
+}
+</script>
+</body>
+</html>
