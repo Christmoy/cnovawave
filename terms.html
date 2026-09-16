@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — Consultations NovaWave Inc.</title>
+<title data-i18n="meta.title">Terms of Service — Consultations NovaWave Inc.</title>
 <meta name="description" content="Terms of Service for Consultations NovaWave Inc. — the rules that govern use of cnovawave.com.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://cnovawave.com/terms.html">
@@ -21,8 +21,12 @@ a:hover{text-decoration:underline}
 nav{position:sticky;top:0;z-index:50;padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(4,9,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
 .nb-main{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:#fff}
 .nb-main span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-right{display:flex;align-items:center;gap:1.4rem}
 .back{font-size:0.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
 .back:hover{color:#fff;text-decoration:none}
+.lang-select{background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,240,0.2);color:var(--off);font-family:'Inter',sans-serif;font-size:0.76rem;font-weight:600;padding:0.4rem 0.7rem;border-radius:8px;cursor:pointer}
+.lang-select:focus{outline:none;border-color:var(--cyan)}
+.lang-select option{background:#070f1e;color:var(--off)}
 
 main{max-width:760px;margin:0 auto;padding:5rem 1.5rem 7rem}
 .eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:1rem}
@@ -43,66 +47,112 @@ footer a{margin:0 0.6rem}
 
 <nav>
   <div class="nb-main">Consultations <span>NovaWave</span></div>
-  <a href="/" class="back">← Back to cnovawave.com</a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSelect" aria-label="Language">
+      <option value="en">EN — English</option>
+      <option value="fr">FR — Français</option>
+      <option value="es">ES — Español</option>
+      <option value="pt">PT — Português</option>
+    </select>
+    <a href="/" class="back" data-i18n="nav.back">← Back to cnovawave.com</a>
+  </div>
 </nav>
 
 <main>
-  <div class="eyebrow">Legal</div>
-  <h1>Terms of Service</h1>
-  <div class="updated">Last updated: September 16, 2026</div>
+  <div class="eyebrow" data-i18n="eyebrow">Legal</div>
+  <h1 data-i18n="h1">Terms of Service</h1>
+  <div class="updated" data-i18n="updated">Last updated: September 16, 2026</div>
 
-  <p>These Terms of Service ("Terms") govern your access to and use of <a href="https://cnovawave.com">cnovawave.com</a> (the "Site"), operated by Consultations NovaWave Inc. ("NovaWave," "we," "us," or "our"). By accessing or using the Site, you agree to these Terms. If you do not agree, please do not use the Site.</p>
+  <p data-i18n="intro.p1" data-i18n-html="1">These Terms of Service ("Terms") govern your access to and use of <a href="https://cnovawave.com">cnovawave.com</a> (the "Site"), operated by Consultations NovaWave Inc. ("NovaWave," "we," "us," or "our"). By accessing or using the Site, you agree to these Terms. If you do not agree, please do not use the Site.</p>
 
-  <p>These Terms govern the Site only. They do not govern any professional services engagement — if you become a client, that relationship is governed by a separate signed agreement (such as a Master Services Agreement, Engagement Letter, or Statement of Work), which controls over anything on this Site in the event of a conflict.</p>
+  <p data-i18n="intro.p2">These Terms govern the Site only. They do not govern any professional services engagement — if you become a client, that relationship is governed by a separate signed agreement (such as a Master Services Agreement, Engagement Letter, or Statement of Work), which controls over anything on this Site in the event of a conflict.</p>
 
-  <h2>1. Use of the Site</h2>
-  <p>You may use the Site for lawful purposes only. You agree not to:</p>
+  <h2 data-i18n="s1.h2">1. Use of the Site</h2>
+  <p data-i18n="s1.p">You may use the Site for lawful purposes only. You agree not to:</p>
   <ul>
-    <li>Use the Site in any way that violates applicable law or regulation.</li>
-    <li>Attempt to gain unauthorized access to the Site, its systems, or any related network.</li>
-    <li>Submit false, misleading, or malicious information through any form on the Site.</li>
-    <li>Use automated means (bots, scrapers) to extract content from the Site, other than standard search engine indexing.</li>
-    <li>Interfere with or disrupt the Site's operation or security.</li>
+    <li data-i18n="s1.li1">Use the Site in any way that violates applicable law or regulation.</li>
+    <li data-i18n="s1.li2">Attempt to gain unauthorized access to the Site, its systems, or any related network.</li>
+    <li data-i18n="s1.li3">Submit false, misleading, or malicious information through any form on the Site.</li>
+    <li data-i18n="s1.li4">Use automated means (bots, scrapers) to extract content from the Site, other than standard search engine indexing.</li>
+    <li data-i18n="s1.li5">Interfere with or disrupt the Site's operation or security.</li>
   </ul>
 
-  <h2>2. No Professional Advice</h2>
-  <p>Content on the Site — including descriptions of services, statistics, and general commentary on cybersecurity, compliance, governance, or AI topics — is provided for general informational purposes only. It does not constitute legal, financial, security, compliance, or other professional advice, and it should not be relied upon as such. Any engagement for professional advice or services requires a separate signed agreement with NovaWave.</p>
+  <h2 data-i18n="s2.h2">2. No Professional Advice</h2>
+  <p data-i18n="s2.p">Content on the Site — including descriptions of services, statistics, and general commentary on cybersecurity, compliance, governance, or AI topics — is provided for general informational purposes only. It does not constitute legal, financial, security, compliance, or other professional advice, and it should not be relied upon as such. Any engagement for professional advice or services requires a separate signed agreement with NovaWave.</p>
 
-  <h2>3. Intellectual Property</h2>
-  <p>All content on the Site — including text, graphics, logos, the NovaWave name and marks, and the design and layout of the Site — is owned by NovaWave or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may view and share pages of the Site for personal, non-commercial reference, but you may not copy, reproduce, republish, or create derivative works from the Site's content without our prior written consent.</p>
+  <h2 data-i18n="s3.h2">3. Intellectual Property</h2>
+  <p data-i18n="s3.p">All content on the Site — including text, graphics, logos, the NovaWave name and marks, and the design and layout of the Site — is owned by NovaWave or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may view and share pages of the Site for personal, non-commercial reference, but you may not copy, reproduce, republish, or create derivative works from the Site's content without our prior written consent.</p>
 
-  <h2>4. Third-Party Links</h2>
-  <p>The Site contains links to third-party services, including Calendly (for scheduling) and LinkedIn. These links are provided for convenience only. We do not control and are not responsible for the content, privacy practices, or availability of any third-party site, and linking to them does not imply endorsement.</p>
+  <h2 data-i18n="s4.h2">4. Third-Party Links</h2>
+  <p data-i18n="s4.p">The Site contains links to third-party services, including Calendly (for scheduling) and LinkedIn. These links are provided for convenience only. We do not control and are not responsible for the content, privacy practices, or availability of any third-party site, and linking to them does not imply endorsement.</p>
 
-  <h2>5. Disclaimer of Warranties</h2>
-  <p>The Site is provided "as is" and "as available," without warranties of any kind, whether express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, or that the Site will be uninterrupted, secure, or error-free.</p>
+  <h2 data-i18n="s5.h2">5. Disclaimer of Warranties</h2>
+  <p data-i18n="s5.p" data-i18n-html="1">The Site is provided "as is" and "as available," without warranties of any kind, whether express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, or that the Site will be uninterrupted, secure, or error-free.</p>
 
-  <h2>6. Limitation of Liability</h2>
-  <p>To the maximum extent permitted by applicable law, NovaWave shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, arising out of or related to your use of, or inability to use, the Site, even if advised of the possibility of such damages.</p>
+  <h2 data-i18n="s6.h2">6. Limitation of Liability</h2>
+  <p data-i18n="s6.p">To the maximum extent permitted by applicable law, NovaWave shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, arising out of or related to your use of, or inability to use, the Site, even if advised of the possibility of such damages.</p>
 
-  <h2>7. Indemnification</h2>
-  <p>You agree to indemnify and hold harmless NovaWave, its officers, directors, and personnel from any claims, damages, losses, or expenses (including reasonable legal fees) arising out of your misuse of the Site or your violation of these Terms.</p>
+  <h2 data-i18n="s7.h2">7. Indemnification</h2>
+  <p data-i18n="s7.p">You agree to indemnify and hold harmless NovaWave, its officers, directors, and personnel from any claims, damages, losses, or expenses (including reasonable legal fees) arising out of your misuse of the Site or your violation of these Terms.</p>
 
-  <h2>8. Governing Law</h2>
-  <p>These Terms are governed by the laws of the Province of Québec and the federal laws of Canada applicable therein, without regard to conflict-of-law principles. Any dispute arising under these Terms shall be subject to the exclusive jurisdiction of the courts located in Québec, Canada.</p>
+  <h2 data-i18n="s8.h2">8. Governing Law</h2>
+  <p data-i18n="s8.p">These Terms are governed by the laws of the Province of Québec and the federal laws of Canada applicable therein, without regard to conflict-of-law principles. Any dispute arising under these Terms shall be subject to the exclusive jurisdiction of the courts located in Québec, Canada.</p>
 
-  <h2>9. Changes to These Terms</h2>
-  <p>We may update these Terms from time to time. The "Last updated" date at the top of this page reflects the most recent revision. Continued use of the Site after changes take effect constitutes acceptance of the revised Terms.</p>
+  <h2 data-i18n="s9.h2">9. Changes to These Terms</h2>
+  <p data-i18n="s9.p">We may update these Terms from time to time. The "Last updated" date at the top of this page reflects the most recent revision. Continued use of the Site after changes take effect constitutes acceptance of the revised Terms.</p>
 
-  <h2>10. Contact Us</h2>
+  <h2 data-i18n="s10.h2">10. Contact Us</h2>
   <div class="contact-box">
     <p style="margin-bottom:0.4rem"><strong>Consultations NovaWave Inc.</strong></p>
     <p style="margin-bottom:0.4rem">Gatineau, Québec, Canada</p>
-    <p style="margin-bottom:0">Email: <a href="mailto:christian.antoine@cnovawave.com">christian.antoine@cnovawave.com</a></p>
+    <p style="margin-bottom:0"><span data-i18n="contact.emailLabel">Email:</span> <a href="mailto:christian.antoine@cnovawave.com">christian.antoine@cnovawave.com</a></p>
   </div>
 </main>
 
 <footer>
-  © 2026 Consultations NovaWave Inc. &nbsp;·&nbsp;
-  <a href="/">Home</a>
-  <a href="/privacy.html">Privacy Policy</a>
-  <a href="/terms.html">Terms of Service</a>
+  <span data-i18n="footer.copyright">© 2026 Consultations NovaWave Inc.</span> &nbsp;·&nbsp;
+  <a href="/" data-i18n="footer.home">Home</a>
+  <a href="/privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+  <a href="/terms.html" data-i18n="footer.terms">Terms of Service</a>
 </footer>
+
+<script>
+var translations = {"en": {"meta.title": "Terms of Service — Consultations NovaWave Inc.", "nav.back": "← Back to cnovawave.com", "eyebrow": "Legal", "h1": "Terms of Service", "updated": "Last updated: September 16, 2026", "intro.p1": "These Terms of Service (\"Terms\") govern your access to and use of <a href=\"https://cnovawave.com\">cnovawave.com</a> (the \"Site\"), operated by Consultations NovaWave Inc. (\"NovaWave,\" \"we,\" \"us,\" or \"our\"). By accessing or using the Site, you agree to these Terms. If you do not agree, please do not use the Site.", "intro.p2": "These Terms govern the Site only. They do not govern any professional services engagement — if you become a client, that relationship is governed by a separate signed agreement (such as a Master Services Agreement, Engagement Letter, or Statement of Work), which controls over anything on this Site in the event of a conflict.", "s1.h2": "1. Use of the Site", "s1.p": "You may use the Site for lawful purposes only. You agree not to:", "s1.li1": "Use the Site in any way that violates applicable law or regulation.", "s1.li2": "Attempt to gain unauthorized access to the Site, its systems, or any related network.", "s1.li3": "Submit false, misleading, or malicious information through any form on the Site.", "s1.li4": "Use automated means (bots, scrapers) to extract content from the Site, other than standard search engine indexing.", "s1.li5": "Interfere with or disrupt the Site's operation or security.", "s2.h2": "2. No Professional Advice", "s2.p": "Content on the Site — including descriptions of services, statistics, and general commentary on cybersecurity, compliance, governance, or AI topics — is provided for general informational purposes only. It does not constitute legal, financial, security, compliance, or other professional advice, and it should not be relied upon as such. Any engagement for professional advice or services requires a separate signed agreement with NovaWave.", "s3.h2": "3. Intellectual Property", "s3.p": "All content on the Site — including text, graphics, logos, the NovaWave name and marks, and the design and layout of the Site — is owned by NovaWave or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may view and share pages of the Site for personal, non-commercial reference, but you may not copy, reproduce, republish, or create derivative works from the Site's content without our prior written consent.", "s4.h2": "4. Third-Party Links", "s4.p": "The Site contains links to third-party services, including Calendly (for scheduling) and LinkedIn. These links are provided for convenience only. We do not control and are not responsible for the content, privacy practices, or availability of any third-party site, and linking to them does not imply endorsement.", "s5.h2": "5. Disclaimer of Warranties", "s5.p": "The Site is provided \"as is\" and \"as available,\" without warranties of any kind, whether express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, or that the Site will be uninterrupted, secure, or error-free.", "s6.h2": "6. Limitation of Liability", "s6.p": "To the maximum extent permitted by applicable law, NovaWave shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, arising out of or related to your use of, or inability to use, the Site, even if advised of the possibility of such damages.", "s7.h2": "7. Indemnification", "s7.p": "You agree to indemnify and hold harmless NovaWave, its officers, directors, and personnel from any claims, damages, losses, or expenses (including reasonable legal fees) arising out of your misuse of the Site or your violation of these Terms.", "s8.h2": "8. Governing Law", "s8.p": "These Terms are governed by the laws of the Province of Québec and the federal laws of Canada applicable therein, without regard to conflict-of-law principles. Any dispute arising under these Terms shall be subject to the exclusive jurisdiction of the courts located in Québec, Canada.", "s9.h2": "9. Changes to These Terms", "s9.p": "We may update these Terms from time to time. The \"Last updated\" date at the top of this page reflects the most recent revision. Continued use of the Site after changes take effect constitutes acceptance of the revised Terms.", "s10.h2": "10. Contact Us", "contact.emailLabel": "Email:", "footer.copyright": "© 2026 Consultations NovaWave Inc.", "footer.home": "Home", "footer.privacy": "Privacy Policy", "footer.terms": "Terms of Service"}, "fr": {"meta.title": "Conditions d'utilisation — Consultations NovaWave Inc.", "nav.back": "← Retour à cnovawave.com", "eyebrow": "Mentions légales", "h1": "Conditions d'utilisation", "updated": "Dernière mise à jour : 16 septembre 2026", "intro.p1": "Les présentes conditions d'utilisation (les « Conditions ») régissent votre accès à <a href=\"https://cnovawave.com\">cnovawave.com</a> (le « Site ») et votre utilisation de celui-ci, exploité par Consultations NovaWave Inc. (« NovaWave », « nous », « notre »). En accédant au Site ou en l'utilisant, vous acceptez les présentes Conditions. Si vous n'y consentez pas, veuillez ne pas utiliser le Site.", "intro.p2": "Les présentes Conditions ne régissent que le Site. Elles ne régissent aucun mandat de services professionnels — si vous devenez client, cette relation est régie par une entente signée distincte (telle qu'une entente de services principale, une lettre de mandat ou un énoncé des travaux), laquelle prévaut sur tout élément du Site en cas de conflit.", "s1.h2": "1. Utilisation du Site", "s1.p": "Vous ne pouvez utiliser le Site qu'à des fins légales. Vous vous engagez à ne pas :", "s1.li1": "Utiliser le Site d'une manière qui viole une loi ou un règlement applicable.", "s1.li2": "Tenter d'obtenir un accès non autorisé au Site, à ses systèmes ou à tout réseau connexe.", "s1.li3": "Soumettre des renseignements faux, trompeurs ou malveillants au moyen de tout formulaire du Site.", "s1.li4": "Utiliser des moyens automatisés (robots, extracteurs) pour extraire le contenu du Site, autres que l'indexation standard par les moteurs de recherche.", "s1.li5": "Entraver ou perturber le fonctionnement ou la sécurité du Site.", "s2.h2": "2. Absence de conseils professionnels", "s2.p": "Le contenu du Site — y compris les descriptions de services, les statistiques et les commentaires généraux sur la cybersécurité, la conformité, la gouvernance ou l'IA — est fourni à titre informatif seulement. Il ne constitue pas un avis juridique, financier, de sécurité, de conformité ou autre avis professionnel, et ne doit pas être considéré comme tel. Tout mandat de conseils ou de services professionnels requiert une entente signée distincte avec NovaWave.", "s3.h2": "3. Propriété intellectuelle", "s3.p": "L'ensemble du contenu du Site — y compris les textes, graphiques, logos, le nom et les marques de NovaWave, ainsi que la conception et la mise en page du Site — appartient à NovaWave ou à ses concédants de licence et est protégé par le droit d'auteur, le droit des marques et d'autres lois sur la propriété intellectuelle. Vous pouvez consulter et partager les pages du Site à des fins personnelles et non commerciales, mais vous ne pouvez pas copier, reproduire, republier ou créer des œuvres dérivées du contenu du Site sans notre consentement écrit préalable.", "s4.h2": "4. Liens vers des tiers", "s4.p": "Le Site contient des liens vers des services tiers, notamment Calendly (pour la prise de rendez-vous) et LinkedIn. Ces liens sont fournis à titre pratique seulement. Nous ne contrôlons pas et ne sommes pas responsables du contenu, des pratiques de confidentialité ou de la disponibilité de tout site tiers, et le fait d'y renvoyer n'implique aucune approbation.", "s5.h2": "5. Exclusion de garanties", "s5.p": "Le Site est fourni « tel quel » et « selon sa disponibilité », sans garantie d'aucune sorte, expresse ou implicite, y compris, sans s'y limiter, les garanties de qualité marchande, d'adéquation à un usage particulier, de non-contrefaçon, ou de fonctionnement ininterrompu, sécurisé ou exempt d'erreurs du Site.", "s6.h2": "6. Limitation de responsabilité", "s6.p": "Dans toute la mesure permise par la loi applicable, NovaWave ne pourra être tenue responsable de tout dommage indirect, accessoire, particulier, consécutif ou punitif, ni de toute perte de profits ou de revenus, découlant de votre utilisation du Site ou de votre incapacité à l'utiliser, même si elle a été avisée de la possibilité de tels dommages.", "s7.h2": "7. Indemnisation", "s7.p": "Vous acceptez d'indemniser NovaWave, ses dirigeants, administrateurs et employés, et de les tenir à couvert de toute réclamation, dommage, perte ou dépense (y compris les honoraires juridiques raisonnables) découlant d'une utilisation abusive du Site ou d'une violation des présentes Conditions de votre part.", "s8.h2": "8. Droit applicable", "s8.p": "Les présentes Conditions sont régies par les lois de la province de Québec et les lois fédérales du Canada qui s'y appliquent, sans égard aux principes de conflits de lois. Tout litige découlant des présentes Conditions relève de la compétence exclusive des tribunaux situés au Québec, au Canada.", "s9.h2": "9. Modifications des présentes Conditions", "s9.p": "Nous pouvons modifier les présentes Conditions de temps à autre. La date de « dernière mise à jour » en haut de cette page reflète la révision la plus récente. La poursuite de l'utilisation du Site après l'entrée en vigueur des modifications constitue une acceptation des Conditions révisées.", "s10.h2": "10. Nous joindre", "contact.emailLabel": "Courriel :", "footer.copyright": "© 2026 Consultations NovaWave Inc.", "footer.home": "Accueil", "footer.privacy": "Politique de confidentialité", "footer.terms": "Conditions d'utilisation"}, "es": {"meta.title": "Términos de Servicio — Consultations NovaWave Inc.", "nav.back": "← Volver a cnovawave.com", "eyebrow": "Legal", "h1": "Términos de Servicio", "updated": "Última actualización: 16 de septiembre de 2026", "intro.p1": "Estos Términos de Servicio (los \"Términos\") rigen su acceso y uso de <a href=\"https://cnovawave.com\">cnovawave.com</a> (el \"Sitio\"), operado por Consultations NovaWave Inc. (\"NovaWave\", \"nosotros\", \"nuestro\"). Al acceder o utilizar el Sitio, usted acepta estos Términos. Si no está de acuerdo, no utilice el Sitio.", "intro.p2": "Estos Términos rigen únicamente el Sitio. No rigen ningún contrato de servicios profesionales — si usted se convierte en cliente, esa relación se rige por un acuerdo firmado por separado (como un Acuerdo Marco de Servicios, una Carta de Contratación o un Alcance de Trabajo), el cual prevalece sobre cualquier disposición del Sitio en caso de conflicto.", "s1.h2": "1. Uso del Sitio", "s1.p": "Usted puede utilizar el Sitio únicamente para fines lícitos. Usted se compromete a no:", "s1.li1": "Utilizar el Sitio de cualquier manera que viole la ley o normativa aplicable.", "s1.li2": "Intentar obtener acceso no autorizado al Sitio, sus sistemas o cualquier red relacionada.", "s1.li3": "Enviar información falsa, engañosa o maliciosa a través de cualquier formulario del Sitio.", "s1.li4": "Utilizar medios automatizados (bots, scrapers) para extraer contenido del Sitio, distintos de la indexación estándar de motores de búsqueda.", "s1.li5": "Interferir con el funcionamiento o la seguridad del Sitio, o interrumpirlos.", "s2.h2": "2. Ausencia de asesoramiento profesional", "s2.p": "El contenido del Sitio — incluidas las descripciones de servicios, estadísticas y comentarios generales sobre ciberseguridad, cumplimiento, gobernanza o temas de IA — se proporciona únicamente con fines informativos generales. No constituye asesoramiento legal, financiero, de seguridad, de cumplimiento u otro tipo de asesoramiento profesional, y no debe considerarse como tal. Cualquier contratación de asesoramiento o servicios profesionales requiere un acuerdo firmado por separado con NovaWave.", "s3.h2": "3. Propiedad intelectual", "s3.p": "Todo el contenido del Sitio — incluidos textos, gráficos, logotipos, el nombre y las marcas de NovaWave, y el diseño y la disposición del Sitio — es propiedad de NovaWave o de sus licenciantes y está protegido por derechos de autor, marcas registradas y otras leyes de propiedad intelectual. Usted puede ver y compartir páginas del Sitio con fines personales y no comerciales, pero no puede copiar, reproducir, republicar ni crear obras derivadas del contenido del Sitio sin nuestro consentimiento previo por escrito.", "s4.h2": "4. Enlaces a terceros", "s4.p": "El Sitio contiene enlaces a servicios de terceros, incluidos Calendly (para programar citas) y LinkedIn. Estos enlaces se proporcionan únicamente por conveniencia. No controlamos ni somos responsables del contenido, las prácticas de privacidad o la disponibilidad de ningún sitio de terceros, y enlazar a ellos no implica su aprobación.", "s5.h2": "5. Exclusión de garantías", "s5.p": "El Sitio se proporciona \"tal cual\" y \"según disponibilidad\", sin garantías de ningún tipo, ya sean expresas o implícitas, incluidas, entre otras, las garantías de comerciabilidad, idoneidad para un propósito particular, no infracción, o de que el Sitio será ininterrumpido, seguro o estará libre de errores.", "s6.h2": "6. Limitación de responsabilidad", "s6.p": "En la máxima medida permitida por la ley aplicable, NovaWave no será responsable de daños indirectos, incidentales, especiales, consecuentes o punitivos, ni de pérdidas de beneficios o ingresos, que surjan de su uso o incapacidad de usar el Sitio, incluso si se le hubiera advertido de la posibilidad de tales daños.", "s7.h2": "7. Indemnización", "s7.p": "Usted se compromete a indemnizar y eximir de responsabilidad a NovaWave, sus directivos, directores y personal, frente a cualquier reclamación, daño, pérdida o gasto (incluidos honorarios legales razonables) derivados del uso indebido del Sitio o del incumplimiento de estos Términos por su parte.", "s8.h2": "8. Ley aplicable", "s8.p": "Estos Términos se rigen por las leyes de la provincia de Quebec y las leyes federales de Canadá aplicables en ella, sin tener en cuenta los principios de conflicto de leyes. Cualquier disputa derivada de estos Términos estará sujeta a la jurisdicción exclusiva de los tribunales ubicados en Quebec, Canadá.", "s9.h2": "9. Cambios a estos Términos", "s9.p": "Podemos actualizar estos Términos periódicamente. La fecha de \"última actualización\" en la parte superior de esta página refleja la revisión más reciente. El uso continuado del Sitio después de que los cambios entren en vigor constituye la aceptación de los Términos revisados.", "s10.h2": "10. Contáctenos", "contact.emailLabel": "Correo electrónico:", "footer.copyright": "© 2026 Consultations NovaWave Inc.", "footer.home": "Inicio", "footer.privacy": "Política de Privacidad", "footer.terms": "Términos de Servicio"}, "pt": {"meta.title": "Termos de Serviço — Consultations NovaWave Inc.", "nav.back": "← Voltar para cnovawave.com", "eyebrow": "Jurídico", "h1": "Termos de Serviço", "updated": "Última atualização: 16 de setembro de 2026", "intro.p1": "Estes Termos de Serviço (os \"Termos\") regem seu acesso e uso de <a href=\"https://cnovawave.com\">cnovawave.com</a> (o \"Site\"), operado pela Consultations NovaWave Inc. (\"NovaWave\", \"nós\", \"nosso\"). Ao acessar ou usar o Site, você concorda com estes Termos. Se você não concordar, não utilize o Site.", "intro.p2": "Estes Termos regem apenas o Site. Eles não regem nenhum contrato de serviços profissionais — se você se tornar cliente, essa relação será regida por um acordo assinado separadamente (como um Contrato Principal de Serviços, uma Carta de Contratação ou um Escopo de Trabalho), que prevalecerá sobre qualquer disposição deste Site em caso de conflito.", "s1.h2": "1. Uso do Site", "s1.p": "Você pode usar o Site apenas para fins lícitos. Você concorda em não:", "s1.li1": "Usar o Site de qualquer forma que viole a lei ou regulamento aplicável.", "s1.li2": "Tentar obter acesso não autorizado ao Site, seus sistemas ou qualquer rede relacionada.", "s1.li3": "Enviar informações falsas, enganosas ou maliciosas por meio de qualquer formulário do Site.", "s1.li4": "Usar meios automatizados (bots, scrapers) para extrair conteúdo do Site, além da indexação padrão de mecanismos de busca.", "s1.li5": "Interferir ou perturbar o funcionamento ou a segurança do Site.", "s2.h2": "2. Ausência de aconselhamento profissional", "s2.p": "O conteúdo do Site — incluindo descrições de serviços, estatísticas e comentários gerais sobre cibersegurança, conformidade, governança ou temas de IA — é fornecido apenas para fins informativos gerais. Não constitui aconselhamento jurídico, financeiro, de segurança, de conformidade ou outro tipo de aconselhamento profissional, e não deve ser utilizado como tal. Qualquer contratação de aconselhamento ou serviços profissionais requer um acordo assinado separadamente com a NovaWave.", "s3.h2": "3. Propriedade intelectual", "s3.p": "Todo o conteúdo do Site — incluindo textos, gráficos, logotipos, o nome e as marcas da NovaWave, e o design e layout do Site — pertence à NovaWave ou aos seus licenciantes e é protegido por direitos autorais, marcas registradas e outras leis de propriedade intelectual. Você pode visualizar e compartilhar páginas do Site para referência pessoal e não comercial, mas não pode copiar, reproduzir, republicar ou criar obras derivadas do conteúdo do Site sem nosso consentimento prévio por escrito.", "s4.h2": "4. Links de terceiros", "s4.p": "O Site contém links para serviços de terceiros, incluindo Calendly (para agendamento) e LinkedIn. Esses links são fornecidos apenas por conveniência. Não controlamos nem somos responsáveis pelo conteúdo, práticas de privacidade ou disponibilidade de qualquer site de terceiros, e a existência de um link não implica endosso.", "s5.h2": "5. Isenção de garantias", "s5.p": "O Site é fornecido \"no estado em que se encontra\" e \"conforme disponibilidade\", sem garantias de qualquer tipo, expressas ou implícitas, incluindo, entre outras, garantias de comercialização, adequação a um propósito específico, não violação, ou de que o Site será ininterrupto, seguro ou livre de erros.", "s6.h2": "6. Limitação de responsabilidade", "s6.p": "Na máxima medida permitida pela lei aplicável, a NovaWave não será responsável por quaisquer danos indiretos, incidentais, especiais, consequenciais ou punitivos, nem por perda de lucros ou receitas, decorrentes do uso ou da incapacidade de uso do Site, mesmo que tenha sido avisada da possibilidade de tais danos.", "s7.h2": "7. Indenização", "s7.p": "Você concorda em indenizar e isentar de responsabilidade a NovaWave, seus diretores, administradores e funcionários, de quaisquer reclamações, danos, perdas ou despesas (incluindo honorários advocatícios razoáveis) decorrentes do uso indevido do Site ou da violação destes Termos por sua parte.", "s8.h2": "8. Lei aplicável", "s8.p": "Estes Termos são regidos pelas leis da província de Quebec e pelas leis federais do Canadá aplicáveis nela, sem considerar os princípios de conflito de leis. Qualquer disputa decorrente destes Termos estará sujeita à jurisdição exclusiva dos tribunais localizados em Quebec, Canadá.", "s9.h2": "9. Alterações a estes Termos", "s9.p": "Podemos atualizar estes Termos periodicamente. A data de \"última atualização\" no topo desta página reflete a revisão mais recente. O uso continuado do Site após a entrada em vigor das alterações constitui aceitação dos Termos revisados.", "s10.h2": "10. Fale conosco", "contact.emailLabel": "E-mail:", "footer.copyright": "© 2026 Consultations NovaWave Inc.", "footer.home": "Início", "footer.privacy": "Política de Privacidade", "footer.terms": "Termos de Serviço"}};
+
+function applyTranslations(lang) {
+  var dict = translations[lang] || translations.en;
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (!(key in dict)) return;
+    if (el.hasAttribute('data-i18n-html')) {
+      el.innerHTML = dict[key];
+    } else {
+      el.textContent = dict[key];
+    }
+  });
+  if (dict['meta.title']) document.title = dict['meta.title'];
+  try { document.documentElement.setAttribute('lang', lang); } catch(e) {}
+}
+
+function setLanguage(lang) {
+  if (!translations[lang]) lang = 'en';
+  applyTranslations(lang);
+  var sel = document.getElementById('langSelect');
+  if (sel) sel.value = lang;
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+}
+
+(function init() {
+  var lang = 'en';
+  try {
+    var saved = localStorage.getItem('novawave_lang');
+    if (saved && translations[saved]) lang = saved;
+  } catch(e) {}
+  setLanguage(lang);
+  var sel = document.getElementById('langSelect');
+  if (sel) sel.addEventListener('change', function() { setLanguage(this.value); });
+})();
+</script>
 
 </body>
 </html>
