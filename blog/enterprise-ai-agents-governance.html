@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise AI Agents: Architecture, Security & Governance for the Agentic Era | Consultations NovaWave</title>
+<meta name="description" content="A comprehensive guide to enterprise AI agent architecture, security frameworks, and governance for CTOs and CISOs. Covers NIST AI RMF, CSA agentic AI guidance, agent observability, and building internal AI agent policies.">
+<link rel="canonical" href="https://cnovawave.com/blog/enterprise-ai-agents-governance.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Enterprise AI Agents: Architecture, Security & Governance for the Agentic Era",
+  "author": {
+    "@type": "Person",
+    "name": "Christian Antoine, Founder & Lead Consultant | CISA, PCIP"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Consultations NovaWave",
+    "url": "https://cnovawave.com"
+  },
+  "datePublished": "2026-09-18",
+  "dateModified": "2026-09-18",
+  "description": "A comprehensive guide to enterprise AI agent architecture, security frameworks, and governance for CTOs and CISOs. Covers NIST AI RMF, CSA agentic AI guidance, agent observability, and building internal AI agent policies.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cnovawave.com/blog/enterprise-ai-agents-governance.html"
+  }
+}
+</script>
+<style>
+:root {
+  --dark: #04090f;
+  --dark2: #070f1e;
+  --cyan: #00d4f0;
+  --green: #00f0a0;
+  --purple: #8b5cf6;
+  --amber: #f59e0b;
+  --off: #f2f6ff;
+  --muted: #a8b8d0;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--dark);
+  color: var(--off);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.25; }
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(4, 9, 15, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 212, 240, 0.12);
+}
+.brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--off);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand span {
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.lang-select {
+  background: var(--dark2);
+  color: var(--muted);
+  border: 1px solid rgba(0, 212, 240, 0.2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+}
+.lang-select:focus { border-color: var(--cyan); }
+.back-link {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--green); }
+
+/* ── Article ── */
+.article-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 16px 80px;
+}
+.article-meta {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(0, 212, 240, 0.1);
+}
+.article-meta h1 {
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--off) 60%, var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+.meta-row .sep { color: rgba(168, 184, 208, 0.3); }
+
+.article-body p {
+  margin-bottom: 18px;
+  color: var(--off);
+  font-weight: 300;
+  font-size: 1.02rem;
+}
+.article-body h2 {
+  font-size: 1.35rem;
+  color: var(--cyan);
+  margin: 48px 0 12px;
+  padding-left: 14px;
+  border-left: 3px solid var(--cyan);
+}
+.article-body h3 {
+  font-size: 1.05rem;
+  color: var(--off);
+  margin: 28px 0 8px;
+  font-weight: 600;
+}
+
+/* ── Architecture Sections ── */
+.arch-section {
+  background: var(--dark2);
+  border: 1px solid rgba(0, 212, 240, 0.08);
+  border-radius: 10px;
+  padding: 24px 20px;
+  margin: 20px 0 32px;
+}
+.arch-section .section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--green);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(0, 240, 160, 0.1);
+  border: 1px solid rgba(0, 240, 160, 0.25);
+  font-size: 0.82rem;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+/* ── Checklist ── */
+.check-list { list-style: none; }
+.check-list li {
+  position: relative;
+  padding: 8px 0 8px 30px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--off);
+  line-height: 1.6;
+}
+.check-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 3px;
+  background: rgba(0, 212, 240, 0.06);
+}
+.check-list li::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 16px;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+  transform: rotate(-45deg);
+  opacity: 0.7;
+}
+.check-list li + li {
+  border-top: 1px solid rgba(168, 184, 208, 0.06);
+}
+
+/* ── Framework Tags ── */
+.framework-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag-nist { background: rgba(139, 92, 246, 0.15); color: var(--purple); border: 1px solid rgba(139, 92, 246, 0.3); }
+.tag-csa { background: rgba(0, 212, 240, 0.1); color: var(--cyan); border: 1px solid rgba(0, 212, 240, 0.25); }
+.tag-iso { background: rgba(245, 158, 11, 0.1); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.25); }
+
+/* ── CTA ── */
+.cta-box {
+  margin-top: 56px;
+  padding: 32px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 212, 240, 0.06), rgba(0, 240, 160, 0.04));
+  border: 1px solid rgba(0, 212, 240, 0.15);
+  text-align: center;
+}
+.cta-box h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  color: var(--off);
+  margin-bottom: 10px;
+}
+.cta-box p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  color: var(--dark);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid rgba(0, 212, 240, 0.1);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { color: var(--green); }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .brand { font-size: 1rem; }
+  .nav-right { gap: 12px; }
+  .back-link { font-size: 0.8rem; }
+  .arch-section { padding: 18px 14px; }
+  .article-wrapper { padding: 32px 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <a href="/" class="brand">Consultations <span>NovaWave</span></a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSwitcher" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+    </select>
+    <a href="/blog.html" class="back-link" data-i18n="nav_back">&larr; Back to blog</a>
+  </div>
+</nav>
+
+<!-- ── Article ── -->
+<main class="article-wrapper">
+
+  <header class="article-meta">
+    <h1 data-i18n="title">Enterprise AI Agents: Architecture, Security & Governance for the Agentic Era</h1>
+    <div class="meta-row">
+      <span data-i18n="meta_author">Christian Antoine, Founder & Lead Consultant | CISA, PCIP</span>
+      <span class="sep">|</span>
+      <span data-i18n="meta_date">September 18, 2026</span>
+      <span class="sep">|</span>
+      <span data-i18n="meta_read">11 min read</span>
+      <span class="sep">|</span>
+      <span data-i18n="meta_cat">AI AGENTS</span>
+    </div>
+  </header>
+
+  <div class="article-body">
+
+    <p data-i18n="intro_1">The enterprise AI landscape is shifting from static models behind API endpoints to autonomous AI agents that reason, plan, and act. These agents do not simply answer questions. They execute multi-step workflows, invoke external tools, make decisions with real consequences, and increasingly coordinate with other agents. For CTOs and CISOs at American enterprises, this shift demands a fundamental rethink of security architecture, governance frameworks, and operational oversight.</p>
+
+    <p data-i18n="intro_2">This guide provides a comprehensive framework for deploying AI agents in the enterprise responsibly. We cover architecture patterns, security controls, observability requirements, and governance structures aligned with NIST AI RMF and the Cloud Security Alliance's 2026 agentic AI guidance.</p>
+
+    <!-- ── Section 1: What Defines an AI Agent ── -->
+    <h2 data-i18n="s1_heading">What Defines an AI Agent</h2>
+
+    <p data-i18n="s1_p1">An AI agent is not a chatbot, and it is not a workflow automation script. The distinction matters for security and governance because each category carries different risk profiles. A chatbot responds to prompts within a single turn, constrained to text generation. A workflow automation follows a predetermined sequence of steps with fixed logic. An AI agent, by contrast, operates with three defining capabilities: autonomy in deciding what steps to take, tool use to interact with external systems, and multi-step reasoning to plan and adapt its approach based on intermediate results.</p>
+
+    <p data-i18n="s1_p2">In practice, this means an AI agent given a task like "investigate this security alert and remediate if confirmed" might query your SIEM, correlate logs across systems, check threat intelligence feeds, draft a firewall rule, request human approval, and deploy the change. Each step is chosen by the agent at runtime, not coded in advance. This autonomy is what makes agents powerful and what makes them dangerous without proper controls.</p>
+
+    <!-- ── Section 2: Architecture Patterns ── -->
+    <h2 data-i18n="s2_heading">Architecture Patterns for Enterprise AI Agents</h2>
+
+    <p data-i18n="s2_intro">The architecture you choose determines your security surface, your observability capabilities, and how much control you retain over agent behavior. Four patterns dominate enterprise deployments in 2026.</p>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">1</span> <span data-i18n="s2_a1_title">Single-Agent Architecture</span></div>
+      <p data-i18n="s2_a1_desc" style="color:var(--off);font-weight:300;font-size:0.95rem;line-height:1.6;margin:0;">One LLM-powered agent with a defined tool set handles a complete task. This is the simplest pattern and the easiest to secure. The agent has a single identity, a bounded permission set, and one chain of reasoning to audit. Best suited for well-scoped domains: code review, document analysis, customer support triage. Security boundaries are clear, but the pattern breaks down for tasks requiring specialized expertise across multiple domains.</p>
+    </div>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">2</span> <span data-i18n="s2_a2_title">Multi-Agent Orchestration</span></div>
+      <p data-i18n="s2_a2_desc" style="color:var(--off);font-weight:300;font-size:0.95rem;line-height:1.6;margin:0;">Multiple specialized agents collaborate on a task, each with distinct tools and permissions. A research agent gathers data, an analysis agent processes it, and an action agent executes decisions. This pattern enables separation of privileges, where the agent that reads sensitive data is not the same agent that writes to production systems, but introduces inter-agent communication as a new attack surface. Message passing between agents must be validated and sanitized just as rigorously as external API inputs.</p>
+    </div>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">3</span> <span data-i18n="s2_a3_title">Supervisor Pattern</span></div>
+      <p data-i18n="s2_a3_desc" style="color:var(--off);font-weight:300;font-size:0.95rem;line-height:1.6;margin:0;">A supervisory agent coordinates sub-agents, reviews their outputs, and makes routing decisions. The supervisor acts as an internal control layer: it can reject sub-agent actions that exceed policy boundaries, aggregate results before they reach production systems, and enforce consistency across the workflow. This pattern maps well to enterprise approval hierarchies but adds latency and cost. The supervisor itself becomes a single point of failure and must be the most hardened component in the system.</p>
+    </div>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">4</span> <span data-i18n="s2_a4_title">Human-in-the-Loop Architecture</span></div>
+      <p data-i18n="s2_a4_desc" style="color:var(--off);font-weight:300;font-size:0.95rem;line-height:1.6;margin:0;">Agents execute autonomously up to defined decision thresholds, then pause and request human approval before proceeding. This is the pattern most aligned with current regulatory expectations and the one we recommend for any agent operating in high-stakes domains: financial transactions, infrastructure changes, customer-facing communications, and compliance decisions. The key design challenge is defining thresholds that balance safety with operational efficiency. Too many approval gates and the agent becomes slower than manual work; too few and you lose meaningful oversight.</p>
+    </div>
+
+    <!-- ── Section 3: Security Framework ── -->
+    <h2 data-i18n="s3_heading">Security Framework for AI Agents</h2>
+
+    <p data-i18n="s3_intro">Traditional application security models assume that software executes deterministic code paths. AI agents break this assumption. An agent's behavior emerges from its reasoning at runtime, which means your security controls must operate at a different layer than conventional access controls.</p>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">5</span> <span data-i18n="s3_sec_title">Agent Identity & Access Management</span></div>
+      <ul class="check-list">
+        <li data-i18n="s3_c1">Assign each agent a unique machine identity with cryptographic credentials, not shared service accounts. Agents should authenticate to downstream systems the same way any privileged service principal does, with short-lived tokens, certificate-based auth, and automatic credential rotation. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s3_c2">Implement tool-level permission boundaries. An agent authorized to read from a database should not inherit write permissions. Define granular tool permissions using principle-of-least-privilege, and enforce them at the tool gateway layer, not within the agent's prompt instructions. Prompt-based restrictions are trivially bypassed. <span class="framework-tag tag-csa">CSA 2026</span></li>
+        <li data-i18n="s3_c3">Deploy runtime sandboxing for agent execution. Agents that run code, access file systems, or interact with infrastructure must operate within isolated containers or VMs with network segmentation, resource limits, and no persistent storage beyond what the task requires. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s3_c4">Build output validation pipelines that inspect agent actions before they reach target systems. Every tool call, API request, and data write should pass through a validation layer that checks for policy violations, data leakage patterns, and anomalous behavior relative to the agent's historical baseline. <span class="framework-tag tag-csa">CSA 2026</span></li>
+      </ul>
+    </div>
+
+    <!-- ── Section 4: Agent Observability ── -->
+    <h2 data-i18n="s4_heading">Agent Observability & Auditing</h2>
+
+    <p data-i18n="s4_intro">You cannot govern what you cannot see. Agent observability goes beyond application logging. You need to capture the agent's reasoning process, not just its outputs, to understand why it took a particular action and whether that reasoning was sound.</p>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">6</span> <span data-i18n="s4_sec_title">Observability Requirements</span></div>
+      <ul class="check-list">
+        <li data-i18n="s4_c1">Log every agent decision point: the input context, the reasoning chain (chain-of-thought), the tools considered, the tool selected, the parameters passed, and the result received. Store these as structured traces with correlation IDs that span the full agent workflow. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s4_c2">Track token consumption per agent, per task, and per user. Token usage is both a cost control mechanism and a security signal. An agent consuming an anomalous number of tokens may be stuck in a reasoning loop, under prompt injection attack, or attempting to exfiltrate data through verbose outputs. <span class="framework-tag tag-csa">CSA 2026</span></li>
+        <li data-i18n="s4_c3">Record all tool invocations with full request and response payloads, redacting sensitive data fields at the logging layer. Integrate these logs into your existing SIEM pipeline so that agent actions can be correlated with broader security events across your infrastructure. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s4_c4">Implement chain-of-thought auditing for high-risk agent actions. Before an agent executes a consequential action, capture and store the full reasoning trace so that compliance teams, auditors, or incident responders can reconstruct exactly how the agent arrived at that decision after the fact. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+      </ul>
+    </div>
+
+    <!-- ── Section 5: Governance Framework ── -->
+    <h2 data-i18n="s5_heading">Governance Framework for Enterprise AI Agents</h2>
+
+    <p data-i18n="s5_intro">Governance for AI agents requires structures that most enterprises do not yet have. Traditional IT governance manages software that behaves deterministically. Agent governance must manage systems whose behavior is probabilistic, context-dependent, and capable of emergent actions that no engineer explicitly programmed.</p>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">7</span> <span data-i18n="s5_sec_title">Governance Checklist</span></div>
+      <ul class="check-list">
+        <li data-i18n="s5_c1">Maintain a centralized agent registry and inventory. Every AI agent in production, including those embedded in third-party SaaS platforms, must be cataloged with its purpose, owner, tool permissions, data access scope, risk classification, and approval status. Shadow AI agents are the new shadow IT. <span class="framework-tag tag-csa">CSA 2026</span></li>
+        <li data-i18n="s5_c2">Classify agents by risk tier based on their autonomy level and impact scope. An agent that summarizes meeting notes is not in the same category as one that modifies firewall rules or processes financial transactions. Apply proportionate controls: higher-risk agents require more rigorous testing, tighter sandboxing, and mandatory human-in-the-loop checkpoints. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s5_c3">Establish formal approval workflows for agent deployment. New agents should go through a review process that includes security assessment, privacy impact analysis, tool permission review, and sign-off from both the business owner and the security team before reaching production. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s5_c4">Implement kill switches at every layer. You need the ability to immediately disable any agent at the agent level, the tool gateway level, and the network level. Kill switches must be tested regularly and accessible to on-call security personnel without requiring code deployments or change management tickets. <span class="framework-tag tag-csa">CSA 2026</span></li>
+      </ul>
+    </div>
+
+    <!-- ── Section 6: NIST AI RMF & CSA ── -->
+    <h2 data-i18n="s6_heading">NIST AI RMF & CSA Applied to Agentic Systems</h2>
+
+    <p data-i18n="s6_p1">The NIST AI Risk Management Framework provides the most actionable foundation for governing agentic AI in US enterprises. Its four functions, Govern, Map, Measure, and Manage, map directly to agent lifecycle stages. Under Govern, establish organizational policies for agent approval and oversight. Under Map, identify and categorize the risks specific to each agent's tool set and autonomy level. Under Measure, implement the observability and auditing controls described above. Under Manage, define response procedures for when agents produce unintended outcomes or are compromised.</p>
+
+    <p data-i18n="s6_p2">The Cloud Security Alliance's 2026 guidance on agentic AI governance adds a critical layer focused on multi-cloud and SaaS-embedded agents. CSA emphasizes that organizations must extend their cloud security posture management (CSPM) to include agent inventories, treat inter-agent communication channels as network boundaries requiring segmentation, and implement agent-specific incident response playbooks that account for the non-deterministic nature of agent behavior. CSA also recommends that enterprises require vendors to provide agent transparency reports detailing what tools their embedded agents can access and what data they process.</p>
+
+    <!-- ── Section 7: Data Handling ── -->
+    <h2 data-i18n="s7_heading">Data Handling & Credential Management</h2>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">8</span> <span data-i18n="s7_sec_title">Agent Data Security Controls</span></div>
+      <ul class="check-list">
+        <li data-i18n="s7_c1">Define explicit data access policies for each agent. Document which data stores, APIs, and file systems each agent can access, at what classification level, and whether access is read-only or read-write. Enforce these policies through infrastructure controls, not prompt instructions. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s7_c2">Use a dedicated secrets management platform for agent credentials. Never embed API keys, database passwords, or service tokens in agent prompts, configuration files, or environment variables accessible to the agent's reasoning process. Agents should retrieve credentials at execution time through a vault with just-in-time provisioning. <span class="framework-tag tag-csa">CSA 2026</span></li>
+        <li data-i18n="s7_c3">Deploy data loss prevention (DLP) controls at agent output boundaries. Monitor agent outputs for patterns that indicate data exfiltration: PII in tool call parameters, encoded data in API payloads, or attempts to write sensitive data to unauthorized destinations. Agents under prompt injection attack frequently attempt to exfiltrate context window contents through tool calls. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s7_c4">Implement context window hygiene. Agents accumulate sensitive data in their context during multi-step tasks. Design your architecture to clear or segment context between workflow phases, preventing an agent that legitimately accessed financial data in step one from inadvertently including that data in an external API call in step five. <span class="framework-tag tag-iso">ISO 42001</span></li>
+      </ul>
+    </div>
+
+    <!-- ── Section 8: Vendor Evaluation ── -->
+    <h2 data-i18n="s8_heading">Vendor Evaluation: Questions to Ask</h2>
+
+    <p data-i18n="s8_intro">When evaluating agent platforms from vendors like Anthropic, OpenAI, Google, Microsoft, AWS, or enterprise-focused startups, your procurement team should go beyond standard SaaS security questionnaires. Agent platforms introduce risks that traditional vendor assessments do not cover.</p>
+
+    <div class="arch-section">
+      <div class="section-title"><span class="num">9</span> <span data-i18n="s8_sec_title">Critical Vendor Questions</span></div>
+      <ul class="check-list">
+        <li data-i18n="s8_c1">What tool permission model does the platform enforce? Can you define granular, per-agent tool permissions, or do all agents share a single permission set? Can permissions be modified without redeploying the agent?</li>
+        <li data-i18n="s8_c2">How are agent reasoning traces logged and retained? Can you export full chain-of-thought logs to your own SIEM? What is the retention period, and does the vendor use agent interaction data for model training?</li>
+        <li data-i18n="s8_c3">What sandboxing and isolation guarantees exist for agent execution? Are agents running in shared infrastructure, or can you deploy in a dedicated tenant environment? What network segmentation controls are available?</li>
+        <li data-i18n="s8_c4">Does the platform support human-in-the-loop approval workflows natively? Can you define approval thresholds based on action type, risk level, or data sensitivity, and integrate them with your existing ticketing and approval systems?</li>
+        <li data-i18n="s8_c5">What happens when you invoke a kill switch? How quickly can an agent be disabled? Does the platform support agent-level, tool-level, and organization-level emergency shutoffs?</li>
+      </ul>
+    </div>
+
+    <!-- ── Section 9: Internal Policy ── -->
+    <h2 data-i18n="s9_heading">Building an Internal AI Agent Policy</h2>
+
+    <p data-i18n="s9_p1">Every enterprise deploying AI agents needs a formal internal policy that goes beyond your existing acceptable use policy for AI. Your AI agent policy should address who can request and deploy agents, the approval process for each risk tier, mandatory security and observability controls, data handling constraints, incident response procedures specific to agent failures, and periodic review cycles.</p>
+
+    <p data-i18n="s9_p2">We recommend structuring your policy around the agent lifecycle: proposal and risk assessment, development and testing, deployment approval, production monitoring, and decommissioning. Each stage should have defined roles, required documentation, and gate criteria. The policy should also address third-party agents embedded in vendor products, as these are often deployed by business units without security team involvement and represent the fastest-growing category of unmanaged agent risk in enterprise environments.</p>
+
+    <!-- ── Closing ── -->
+    <p data-i18n="closing_1">The agentic era is not coming; it is here. Enterprises across financial services, healthcare, manufacturing, and federal government are already deploying AI agents that make decisions, invoke tools, and operate with meaningful autonomy. The organizations that will thrive are those building the governance and security architecture now, before a consequential agent failure forces them to do it reactively under regulatory and board-level pressure.</p>
+
+    <p data-i18n="closing_2">Start with your agent inventory. You likely have more AI agents operating in your environment than you realize, embedded in SaaS platforms, created by engineering teams experimenting with agent frameworks, and running in development environments with production credentials. Visibility is the first step. Governance follows. Security is the foundation that makes the entire agentic transformation trustworthy.</p>
+
+    <!-- ── CTA ── -->
+    <div class="cta-box">
+      <h3 data-i18n="cta_title">Need Help Securing Your AI Agent Deployments?</h3>
+      <p data-i18n="cta_text">Our team specializes in AI agent security assessments, governance framework design, and policy development for enterprises navigating the agentic era. We help you build the architecture, controls, and oversight structures aligned with NIST AI RMF and CSA guidance.</p>
+      <a href="/#contact" class="cta-btn" data-i18n="cta_btn">Schedule a Consultation</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <p data-i18n="footer">&copy; 2026 <a href="/">Consultations NovaWave</a> &mdash; Gatineau, QC, Canada</p>
+</footer>
+
+<script>
+const translations = {
+  en: {
+    nav_back: "← Back to blog",
+    title: "Enterprise AI Agents: Architecture, Security & Governance for the Agentic Era",
+    meta_author: "Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    meta_date: "September 18, 2026",
+    meta_read: "11 min read",
+    meta_cat: "AI AGENTS",
+    intro_1: "The enterprise AI landscape is shifting from static models behind API endpoints to autonomous AI agents that reason, plan, and act. These agents do not simply answer questions. They execute multi-step workflows, invoke external tools, make decisions with real consequences, and increasingly coordinate with other agents. For CTOs and CISOs at American enterprises, this shift demands a fundamental rethink of security architecture, governance frameworks, and operational oversight.",
+    intro_2: "This guide provides a comprehensive framework for deploying AI agents in the enterprise responsibly. We cover architecture patterns, security controls, observability requirements, and governance structures aligned with NIST AI RMF and the Cloud Security Alliance’s 2026 agentic AI guidance.",
+    s1_heading: "What Defines an AI Agent",
+    s1_p1: "An AI agent is not a chatbot, and it is not a workflow automation script. The distinction matters for security and governance because each category carries different risk profiles. A chatbot responds to prompts within a single turn, constrained to text generation. A workflow automation follows a predetermined sequence of steps with fixed logic. An AI agent, by contrast, operates with three defining capabilities: autonomy in deciding what steps to take, tool use to interact with external systems, and multi-step reasoning to plan and adapt its approach based on intermediate results.",
+    s1_p2: "In practice, this means an AI agent given a task like “investigate this security alert and remediate if confirmed” might query your SIEM, correlate logs across systems, check threat intelligence feeds, draft a firewall rule, request human approval, and deploy the change. Each step is chosen by the agent at runtime, not coded in advance. This autonomy is what makes agents powerful and what makes them dangerous without proper controls.",
+    s2_heading: "Architecture Patterns for Enterprise AI Agents",
+    s2_intro: "The architecture you choose determines your security surface, your observability capabilities, and how much control you retain over agent behavior. Four patterns dominate enterprise deployments in 2026.",
+    s2_a1_title: "Single-Agent Architecture",
+    s2_a1_desc: "One LLM-powered agent with a defined tool set handles a complete task. This is the simplest pattern and the easiest to secure. The agent has a single identity, a bounded permission set, and one chain of reasoning to audit. Best suited for well-scoped domains: code review, document analysis, customer support triage. Security boundaries are clear, but the pattern breaks down for tasks requiring specialized expertise across multiple domains.",
+    s2_a2_title: "Multi-Agent Orchestration",
+    s2_a2_desc: "Multiple specialized agents collaborate on a task, each with distinct tools and permissions. A research agent gathers data, an analysis agent processes it, and an action agent executes decisions. This pattern enables separation of privileges, where the agent that reads sensitive data is not the same agent that writes to production systems, but introduces inter-agent communication as a new attack surface. Message passing between agents must be validated and sanitized just as rigorously as external API inputs.",
+    s2_a3_title: "Supervisor Pattern",
+    s2_a3_desc: "A supervisory agent coordinates sub-agents, reviews their outputs, and makes routing decisions. The supervisor acts as an internal control layer: it can reject sub-agent actions that exceed policy boundaries, aggregate results before they reach production systems, and enforce consistency across the workflow. This pattern maps well to enterprise approval hierarchies but adds latency and cost. The supervisor itself becomes a single point of failure and must be the most hardened component in the system.",
+    s2_a4_title: "Human-in-the-Loop Architecture",
+    s2_a4_desc: "Agents execute autonomously up to defined decision thresholds, then pause and request human approval before proceeding. This is the pattern most aligned with current regulatory expectations and the one we recommend for any agent operating in high-stakes domains: financial transactions, infrastructure changes, customer-facing communications, and compliance decisions. The key design challenge is defining thresholds that balance safety with operational efficiency. Too many approval gates and the agent becomes slower than manual work; too few and you lose meaningful oversight.",
+    s3_heading: "Security Framework for AI Agents",
+    s3_intro: "Traditional application security models assume that software executes deterministic code paths. AI agents break this assumption. An agent’s behavior emerges from its reasoning at runtime, which means your security controls must operate at a different layer than conventional access controls.",
+    s3_sec_title: "Agent Identity & Access Management",
+    s3_c1: "Assign each agent a unique machine identity with cryptographic credentials, not shared service accounts. Agents should authenticate to downstream systems the same way any privileged service principal does, with short-lived tokens, certificate-based auth, and automatic credential rotation.",
+    s3_c2: "Implement tool-level permission boundaries. An agent authorized to read from a database should not inherit write permissions. Define granular tool permissions using principle-of-least-privilege, and enforce them at the tool gateway layer, not within the agent’s prompt instructions. Prompt-based restrictions are trivially bypassed.",
+    s3_c3: "Deploy runtime sandboxing for agent execution. Agents that run code, access file systems, or interact with infrastructure must operate within isolated containers or VMs with network segmentation, resource limits, and no persistent storage beyond what the task requires.",
+    s3_c4: "Build output validation pipelines that inspect agent actions before they reach target systems. Every tool call, API request, and data write should pass through a validation layer that checks for policy violations, data leakage patterns, and anomalous behavior relative to the agent’s historical baseline.",
+    s4_heading: "Agent Observability & Auditing",
+    s4_intro: "You cannot govern what you cannot see. Agent observability goes beyond application logging. You need to capture the agent’s reasoning process, not just its outputs, to understand why it took a particular action and whether that reasoning was sound.",
+    s4_sec_title: "Observability Requirements",
+    s4_c1: "Log every agent decision point: the input context, the reasoning chain (chain-of-thought), the tools considered, the tool selected, the parameters passed, and the result received. Store these as structured traces with correlation IDs that span the full agent workflow.",
+    s4_c2: "Track token consumption per agent, per task, and per user. Token usage is both a cost control mechanism and a security signal. An agent consuming an anomalous number of tokens may be stuck in a reasoning loop, under prompt injection attack, or attempting to exfiltrate data through verbose outputs.",
+    s4_c3: "Record all tool invocations with full request and response payloads, redacting sensitive data fields at the logging layer. Integrate these logs into your existing SIEM pipeline so that agent actions can be correlated with broader security events across your infrastructure.",
+    s4_c4: "Implement chain-of-thought auditing for high-risk agent actions. Before an agent executes a consequential action, capture and store the full reasoning trace so that compliance teams, auditors, or incident responders can reconstruct exactly how the agent arrived at that decision after the fact.",
+    s5_heading: "Governance Framework for Enterprise AI Agents",
+    s5_intro: "Governance for AI agents requires structures that most enterprises do not yet have. Traditional IT governance manages software that behaves deterministically. Agent governance must manage systems whose behavior is probabilistic, context-dependent, and capable of emergent actions that no engineer explicitly programmed.",
+    s5_sec_title: "Governance Checklist",
+    s5_c1: "Maintain a centralized agent registry and inventory. Every AI agent in production, including those embedded in third-party SaaS platforms, must be cataloged with its purpose, owner, tool permissions, data access scope, risk classification, and approval status. Shadow AI agents are the new shadow IT.",
+    s5_c2: "Classify agents by risk tier based on their autonomy level and impact scope. An agent that summarizes meeting notes is not in the same category as one that modifies firewall rules or processes financial transactions. Apply proportionate controls: higher-risk agents require more rigorous testing, tighter sandboxing, and mandatory human-in-the-loop checkpoints.",
+    s5_c3: "Establish formal approval workflows for agent deployment. New agents should go through a review process that includes security assessment, privacy impact analysis, tool permission review, and sign-off from both the business owner and the security team before reaching production.",
+    s5_c4: "Implement kill switches at every layer. You need the ability to immediately disable any agent at the agent level, the tool gateway level, and the network level. Kill switches must be tested regularly and accessible to on-call security personnel without requiring code deployments or change management tickets.",
+    s6_heading: "NIST AI RMF & CSA Applied to Agentic Systems",
+    s6_p1: "The NIST AI Risk Management Framework provides the most actionable foundation for governing agentic AI in US enterprises. Its four functions, Govern, Map, Measure, and Manage, map directly to agent lifecycle stages. Under Govern, establish organizational policies for agent approval and oversight. Under Map, identify and categorize the risks specific to each agent’s tool set and autonomy level. Under Measure, implement the observability and auditing controls described above. Under Manage, define response procedures for when agents produce unintended outcomes or are compromised.",
+    s6_p2: "The Cloud Security Alliance’s 2026 guidance on agentic AI governance adds a critical layer focused on multi-cloud and SaaS-embedded agents. CSA emphasizes that organizations must extend their cloud security posture management (CSPM) to include agent inventories, treat inter-agent communication channels as network boundaries requiring segmentation, and implement agent-specific incident response playbooks that account for the non-deterministic nature of agent behavior. CSA also recommends that enterprises require vendors to provide agent transparency reports detailing what tools their embedded agents can access and what data they process.",
+    s7_heading: "Data Handling & Credential Management",
+    s7_sec_title: "Agent Data Security Controls",
+    s7_c1: "Define explicit data access policies for each agent. Document which data stores, APIs, and file systems each agent can access, at what classification level, and whether access is read-only or read-write. Enforce these policies through infrastructure controls, not prompt instructions.",
+    s7_c2: "Use a dedicated secrets management platform for agent credentials. Never embed API keys, database passwords, or service tokens in agent prompts, configuration files, or environment variables accessible to the agent’s reasoning process. Agents should retrieve credentials at execution time through a vault with just-in-time provisioning.",
+    s7_c3: "Deploy data loss prevention (DLP) controls at agent output boundaries. Monitor agent outputs for patterns that indicate data exfiltration: PII in tool call parameters, encoded data in API payloads, or attempts to write sensitive data to unauthorized destinations. Agents under prompt injection attack frequently attempt to exfiltrate context window contents through tool calls.",
+    s7_c4: "Implement context window hygiene. Agents accumulate sensitive data in their context during multi-step tasks. Design your architecture to clear or segment context between workflow phases, preventing an agent that legitimately accessed financial data in step one from inadvertently including that data in an external API call in step five.",
+    s8_heading: "Vendor Evaluation: Questions to Ask",
+    s8_intro: "When evaluating agent platforms from vendors like Anthropic, OpenAI, Google, Microsoft, AWS, or enterprise-focused startups, your procurement team should go beyond standard SaaS security questionnaires. Agent platforms introduce risks that traditional vendor assessments do not cover.",
+    s8_sec_title: "Critical Vendor Questions",
+    s8_c1: "What tool permission model does the platform enforce? Can you define granular, per-agent tool permissions, or do all agents share a single permission set? Can permissions be modified without redeploying the agent?",
+    s8_c2: "How are agent reasoning traces logged and retained? Can you export full chain-of-thought logs to your own SIEM? What is the retention period, and does the vendor use agent interaction data for model training?",
+    s8_c3: "What sandboxing and isolation guarantees exist for agent execution? Are agents running in shared infrastructure, or can you deploy in a dedicated tenant environment? What network segmentation controls are available?",
+    s8_c4: "Does the platform support human-in-the-loop approval workflows natively? Can you define approval thresholds based on action type, risk level, or data sensitivity, and integrate them with your existing ticketing and approval systems?",
+    s8_c5: "What happens when you invoke a kill switch? How quickly can an agent be disabled? Does the platform support agent-level, tool-level, and organization-level emergency shutoffs?",
+    s9_heading: "Building an Internal AI Agent Policy",
+    s9_p1: "Every enterprise deploying AI agents needs a formal internal policy that goes beyond your existing acceptable use policy for AI. Your AI agent policy should address who can request and deploy agents, the approval process for each risk tier, mandatory security and observability controls, data handling constraints, incident response procedures specific to agent failures, and periodic review cycles.",
+    s9_p2: "We recommend structuring your policy around the agent lifecycle: proposal and risk assessment, development and testing, deployment approval, production monitoring, and decommissioning. Each stage should have defined roles, required documentation, and gate criteria. The policy should also address third-party agents embedded in vendor products, as these are often deployed by business units without security team involvement and represent the fastest-growing category of unmanaged agent risk in enterprise environments.",
+    closing_1: "The agentic era is not coming; it is here. Enterprises across financial services, healthcare, manufacturing, and federal government are already deploying AI agents that make decisions, invoke tools, and operate with meaningful autonomy. The organizations that will thrive are those building the governance and security architecture now, before a consequential agent failure forces them to do it reactively under regulatory and board-level pressure.",
+    closing_2: "Start with your agent inventory. You likely have more AI agents operating in your environment than you realize, embedded in SaaS platforms, created by engineering teams experimenting with agent frameworks, and running in development environments with production credentials. Visibility is the first step. Governance follows. Security is the foundation that makes the entire agentic transformation trustworthy.",
+    cta_title: "Need Help Securing Your AI Agent Deployments?",
+    cta_text: "Our team specializes in AI agent security assessments, governance framework design, and policy development for enterprises navigating the agentic era. We help you build the architecture, controls, and oversight structures aligned with NIST AI RMF and CSA guidance.",
+    cta_btn: "Schedule a Consultation",
+    footer: "© 2026 Consultations NovaWave — Gatineau, QC, Canada"
+  },
+  fr: {
+    nav_back: "← Retour au blogue",
+    title: "Agents IA en entreprise : architecture, sécurité et gouvernance pour l’ère agentique",
+    meta_author: "Christian Antoine, Fondateur et consultant principal | CISA, PCIP",
+    meta_date: "18 septembre 2026",
+    meta_read: "11 min de lecture",
+    meta_cat: "AGENTS IA",
+    intro_1: "Le paysage de l’IA en entreprise évolue des modèles statiques derrière des points d’accès API vers des agents IA autonomes capables de raisonner, planifier et agir. Ces agents ne se contentent pas de répondre à des questions. Ils exécutent des flux de travail multi-étapes, invoquent des outils externes, prennent des décisions aux conséquences réelles et coordonnent de plus en plus leurs actions avec d’autres agents. Pour les directeurs techniques et les responsables de la sécurité des systèmes d’information des entreprises américaines, ce changement exige une refonte fondamentale de l’architecture de sécurité, des cadres de gouvernance et de la supervision opérationnelle.",
+    intro_2: "Ce guide fournit un cadre complet pour déployer les agents IA en entreprise de manière responsable. Nous couvrons les modèles d’architecture, les contrôles de sécurité, les exigences d’observabilité et les structures de gouvernance alignées sur le NIST AI RMF et les recommandations 2026 de la Cloud Security Alliance sur l’IA agentique.",
+    s1_heading: "Ce qui définit un agent IA",
+    s1_p1: "Un agent IA n’est ni un chatbot ni un script d’automatisation de flux de travail. Cette distinction est essentielle pour la sécurité et la gouvernance, car chaque catégorie présente des profils de risque différents. Un chatbot répond aux invites en un seul tour, limité à la génération de texte. Une automatisation suit une séquence prédéterminée d’étapes avec une logique fixe. Un agent IA, en revanche, opère avec trois capacités définitoires : l’autonomie dans le choix des étapes à suivre, l’utilisation d’outils pour interagir avec des systèmes externes, et le raisonnement multi-étapes pour planifier et adapter son approche en fonction des résultats intermédiaires.",
+    s1_p2: "En pratique, cela signifie qu’un agent IA chargé d’une tâche comme « investiguer cette alerte de sécurité et remédier si confirmée » pourrait interroger votre SIEM, corréler des journaux entre systèmes, consulter des flux de renseignements sur les menaces, rédiger une règle de pare-feu, demander l’approbation humaine et déployer la modification. Chaque étape est choisie par l’agent au moment de l’exécution, non codée à l’avance. Cette autonomie rend les agents puissants et dangereux sans contrôles adéquats.",
+    s2_heading: "Modèles d’architecture pour les agents IA en entreprise",
+    s2_intro: "L’architecture que vous choisissez détermine votre surface de sécurité, vos capacités d’observabilité et le degré de contrôle que vous conservez sur le comportement des agents. Quatre modèles dominent les déploiements en entreprise en 2026.",
+    s2_a1_title: "Architecture mono-agent",
+    s2_a1_desc: "Un seul agent alimenté par un LLM avec un ensemble d’outils défini gère une tâche complète. C’est le modèle le plus simple et le plus facile à sécuriser. L’agent a une identité unique, un périmètre de permissions délimité et une seule chaîne de raisonnement à auditer. Adapté aux domaines bien délimités : revue de code, analyse documentaire, triage du support client. Les frontières de sécurité sont claires, mais le modèle atteint ses limites pour les tâches nécessitant une expertise spécialisée dans plusieurs domaines.",
+    s2_a2_title: "Orchestration multi-agents",
+    s2_a2_desc: "Plusieurs agents spécialisés collaborent sur une tâche, chacun avec des outils et des permissions distincts. Un agent de recherche collecte les données, un agent d’analyse les traite et un agent d’action exécute les décisions. Ce modèle permet la séparation des privilèges, mais introduit la communication inter-agents comme nouvelle surface d’attaque. Les messages entre agents doivent être validés et assainis aussi rigoureusement que les entrées d’API externes.",
+    s2_a3_title: "Modèle superviseur",
+    s2_a3_desc: "Un agent superviseur coordonne les sous-agents, examine leurs résultats et prend les décisions de routage. Le superviseur agit comme une couche de contrôle interne : il peut rejeter les actions des sous-agents qui dépassent les limites de la politique, agréger les résultats avant qu’ils n’atteignent les systèmes de production et assurer la cohérence du flux de travail. Ce modèle s’adapte bien aux hiérarchies d’approbation en entreprise, mais ajoute de la latence et des coûts. Le superviseur lui-même devient un point de défaillance unique et doit être le composant le plus sécurisé du système.",
+    s2_a4_title: "Architecture avec humain dans la boucle",
+    s2_a4_desc: "Les agents s’exécutent de manière autonome jusqu’à des seuils de décision définis, puis s’arrêtent et demandent l’approbation humaine avant de continuer. C’est le modèle le plus conforme aux attentes réglementaires actuelles et celui que nous recommandons pour tout agent opérant dans des domaines à enjeux élevés : transactions financières, modifications d’infrastructure, communications client et décisions de conformité. Le défi principal est de définir des seuils qui équilibrent sécurité et efficacité opérationnelle.",
+    s3_heading: "Cadre de sécurité pour les agents IA",
+    s3_intro: "Les modèles traditionnels de sécurité applicative supposent que le logiciel exécute des chemins de code déterministes. Les agents IA brisent cette hypothèse. Le comportement d’un agent émerge de son raisonnement au moment de l’exécution, ce qui signifie que vos contrôles de sécurité doivent opérer à un niveau différent des contrôles d’accès conventionnels.",
+    s3_sec_title: "Gestion des identités et des accès des agents",
+    s3_c1: "Attribuez à chaque agent une identité machine unique avec des identifiants cryptographiques, pas des comptes de service partagés. Les agents doivent s’authentifier auprès des systèmes en aval comme tout principal de service privilégié, avec des jetons à durée limitée, une authentification par certificat et une rotation automatique des identifiants.",
+    s3_c2: "Mettez en œuvre des limites de permission au niveau des outils. Un agent autorisé à lire une base de données ne devrait pas hériter des permissions d’écriture. Définissez des permissions granulaires selon le principe du moindre privilège et appliquez-les au niveau de la passerelle des outils, pas dans les instructions de l’invite de l’agent.",
+    s3_c3: "Déployez un sandboxing d’exécution pour les agents. Les agents qui exécutent du code, accèdent au système de fichiers ou interagissent avec l’infrastructure doivent fonctionner dans des conteneurs ou des machines virtuelles isolés avec segmentation réseau, limites de ressources et aucun stockage persistant au-delà de ce que la tâche requiert.",
+    s3_c4: "Construisez des pipelines de validation des sorties qui inspectent les actions de l’agent avant qu’elles n’atteignent les systèmes cibles. Chaque appel d’outil, requête API et écriture de données doit passer par une couche de validation vérifiant les violations de politique, les modèles de fuite de données et les comportements anormaux.",
+    s4_heading: "Observabilité et audit des agents",
+    s4_intro: "On ne peut pas gouverner ce qu’on ne peut pas voir. L’observabilité des agents va au-delà de la journalisation applicative. Vous devez capturer le processus de raisonnement de l’agent, pas seulement ses résultats, pour comprendre pourquoi il a pris une action particulière et si ce raisonnement était solide.",
+    s4_sec_title: "Exigences d’observabilité",
+    s4_c1: "Journalisez chaque point de décision de l’agent : le contexte d’entrée, la chaîne de raisonnement, les outils considérés, l’outil sélectionné, les paramètres passés et le résultat reçu. Stockez-les comme des traces structurées avec des identifiants de corrélation couvrant l’ensemble du flux de travail de l’agent.",
+    s4_c2: "Suivez la consommation de jetons par agent, par tâche et par utilisateur. L’utilisation des jetons est à la fois un mécanisme de contrôle des coûts et un signal de sécurité. Un agent consommant un nombre anormal de jetons peut être pris dans une boucle de raisonnement, sous attaque par injection d’invite ou en train de tenter d’exfiltrer des données.",
+    s4_c3: "Enregistrez toutes les invocations d’outils avec les charges utiles complètes de requête et de réponse, en expurgeant les champs de données sensibles au niveau de la couche de journalisation. Intégrez ces journaux dans votre pipeline SIEM existant.",
+    s4_c4: "Mettez en œuvre un audit de la chaîne de raisonnement pour les actions d’agents à haut risque. Avant qu’un agent n’exécute une action conséquente, capturez et stockez la trace de raisonnement complète pour que les équipes de conformité et les auditeurs puissent reconstruire exactement comment l’agent est arrivé à cette décision.",
+    s5_heading: "Cadre de gouvernance pour les agents IA en entreprise",
+    s5_intro: "La gouvernance des agents IA nécessite des structures que la plupart des entreprises n’ont pas encore. La gouvernance informatique traditionnelle gère des logiciels au comportement déterministe. La gouvernance des agents doit gérer des systèmes dont le comportement est probabiliste, dépendant du contexte et capable d’actions émergentes qu’aucun ingénieur n’a explicitement programmées.",
+    s5_sec_title: "Liste de contrôle de gouvernance",
+    s5_c1: "Maintenez un registre et un inventaire centralisés des agents. Chaque agent IA en production, y compris ceux intégrés dans les plateformes SaaS tierces, doit être catalogué avec son objectif, son propriétaire, ses permissions d’outils, sa portée d’accès aux données, sa classification de risque et son statut d’approbation. Les agents IA non répertoriés sont le nouveau shadow IT.",
+    s5_c2: "Classifiez les agents par niveau de risque en fonction de leur degré d’autonomie et de leur portée d’impact. Un agent qui résume des notes de réunion n’est pas dans la même catégorie qu’un agent qui modifie des règles de pare-feu ou traite des transactions financières. Appliquez des contrôles proportionnés.",
+    s5_c3: "Établissez des flux d’approbation formels pour le déploiement des agents. Les nouveaux agents doivent passer par un processus de revue incluant une évaluation de sécurité, une analyse d’impact sur la vie privée, une revue des permissions d’outils et la validation du propriétaire métier et de l’équipe de sécurité.",
+    s5_c4: "Implémentez des coupe-circuits à chaque couche. Vous devez pouvoir désactiver immédiatement tout agent au niveau de l’agent, de la passerelle des outils et du réseau. Les coupe-circuits doivent être testés régulièrement et accessibles au personnel de sécurité d’astreinte sans nécessiter de déploiement de code.",
+    s6_heading: "NIST AI RMF et CSA appliqués aux systèmes agentiques",
+    s6_p1: "Le cadre de gestion des risques IA du NIST fournit la base la plus actionnable pour gouverner l’IA agentique dans les entreprises américaines. Ses quatre fonctions — Gouverner, Cartographier, Mesurer et Gérer — s’appliquent directement aux étapes du cycle de vie des agents. Sous Gouverner, établissez des politiques organisationnelles pour l’approbation et la supervision des agents. Sous Cartographier, identifiez et catégorisez les risques spécifiques à chaque agent. Sous Mesurer, implémentez les contrôles d’observabilité et d’audit. Sous Gérer, définissez les procédures de réponse.",
+    s6_p2: "Les recommandations 2026 de la Cloud Security Alliance sur la gouvernance de l’IA agentique ajoutent une couche critique axée sur les agents multi-cloud et intégrés aux SaaS. La CSA souligne que les organisations doivent étendre leur gestion de la posture de sécurité cloud (CSPM) pour inclure les inventaires d’agents, traiter les canaux de communication inter-agents comme des frontières réseau nécessitant une segmentation, et implémenter des playbooks de réponse aux incidents spécifiques aux agents.",
+    s7_heading: "Gestion des données et des identifiants",
+    s7_sec_title: "Contrôles de sécurité des données des agents",
+    s7_c1: "Définissez des politiques d’accès aux données explicites pour chaque agent. Documentez quels entrepôts de données, API et systèmes de fichiers chaque agent peut accéder, à quel niveau de classification et si l’accès est en lecture seule ou en lecture-écriture.",
+    s7_c2: "Utilisez une plateforme dédiée de gestion des secrets pour les identifiants des agents. N’intégrez jamais de clés API, de mots de passe de bases de données ou de jetons de service dans les invites, fichiers de configuration ou variables d’environnement accessibles au processus de raisonnement de l’agent.",
+    s7_c3: "Déployez des contrôles de prévention des pertes de données (DLP) aux frontières de sortie des agents. Surveillez les sorties des agents pour détecter les modèles indiquant une exfiltration de données : données personnelles dans les paramètres d’appels d’outils, données encodées dans les charges API ou tentatives d’écriture vers des destinations non autorisées.",
+    s7_c4: "Implémentez une hygiène de la fenêtre de contexte. Les agents accumulent des données sensibles dans leur contexte lors de tâches multi-étapes. Concevez votre architecture pour effacer ou segmenter le contexte entre les phases du flux de travail.",
+    s8_heading: "Évaluation des fournisseurs : questions à poser",
+    s8_intro: "Lors de l’évaluation de plateformes d’agents auprès de fournisseurs comme Anthropic, OpenAI, Google, Microsoft, AWS ou des startups spécialisées, votre équipe d’approvisionnement doit aller au-delà des questionnaires de sécurité SaaS standards.",
+    s8_sec_title: "Questions critiques pour les fournisseurs",
+    s8_c1: "Quel modèle de permission des outils la plateforme applique-t-elle ? Pouvez-vous définir des permissions granulaires par agent ou tous les agents partagent-ils un ensemble unique de permissions ? Les permissions peuvent-elles être modifiées sans redéployer l’agent ?",
+    s8_c2: "Comment les traces de raisonnement des agents sont-elles journalisées et conservées ? Pouvez-vous exporter les journaux complets de chaîne de raisonnement vers votre propre SIEM ? Quelle est la durée de conservation et le fournisseur utilise-t-il les données d’interaction pour l’entraînement des modèles ?",
+    s8_c3: "Quelles garanties de sandboxing et d’isolation existent pour l’exécution des agents ? Les agents fonctionnent-ils sur une infrastructure partagée ou pouvez-vous déployer dans un environnement dédié ? Quels contrôles de segmentation réseau sont disponibles ?",
+    s8_c4: "La plateforme prend-elle en charge nativement les flux d’approbation avec humain dans la boucle ? Pouvez-vous définir des seuils d’approbation basés sur le type d’action, le niveau de risque ou la sensibilité des données et les intégrer à vos systèmes existants ?",
+    s8_c5: "Que se passe-t-il lorsque vous activez un coupe-circuit ? À quelle vitesse un agent peut-il être désactivé ? La plateforme prend-elle en charge les arrêts d’urgence au niveau de l’agent, des outils et de l’organisation ?",
+    s9_heading: "Élaboration d’une politique interne pour les agents IA",
+    s9_p1: "Chaque entreprise déployant des agents IA a besoin d’une politique interne formelle qui va au-delà de votre politique d’utilisation acceptable existante pour l’IA. Votre politique d’agents IA doit couvrir qui peut demander et déployer des agents, le processus d’approbation par niveau de risque, les contrôles obligatoires de sécurité et d’observabilité, les contraintes de gestion des données, les procédures de réponse aux incidents spécifiques aux agents et les cycles de révision périodiques.",
+    s9_p2: "Nous recommandons de structurer votre politique autour du cycle de vie de l’agent : proposition et évaluation des risques, développement et tests, approbation du déploiement, surveillance en production et décommissionnement. La politique devrait également couvrir les agents tiers intégrés dans les produits des fournisseurs, car ils représentent la catégorie à la croissance la plus rapide de risque non géré lié aux agents.",
+    closing_1: "L’ère agentique n’arrive pas ; elle est là. Les entreprises des services financiers, de la santé, de l’industrie et du gouvernement fédéral déploient déjà des agents IA qui prennent des décisions, invoquent des outils et opèrent avec une autonomie significative. Les organisations qui prospéreront sont celles qui construisent l’architecture de gouvernance et de sécurité maintenant.",
+    closing_2: "Commencez par votre inventaire d’agents. Vous avez probablement plus d’agents IA dans votre environnement que vous ne le réalisez. La visibilité est la première étape. La gouvernance suit. La sécurité est le fondement qui rend l’ensemble de la transformation agentique digne de confiance.",
+    cta_title: "Besoin d’aide pour sécuriser vos déploiements d’agents IA ?",
+    cta_text: "Notre équipe se spécialise dans les évaluations de sécurité des agents IA, la conception de cadres de gouvernance et l’élaboration de politiques pour les entreprises naviguant dans l’ère agentique. Nous vous aidons à construire l’architecture, les contrôles et les structures de supervision alignés sur le NIST AI RMF et les recommandations de la CSA.",
+    cta_btn: "Planifier une consultation",
+    footer: "© 2026 Consultations NovaWave — Gatineau, QC, Canada"
+  },
+  es: {
+    nav_back: "← Volver al blog",
+    title: "Agentes de IA empresariales: arquitectura, seguridad y gobernanza para la era agéntica",
+    meta_author: "Christian Antoine, Fundador y consultor principal | CISA, PCIP",
+    meta_date: "18 de septiembre de 2026",
+    meta_read: "11 min de lectura",
+    meta_cat: "AGENTES DE IA",
+    intro_1: "El panorama de la IA empresarial está evolucionando de modelos estáticos detrás de endpoints API hacia agentes de IA autónomos que razonan, planifican y actúan. Estos agentes no se limitan a responder preguntas. Ejecutan flujos de trabajo de múltiples pasos, invocan herramientas externas, toman decisiones con consecuencias reales y coordinan cada vez más con otros agentes. Para los CTO y CISO de empresas estadounidenses, este cambio exige un replanteamiento fundamental de la arquitectura de seguridad, los marcos de gobernanza y la supervisión operacional.",
+    intro_2: "Esta guía proporciona un marco integral para implementar agentes de IA en la empresa de manera responsable. Cubrimos patrones de arquitectura, controles de seguridad, requisitos de observabilidad y estructuras de gobernanza alineadas con el NIST AI RMF y la guía 2026 de la Cloud Security Alliance sobre IA agéntica.",
+    s1_heading: "Qué define a un agente de IA",
+    s1_p1: "Un agente de IA no es un chatbot ni un script de automatización de flujos de trabajo. La distinción importa para la seguridad y la gobernanza porque cada categoría tiene perfiles de riesgo diferentes. Un chatbot responde a indicaciones en un solo turno, limitado a la generación de texto. Una automatización sigue una secuencia predeterminada de pasos con lógica fija. Un agente de IA, por el contrario, opera con tres capacidades definitorias: autonomía para decidir qué pasos tomar, uso de herramientas para interactuar con sistemas externos y razonamiento de múltiples pasos para planificar y adaptar su enfoque basado en resultados intermedios.",
+    s1_p2: "En la práctica, esto significa que un agente de IA con la tarea de “investigar esta alerta de seguridad y remediar si se confirma” podría consultar su SIEM, correlacionar registros entre sistemas, verificar fuentes de inteligencia de amenazas, redactar una regla de firewall, solicitar aprobación humana y desplegar el cambio. Cada paso es elegido por el agente en tiempo de ejecución, no codificado de antemano. Esta autonomía es lo que hace que los agentes sean poderosos y peligrosos sin controles adecuados.",
+    s2_heading: "Patrones de arquitectura para agentes de IA empresariales",
+    s2_intro: "La arquitectura que elija determina su superficie de seguridad, sus capacidades de observabilidad y cuánto control retiene sobre el comportamiento del agente. Cuatro patrones dominan las implementaciones empresariales en 2026.",
+    s2_a1_title: "Arquitectura de agente único",
+    s2_a1_desc: "Un solo agente alimentado por LLM con un conjunto definido de herramientas maneja una tarea completa. Es el patrón más simple y fácil de asegurar. El agente tiene una identidad única, un conjunto de permisos delimitado y una sola cadena de razonamiento para auditar. Adecuado para dominios bien acotados: revisión de código, análisis documental, triaje de soporte al cliente.",
+    s2_a2_title: "Orquestación multiagente",
+    s2_a2_desc: "Múltiples agentes especializados colaboran en una tarea, cada uno con herramientas y permisos distintos. Un agente de investigación recopila datos, un agente de análisis los procesa y un agente de acción ejecuta decisiones. Este patrón permite la separación de privilegios, pero introduce la comunicación entre agentes como nueva superficie de ataque.",
+    s2_a3_title: "Patrón supervisor",
+    s2_a3_desc: "Un agente supervisor coordina subagentes, revisa sus resultados y toma decisiones de enrutamiento. El supervisor actúa como capa de control interno: puede rechazar acciones de subagentes que excedan los límites de política, agregar resultados antes de que lleguen a sistemas de producción y asegurar la consistencia del flujo de trabajo. Este patrón se adapta bien a las jerarquías de aprobación empresariales, pero añade latencia y costos.",
+    s2_a4_title: "Arquitectura con humano en el bucle",
+    s2_a4_desc: "Los agentes se ejecutan autónomamente hasta umbrales de decisión definidos, luego se detienen y solicitan aprobación humana antes de continuar. Es el patrón más alineado con las expectativas regulatorias actuales y el que recomendamos para cualquier agente que opere en dominios de alto riesgo: transacciones financieras, cambios de infraestructura, comunicaciones con clientes y decisiones de cumplimiento.",
+    s3_heading: "Marco de seguridad para agentes de IA",
+    s3_intro: "Los modelos tradicionales de seguridad de aplicaciones asumen que el software ejecuta rutas de código deterministas. Los agentes de IA rompen esta suposición. El comportamiento de un agente emerge de su razonamiento en tiempo de ejecución, lo que significa que sus controles de seguridad deben operar en un nivel diferente al de los controles de acceso convencionales.",
+    s3_sec_title: "Gestión de identidad y acceso de agentes",
+    s3_c1: "Asigne a cada agente una identidad de máquina única con credenciales criptográficas, no cuentas de servicio compartidas. Los agentes deben autenticarse en sistemas downstream como cualquier principal de servicio privilegiado, con tokens de corta duración, autenticación basada en certificados y rotación automática de credenciales.",
+    s3_c2: "Implemente límites de permisos a nivel de herramientas. Un agente autorizado para leer una base de datos no debería heredar permisos de escritura. Defina permisos granulares usando el principio de mínimo privilegio y aplíquelos en la capa de la pasarela de herramientas, no en las instrucciones del prompt del agente.",
+    s3_c3: "Despliegue sandboxing de ejecución para los agentes. Los agentes que ejecutan código, acceden a sistemas de archivos o interactúan con infraestructura deben operar dentro de contenedores o VMs aislados con segmentación de red, límites de recursos y ningún almacenamiento persistente más allá de lo que la tarea requiere.",
+    s3_c4: "Construya pipelines de validación de salida que inspeccionen las acciones del agente antes de que lleguen a los sistemas objetivo. Cada llamada a herramienta, solicitud API y escritura de datos debe pasar por una capa de validación que verifique violaciones de política y patrones de fuga de datos.",
+    s4_heading: "Observabilidad y auditoría de agentes",
+    s4_intro: "No se puede gobernar lo que no se puede ver. La observabilidad de agentes va más allá del registro de aplicaciones. Necesita capturar el proceso de razonamiento del agente, no solo sus resultados, para entender por qué tomó una acción particular y si ese razonamiento fue sólido.",
+    s4_sec_title: "Requisitos de observabilidad",
+    s4_c1: "Registre cada punto de decisión del agente: el contexto de entrada, la cadena de razonamiento, las herramientas consideradas, la herramienta seleccionada, los parámetros pasados y el resultado recibido. Almacénelos como trazas estructuradas con identificadores de correlación que abarquen todo el flujo de trabajo del agente.",
+    s4_c2: "Rastree el consumo de tokens por agente, por tarea y por usuario. El uso de tokens es tanto un mecanismo de control de costos como una señal de seguridad. Un agente que consume un número anómalo de tokens puede estar atrapado en un bucle de razonamiento, bajo ataque de inyección de prompt o intentando exfiltrar datos.",
+    s4_c3: "Registre todas las invocaciones de herramientas con las cargas útiles completas de solicitud y respuesta, redactando campos de datos sensibles en la capa de registro. Integre estos registros en su pipeline SIEM existente.",
+    s4_c4: "Implemente auditoría de cadena de razonamiento para acciones de alto riesgo de agentes. Antes de que un agente ejecute una acción consecuente, capture y almacene la traza completa de razonamiento para que los equipos de cumplimiento y auditores puedan reconstruir exactamente cómo el agente llegó a esa decisión.",
+    s5_heading: "Marco de gobernanza para agentes de IA empresariales",
+    s5_intro: "La gobernanza de agentes de IA requiere estructuras que la mayoría de las empresas aún no tienen. La gobernanza de TI tradicional gestiona software con comportamiento determinista. La gobernanza de agentes debe gestionar sistemas cuyo comportamiento es probabilístico, dependiente del contexto y capaz de acciones emergentes que ningún ingeniero programó explícitamente.",
+    s5_sec_title: "Lista de verificación de gobernanza",
+    s5_c1: "Mantenga un registro e inventario centralizado de agentes. Cada agente de IA en producción, incluidos los integrados en plataformas SaaS de terceros, debe catalogarse con su propósito, propietario, permisos de herramientas, alcance de acceso a datos, clasificación de riesgo y estado de aprobación. Los agentes de IA no registrados son el nuevo shadow IT.",
+    s5_c2: "Clasifique los agentes por nivel de riesgo basado en su grado de autonomía y alcance de impacto. Un agente que resume notas de reuniones no está en la misma categoría que uno que modifica reglas de firewall o procesa transacciones financieras. Aplique controles proporcionados.",
+    s5_c3: "Establezca flujos de aprobación formales para el despliegue de agentes. Los nuevos agentes deben pasar por un proceso de revisión que incluya evaluación de seguridad, análisis de impacto en la privacidad, revisión de permisos de herramientas y aprobación del propietario del negocio y el equipo de seguridad.",
+    s5_c4: "Implemente interruptores de emergencia en cada capa. Debe poder desactivar inmediatamente cualquier agente a nivel del agente, la pasarela de herramientas y la red. Los interruptores deben probarse regularmente y ser accesibles al personal de seguridad de guardia sin requerir despliegues de código.",
+    s6_heading: "NIST AI RMF y CSA aplicados a sistemas agénticos",
+    s6_p1: "El Marco de Gestión de Riesgos de IA del NIST proporciona la base más accionable para gobernar la IA agéntica en empresas estadounidenses. Sus cuatro funciones — Gobernar, Mapear, Medir y Gestionar — se aplican directamente a las etapas del ciclo de vida de los agentes. Bajo Gobernar, establezca políticas organizacionales para la aprobación y supervisión de agentes. Bajo Mapear, identifique y categorice los riesgos. Bajo Medir, implemente los controles de observabilidad y auditoría. Bajo Gestionar, defina procedimientos de respuesta.",
+    s6_p2: "La guía 2026 de la Cloud Security Alliance sobre gobernanza de IA agéntica añade una capa crítica enfocada en agentes multi-nube e integrados en SaaS. La CSA enfatiza que las organizaciones deben extender su gestión de postura de seguridad en la nube (CSPM) para incluir inventarios de agentes, tratar los canales de comunicación entre agentes como fronteras de red que requieren segmentación, e implementar playbooks de respuesta a incidentes específicos para agentes.",
+    s7_heading: "Gestión de datos y credenciales",
+    s7_sec_title: "Controles de seguridad de datos de agentes",
+    s7_c1: "Defina políticas de acceso a datos explícitas para cada agente. Documente qué almacenes de datos, APIs y sistemas de archivos puede acceder cada agente, a qué nivel de clasificación y si el acceso es de solo lectura o lectura-escritura.",
+    s7_c2: "Use una plataforma dedicada de gestión de secretos para las credenciales de agentes. Nunca incruste claves API, contraseñas de bases de datos o tokens de servicio en los prompts, archivos de configuración o variables de entorno accesibles al proceso de razonamiento del agente.",
+    s7_c3: "Despliegue controles de prevención de pérdida de datos (DLP) en las fronteras de salida del agente. Monitoree las salidas de los agentes en busca de patrones que indiquen exfiltración de datos: PII en parámetros de llamadas a herramientas, datos codificados en cargas API o intentos de escribir datos sensibles a destinos no autorizados.",
+    s7_c4: "Implemente higiene de la ventana de contexto. Los agentes acumulan datos sensibles en su contexto durante tareas de múltiples pasos. Diseñe su arquitectura para limpiar o segmentar el contexto entre fases del flujo de trabajo.",
+    s8_heading: "Evaluación de proveedores: preguntas clave",
+    s8_intro: "Al evaluar plataformas de agentes de proveedores como Anthropic, OpenAI, Google, Microsoft, AWS o startups especializadas, su equipo de adquisiciones debe ir más allá de los cuestionarios de seguridad SaaS estándar.",
+    s8_sec_title: "Preguntas críticas para proveedores",
+    s8_c1: "¿Qué modelo de permisos de herramientas aplica la plataforma? ¿Puede definir permisos granulares por agente o todos los agentes comparten un único conjunto de permisos? ¿Se pueden modificar los permisos sin redesplegar el agente?",
+    s8_c2: "¿Cómo se registran y retienen las trazas de razonamiento de los agentes? ¿Puede exportar los registros completos de cadena de razonamiento a su propio SIEM? ¿Cuál es el período de retención y el proveedor utiliza los datos de interacción para entrenar modelos?",
+    s8_c3: "¿Qué garantías de sandboxing y aislamiento existen para la ejecución de agentes? ¿Los agentes funcionan en infraestructura compartida o puede desplegar en un entorno dedicado? ¿Qué controles de segmentación de red están disponibles?",
+    s8_c4: "¿La plataforma soporta nativamente flujos de aprobación con humano en el bucle? ¿Puede definir umbrales de aprobación basados en tipo de acción, nivel de riesgo o sensibilidad de datos e integrarlos con sus sistemas existentes?",
+    s8_c5: "¿Qué sucede cuando activa un interruptor de emergencia? ¿Cuán rápido se puede desactivar un agente? ¿La plataforma soporta paradas de emergencia a nivel de agente, herramientas y organización?",
+    s9_heading: "Construcción de una política interna de agentes de IA",
+    s9_p1: "Cada empresa que despliega agentes de IA necesita una política interna formal que vaya más allá de su política de uso aceptable existente para la IA. Su política de agentes de IA debe abordar quién puede solicitar y desplegar agentes, el proceso de aprobación por nivel de riesgo, los controles obligatorios de seguridad y observabilidad, las restricciones de gestión de datos, los procedimientos de respuesta a incidentes específicos para agentes y los ciclos de revisión periódica.",
+    s9_p2: "Recomendamos estructurar su política alrededor del ciclo de vida del agente: propuesta y evaluación de riesgos, desarrollo y pruebas, aprobación del despliegue, monitoreo en producción y desmantelamiento. La política también debe abordar los agentes de terceros integrados en productos de proveedores, ya que representan la categoría de mayor crecimiento de riesgo no gestionado de agentes.",
+    closing_1: "La era agéntica no está llegando; ya está aquí. Las empresas de servicios financieros, salud, manufactura y gobierno federal ya están desplegando agentes de IA que toman decisiones, invocan herramientas y operan con autonomía significativa. Las organizaciones que prosperarán son las que construyen la arquitectura de gobernanza y seguridad ahora.",
+    closing_2: "Comience con su inventario de agentes. Probablemente tiene más agentes de IA operando en su entorno de lo que cree. La visibilidad es el primer paso. La gobernanza sigue. La seguridad es la base que hace confiable toda la transformación agéntica.",
+    cta_title: "¿Necesita ayuda para asegurar sus implementaciones de agentes de IA?",
+    cta_text: "Nuestro equipo se especializa en evaluaciones de seguridad de agentes de IA, diseño de marcos de gobernanza y desarrollo de políticas para empresas que navegan la era agéntica. Le ayudamos a construir la arquitectura, los controles y las estructuras de supervisión alineados con el NIST AI RMF y la guía de la CSA.",
+    cta_btn: "Programar una consulta",
+    footer: "© 2026 Consultations NovaWave — Gatineau, QC, Canadá"
+  },
+  pt: {
+    nav_back: "← Voltar ao blog",
+    title: "Agentes de IA empresariais: arquitetura, segurança e governança para a era agêntica",
+    meta_author: "Christian Antoine, Fundador e consultor principal | CISA, PCIP",
+    meta_date: "18 de setembro de 2026",
+    meta_read: "11 min de leitura",
+    meta_cat: "AGENTES DE IA",
+    intro_1: "O panorama da IA empresarial está evoluindo de modelos estáticos atrás de endpoints de API para agentes de IA autônomos que raciocinam, planejam e agem. Esses agentes não se limitam a responder perguntas. Eles executam fluxos de trabalho de múltiplas etapas, invocam ferramentas externas, tomam decisões com consequências reais e coordenam cada vez mais com outros agentes. Para CTOs e CISOs de empresas americanas, essa mudança exige uma reformulação fundamental da arquitetura de segurança, dos frameworks de governança e da supervisão operacional.",
+    intro_2: "Este guia fornece um framework abrangente para implantar agentes de IA na empresa de forma responsável. Cobrimos padrões de arquitetura, controles de segurança, requisitos de observabilidade e estruturas de governança alinhados com o NIST AI RMF e as diretrizes 2026 da Cloud Security Alliance sobre IA agêntica.",
+    s1_heading: "O que define um agente de IA",
+    s1_p1: "Um agente de IA não é um chatbot nem um script de automação de fluxo de trabalho. A distinção importa para segurança e governança porque cada categoria possui perfis de risco diferentes. Um chatbot responde a prompts em um único turno, limitado à geração de texto. Uma automação segue uma sequência predeterminada de etapas com lógica fixa. Um agente de IA, por outro lado, opera com três capacidades definidoras: autonomia para decidir quais etapas seguir, uso de ferramentas para interagir com sistemas externos e raciocínio de múltiplas etapas para planejar e adaptar sua abordagem com base em resultados intermediários.",
+    s1_p2: "Na prática, isso significa que um agente de IA com a tarefa de “investigar este alerta de segurança e remediar se confirmado” poderia consultar seu SIEM, correlacionar logs entre sistemas, verificar feeds de inteligência de ameaças, redigir uma regra de firewall, solicitar aprovação humana e implantar a alteração. Cada etapa é escolhida pelo agente em tempo de execução, não codificada antecipadamente. Essa autonomia é o que torna os agentes poderosos e perigosos sem controles adequados.",
+    s2_heading: "Padrões de arquitetura para agentes de IA empresariais",
+    s2_intro: "A arquitetura escolhida determina sua superfície de segurança, suas capacidades de observabilidade e quanto controle você retém sobre o comportamento do agente. Quatro padrões dominam as implantações empresariais em 2026.",
+    s2_a1_title: "Arquitetura de agente único",
+    s2_a1_desc: "Um único agente alimentado por LLM com um conjunto definido de ferramentas lida com uma tarefa completa. É o padrão mais simples e fácil de proteger. O agente tem uma identidade única, um conjunto delimitado de permissões e uma única cadeia de raciocínio para auditar. Adequado para domínios bem delimitados: revisão de código, análise documental, triagem de suporte ao cliente.",
+    s2_a2_title: "Orquestração multiagente",
+    s2_a2_desc: "Múltiplos agentes especializados colaboram em uma tarefa, cada um com ferramentas e permissões distintas. Um agente de pesquisa coleta dados, um agente de análise os processa e um agente de ação executa decisões. Este padrão permite a separação de privilégios, mas introduz a comunicação entre agentes como nova superfície de ataque.",
+    s2_a3_title: "Padrão supervisor",
+    s2_a3_desc: "Um agente supervisor coordena subagentes, revisa seus resultados e toma decisões de roteamento. O supervisor atua como camada de controle interno: pode rejeitar ações de subagentes que excedam os limites da política, agregar resultados antes que cheguem aos sistemas de produção e garantir consistência no fluxo de trabalho. Este padrão se adapta bem às hierarquias de aprovação empresariais, mas adiciona latência e custos.",
+    s2_a4_title: "Arquitetura com humano no ciclo",
+    s2_a4_desc: "Agentes executam autonomamente até limites de decisão definidos, então pausam e solicitam aprovação humana antes de prosseguir. É o padrão mais alinhado com as expectativas regulatórias atuais e o que recomendamos para qualquer agente operando em domínios de alto risco: transações financeiras, alterações de infraestrutura, comunicações com clientes e decisões de conformidade.",
+    s3_heading: "Framework de segurança para agentes de IA",
+    s3_intro: "Os modelos tradicionais de segurança de aplicações assumem que o software executa caminhos de código determinísticos. Os agentes de IA quebram essa premissa. O comportamento de um agente emerge de seu raciocínio em tempo de execução, o que significa que seus controles de segurança devem operar em um nível diferente dos controles de acesso convencionais.",
+    s3_sec_title: "Gestão de identidade e acesso de agentes",
+    s3_c1: "Atribua a cada agente uma identidade de máquina única com credenciais criptográficas, não contas de serviço compartilhadas. Agentes devem se autenticar em sistemas downstream como qualquer principal de serviço privilegiado, com tokens de curta duração, autenticação baseada em certificados e rotação automática de credenciais.",
+    s3_c2: "Implemente limites de permissão no nível das ferramentas. Um agente autorizado a ler um banco de dados não deveria herdar permissões de escrita. Defina permissões granulares usando o princípio do menor privilégio e aplique-as na camada do gateway de ferramentas, não nas instruções do prompt do agente.",
+    s3_c3: "Implante sandboxing de execução para agentes. Agentes que executam código, acessam sistemas de arquivos ou interagem com infraestrutura devem operar dentro de contêineres ou VMs isolados com segmentação de rede, limites de recursos e nenhum armazenamento persistente além do que a tarefa requer.",
+    s3_c4: "Construa pipelines de validação de saída que inspecionem as ações do agente antes que alcancem os sistemas alvo. Cada chamada de ferramenta, requisição de API e escrita de dados deve passar por uma camada de validação que verifique violações de política e padrões de vazamento de dados.",
+    s4_heading: "Observabilidade e auditoria de agentes",
+    s4_intro: "Não é possível governar o que não se pode ver. A observabilidade de agentes vai além do registro de aplicações. É preciso capturar o processo de raciocínio do agente, não apenas seus resultados, para entender por que ele tomou uma ação específica e se aquele raciocínio foi sólido.",
+    s4_sec_title: "Requisitos de observabilidade",
+    s4_c1: "Registre cada ponto de decisão do agente: o contexto de entrada, a cadeia de raciocínio, as ferramentas consideradas, a ferramenta selecionada, os parâmetros passados e o resultado recebido. Armazene-os como rastreamentos estruturados com IDs de correlação que abrangem todo o fluxo de trabalho do agente.",
+    s4_c2: "Rastreie o consumo de tokens por agente, por tarefa e por usuário. O uso de tokens é tanto um mecanismo de controle de custos quanto um sinal de segurança. Um agente consumindo um número anômalo de tokens pode estar preso em um loop de raciocínio, sob ataque de injeção de prompt ou tentando exfiltrar dados.",
+    s4_c3: "Registre todas as invocações de ferramentas com as cargas úteis completas de solicitação e resposta, redatando campos de dados sensíveis na camada de registro. Integre esses logs no seu pipeline SIEM existente.",
+    s4_c4: "Implemente auditoria de cadeia de raciocínio para ações de alto risco de agentes. Antes que um agente execute uma ação consequente, capture e armazene o rastreamento completo de raciocínio para que equipes de conformidade e auditores possam reconstruir exatamente como o agente chegou àquela decisão.",
+    s5_heading: "Framework de governança para agentes de IA empresariais",
+    s5_intro: "A governança de agentes de IA requer estruturas que a maioria das empresas ainda não possui. A governança de TI tradicional gerencia software com comportamento determinístico. A governança de agentes deve gerenciar sistemas cujo comportamento é probabilístico, dependente de contexto e capaz de ações emergentes que nenhum engenheiro programou explicitamente.",
+    s5_sec_title: "Lista de verificação de governança",
+    s5_c1: "Mantenha um registro e inventário centralizado de agentes. Cada agente de IA em produção, incluindo os integrados em plataformas SaaS de terceiros, deve ser catalogado com seu propósito, proprietário, permissões de ferramentas, escopo de acesso a dados, classificação de risco e status de aprovação. Agentes de IA não registrados são o novo shadow IT.",
+    s5_c2: "Classifique os agentes por nível de risco com base em seu grau de autonomia e escopo de impacto. Um agente que resume notas de reunião não está na mesma categoria de um que modifica regras de firewall ou processa transações financeiras. Aplique controles proporcionais.",
+    s5_c3: "Estabeleça fluxos de aprovação formais para a implantação de agentes. Novos agentes devem passar por um processo de revisão que inclua avaliação de segurança, análise de impacto na privacidade, revisão de permissões de ferramentas e aprovação do proprietário do negócio e da equipe de segurança.",
+    s5_c4: "Implemente interruptores de emergência em cada camada. Você precisa da capacidade de desativar imediatamente qualquer agente no nível do agente, do gateway de ferramentas e da rede. Os interruptores devem ser testados regularmente e acessíveis ao pessoal de segurança de plantão sem exigir implantações de código.",
+    s6_heading: "NIST AI RMF e CSA aplicados a sistemas agênticos",
+    s6_p1: "O Framework de Gestão de Riscos de IA do NIST fornece a base mais acionável para governar a IA agêntica em empresas americanas. Suas quatro funções — Governar, Mapear, Medir e Gerenciar — se aplicam diretamente às etapas do ciclo de vida dos agentes. Sob Governar, estabeleça políticas organizacionais para aprovação e supervisão de agentes. Sob Mapear, identifique e categorize os riscos. Sob Medir, implemente os controles de observabilidade e auditoria. Sob Gerenciar, defina procedimentos de resposta.",
+    s6_p2: "As diretrizes 2026 da Cloud Security Alliance sobre governança de IA agêntica adicionam uma camada crítica focada em agentes multi-nuvem e integrados em SaaS. A CSA enfatiza que as organizações devem estender sua gestão de postura de segurança na nuvem (CSPM) para incluir inventários de agentes, tratar canais de comunicação entre agentes como fronteiras de rede que requerem segmentação, e implementar playbooks de resposta a incidentes específicos para agentes.",
+    s7_heading: "Gestão de dados e credenciais",
+    s7_sec_title: "Controles de segurança de dados de agentes",
+    s7_c1: "Defina políticas de acesso a dados explícitas para cada agente. Documente quais armazenamentos de dados, APIs e sistemas de arquivos cada agente pode acessar, em qual nível de classificação e se o acesso é somente leitura ou leitura-escrita.",
+    s7_c2: "Use uma plataforma dedicada de gestão de segredos para as credenciais dos agentes. Nunca incorpore chaves de API, senhas de bancos de dados ou tokens de serviço nos prompts, arquivos de configuração ou variáveis de ambiente acessíveis ao processo de raciocínio do agente.",
+    s7_c3: "Implante controles de prevenção de perda de dados (DLP) nas fronteiras de saída do agente. Monitore as saídas dos agentes em busca de padrões que indiquem exfiltração de dados: PII em parâmetros de chamadas de ferramentas, dados codificados em cargas de API ou tentativas de escrever dados sensíveis em destinos não autorizados.",
+    s7_c4: "Implemente higiene da janela de contexto. Os agentes acumulam dados sensíveis em seu contexto durante tarefas de múltiplas etapas. Projete sua arquitetura para limpar ou segmentar o contexto entre as fases do fluxo de trabalho.",
+    s8_heading: "Avaliação de fornecedores: perguntas-chave",
+    s8_intro: "Ao avaliar plataformas de agentes de fornecedores como Anthropic, OpenAI, Google, Microsoft, AWS ou startups especializadas, sua equipe de compras deve ir além dos questionários de segurança SaaS padrão.",
+    s8_sec_title: "Perguntas críticas para fornecedores",
+    s8_c1: "Qual modelo de permissões de ferramentas a plataforma aplica? Você pode definir permissões granulares por agente ou todos os agentes compartilham um único conjunto de permissões? As permissões podem ser modificadas sem reimplantar o agente?",
+    s8_c2: "Como os rastreamentos de raciocínio dos agentes são registrados e retidos? Você pode exportar logs completos de cadeia de raciocínio para seu próprio SIEM? Qual é o período de retenção e o fornecedor utiliza os dados de interação para treinamento de modelos?",
+    s8_c3: "Quais garantias de sandboxing e isolamento existem para a execução de agentes? Os agentes funcionam em infraestrutura compartilhada ou você pode implantar em um ambiente dedicado? Quais controles de segmentação de rede estão disponíveis?",
+    s8_c4: "A plataforma suporta nativamente fluxos de aprovação com humano no ciclo? Você pode definir limites de aprovação baseados no tipo de ação, nível de risco ou sensibilidade dos dados e integrá-los com seus sistemas existentes?",
+    s8_c5: "O que acontece quando você ativa um interruptor de emergência? Quão rápido um agente pode ser desativado? A plataforma suporta paradas de emergência no nível do agente, das ferramentas e da organização?",
+    s9_heading: "Construção de uma política interna de agentes de IA",
+    s9_p1: "Toda empresa que implanta agentes de IA precisa de uma política interna formal que vá além de sua política de uso aceitável existente para IA. Sua política de agentes de IA deve abordar quem pode solicitar e implantar agentes, o processo de aprovação por nível de risco, os controles obrigatórios de segurança e observabilidade, as restrições de gestão de dados, os procedimentos de resposta a incidentes específicos para agentes e os ciclos de revisão periódica.",
+    s9_p2: "Recomendamos estruturar sua política em torno do ciclo de vida do agente: proposta e avaliação de riscos, desenvolvimento e testes, aprovação da implantação, monitoramento em produção e descomissionamento. A política também deve abordar agentes de terceiros integrados em produtos de fornecedores, pois representam a categoria de crescimento mais rápido de risco não gerenciado de agentes.",
+    closing_1: "A era agêntica não está chegando; já está aqui. Empresas de serviços financeiros, saúde, manufatura e governo federal já estão implantando agentes de IA que tomam decisões, invocam ferramentas e operam com autonomia significativa. As organizações que prosperarão são as que constroem a arquitetura de governança e segurança agora.",
+    closing_2: "Comece pelo seu inventário de agentes. Você provavelmente tem mais agentes de IA operando em seu ambiente do que imagina. A visibilidade é o primeiro passo. A governança vem em seguida. A segurança é a base que torna toda a transformação agêntica confiável.",
+    cta_title: "Precisa de ajuda para proteger suas implantações de agentes de IA?",
+    cta_text: "Nossa equipe é especializada em avaliações de segurança de agentes de IA, design de frameworks de governança e desenvolvimento de políticas para empresas que navegam na era agêntica. Ajudamos você a construir a arquitetura, os controles e as estruturas de supervisão alinhados com o NIST AI RMF e as diretrizes da CSA.",
+    cta_btn: "Agendar uma consulta",
+    footer: "© 2026 Consultations NovaWave — Gatineau, QC, Canadá"
+  }
+};
+
+function applyLang(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      const tags = el.querySelectorAll('.framework-tag');
+      if (tags.length > 0) {
+        const tagHTML = Array.from(tags).map(tag => ' ' + tag.outerHTML).join('');
+        el.innerHTML = t[key] + tagHTML;
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+  document.documentElement.lang = lang;
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let savedLang = 'en';
+  try { savedLang = localStorage.getItem('novawave_lang') || 'en'; } catch(e) {}
+  const switcher = document.getElementById('langSwitcher');
+  if (switcher) {
+    switcher.value = savedLang;
+    switcher.addEventListener('change', e => applyLang(e.target.value));
+  }
+  applyLang(savedLang);
+});
+</script>
+
+</body>
+</html>

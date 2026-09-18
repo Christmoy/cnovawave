@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Compliance for U.S. Financial Institutions: What CTOs and CISOs Need to Know | Consultations NovaWave</title>
+<meta name="description" content="A comprehensive guide to AI compliance for U.S. financial institutions covering GLBA, SOX, FFIEC, SEC, OCC SR 11-7, Federal Reserve guidance, NYDFS 23 NYCRR 500, and emerging state AI laws.">
+<link rel="canonical" href="https://cnovawave.com/blog/us-financial-ai-compliance.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Compliance for U.S. Financial Institutions: What CTOs and CISOs Need to Know",
+  "author": {
+    "@type": "Person",
+    "name": "Christian Antoine, Founder & Lead Consultant | CISA, PCIP"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Consultations NovaWave",
+    "url": "https://cnovawave.com"
+  },
+  "datePublished": "2026-09-18",
+  "dateModified": "2026-09-18",
+  "description": "A comprehensive guide to AI compliance for U.S. financial institutions covering GLBA, SOX, FFIEC, SEC, OCC SR 11-7, Federal Reserve guidance, NYDFS 23 NYCRR 500, and emerging state AI laws.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cnovawave.com/blog/us-financial-ai-compliance.html"
+  }
+}
+</script>
+<style>
+:root {
+  --dark: #04090f;
+  --dark2: #070f1e;
+  --cyan: #00d4f0;
+  --green: #00f0a0;
+  --purple: #8b5cf6;
+  --amber: #f59e0b;
+  --off: #f2f6ff;
+  --muted: #a8b8d0;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--dark);
+  color: var(--off);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.25; }
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(4, 9, 15, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 212, 240, 0.12);
+}
+.brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--off);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand span {
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.lang-select {
+  background: var(--dark2);
+  color: var(--muted);
+  border: 1px solid rgba(0, 212, 240, 0.2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+}
+.lang-select:focus { border-color: var(--cyan); }
+.back-link {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--green); }
+
+/* ── Article ── */
+.article-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 16px 80px;
+}
+.article-meta {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(0, 212, 240, 0.1);
+}
+.article-meta h1 {
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--off) 60%, var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+.meta-row .sep { color: rgba(168, 184, 208, 0.3); }
+
+.article-body p {
+  margin-bottom: 18px;
+  color: var(--off);
+  font-weight: 300;
+  font-size: 1.02rem;
+}
+.article-body h2 {
+  font-size: 1.35rem;
+  color: var(--cyan);
+  margin: 48px 0 12px;
+  padding-left: 14px;
+  border-left: 3px solid var(--cyan);
+}
+.article-body h3 {
+  font-size: 1.05rem;
+  color: var(--off);
+  margin: 28px 0 8px;
+  font-weight: 600;
+}
+
+/* ── Compliance Sections ── */
+.audit-section {
+  background: var(--dark2);
+  border: 1px solid rgba(0, 212, 240, 0.08);
+  border-radius: 10px;
+  padding: 24px 20px;
+  margin: 20px 0 32px;
+}
+.audit-section .section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--green);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(0, 240, 160, 0.1);
+  border: 1px solid rgba(0, 240, 160, 0.25);
+  font-size: 0.82rem;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.check-list { list-style: none; }
+.check-list li {
+  position: relative;
+  padding: 8px 0 8px 30px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--off);
+  line-height: 1.6;
+}
+.check-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 3px;
+  background: rgba(0, 212, 240, 0.06);
+}
+.check-list li::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 16px;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+  transform: rotate(-45deg);
+  opacity: 0.7;
+}
+.check-list li + li {
+  border-top: 1px solid rgba(168, 184, 208, 0.06);
+}
+
+.framework-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag-nist { background: rgba(139, 92, 246, 0.15); color: var(--purple); border: 1px solid rgba(139, 92, 246, 0.3); }
+.tag-eu { background: rgba(0, 212, 240, 0.1); color: var(--cyan); border: 1px solid rgba(0, 212, 240, 0.25); }
+.tag-iso { background: rgba(245, 158, 11, 0.1); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.25); }
+
+/* ── CTA ── */
+.cta-box {
+  margin-top: 56px;
+  padding: 32px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 212, 240, 0.06), rgba(0, 240, 160, 0.04));
+  border: 1px solid rgba(0, 212, 240, 0.15);
+  text-align: center;
+}
+.cta-box h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  color: var(--off);
+  margin-bottom: 10px;
+}
+.cta-box p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  color: var(--dark);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid rgba(0, 212, 240, 0.1);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { color: var(--green); }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .brand { font-size: 1rem; }
+  .nav-right { gap: 12px; }
+  .back-link { font-size: 0.8rem; }
+  .audit-section { padding: 18px 14px; }
+  .article-wrapper { padding: 32px 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <a href="/" class="brand">Consultations <span>NovaWave</span></a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSwitcher" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+    </select>
+    <a href="/blog.html" class="back-link" data-i18n="nav_back">&larr; Back to blog</a>
+  </div>
+</nav>
+
+<!-- ── Article ── -->
+<main class="article-wrapper">
+
+  <header class="article-meta">
+    <h1 data-i18n="title">AI Compliance for U.S. Financial Institutions: What CTOs and CISOs Need to Know</h1>
+    <div class="meta-row">
+      <span data-i18n="author">Christian Antoine, Founder & Lead Consultant | CISA, PCIP</span>
+      <span class="sep">|</span>
+      <span data-i18n="date">September 18, 2026</span>
+      <span class="sep">|</span>
+      <span data-i18n="read_time">11 min read</span>
+    </div>
+  </header>
+
+  <article class="article-body">
+
+    <p data-i18n="intro_1">Artificial intelligence is transforming the U.S. financial services industry at a pace that regulators are racing to match. From algorithmic trading and automated credit decisions to AI-powered fraud detection and customer service chatbots, banks, broker-dealers, insurance companies, and fintech firms are deploying machine learning models across every business function. But the regulatory landscape governing these deployments is neither simple nor unified. For CTOs and CISOs at American financial institutions, understanding the patchwork of federal and state requirements is no longer optional -- it is a fiduciary obligation.</p>
+
+    <p data-i18n="intro_2">This guide maps the major U.S. regulatory frameworks that affect AI adoption in financial services, explains their practical implications, and provides a compliance checklist your team can act on immediately. Whether you are a community bank deploying your first AI model or a regional institution scaling an existing program, these are the rules you must navigate.</p>
+
+    <h2 data-i18n="h2_federal">The Federal Regulatory Framework</h2>
+
+    <p data-i18n="federal_intro">Unlike the EU, which has enacted a single comprehensive AI Act, the United States regulates AI through a layered system of sector-specific statutes, agency guidance, and supervisory expectations. For financial institutions, several federal frameworks converge.</p>
+
+    <!-- ── 1. GLBA ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">1</span> <span data-i18n="s1_title">GLBA (Gramm-Leach-Bliley Act) &amp; AI Data Handling</span></div>
+      <ul class="check-list">
+        <li data-i18n="s1_c1">The GLBA Safeguards Rule requires financial institutions to protect nonpublic personal information (NPI). When AI systems ingest, process, or generate outputs from customer NPI, they fall squarely within the Safeguards Rule's scope. <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s1_c2">AI models trained on customer data must be inventoried as information systems under your GLBA risk assessment. Document what NPI each model accesses, how training data is stored, and whether inference outputs could re-identify individuals.</li>
+        <li data-i18n="s1_c3">The FTC's 2024-2025 enforcement actions have clarified that algorithmic outputs derived from NPI are themselves protected information. If your AI system generates risk scores, customer profiles, or behavioral predictions, those outputs inherit GLBA protections.</li>
+        <li data-i18n="s1_c4">Third-party AI vendors who receive NPI must be assessed under your GLBA service provider oversight program. The Safeguards Rule requires contractual protections and ongoing monitoring -- vendor assurances alone are insufficient.</li>
+      </ul>
+    </div>
+
+    <!-- ── 2. SOX ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">2</span> <span data-i18n="s2_title">SOX (Sarbanes-Oxley) &amp; AI in Financial Reporting</span></div>
+      <ul class="check-list">
+        <li data-i18n="s2_c1">When AI systems contribute to financial reporting -- revenue forecasting, reserve calculations, impairment estimates, or journal entry analysis -- they become relevant to SOX Section 404 internal controls over financial reporting (ICFR). <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s2_c2">Auditors are increasingly asking for model documentation, validation records, and change management logs for AI systems that feed financial statements. The PCAOB's 2025 staff guidance flagged AI-assisted estimates as an area of heightened audit risk.</li>
+        <li data-i18n="s2_c3">Establish clear change control procedures for AI models that affect financial reporting. Any model retraining, feature engineering change, or threshold adjustment must go through your IT General Controls (ITGC) change management process.</li>
+        <li data-i18n="s2_c4">Maintain human-in-the-loop review for AI-generated financial figures. SOX requires that management can attest to the accuracy of financial statements -- full automation of material estimates without human validation creates attestation risk.</li>
+      </ul>
+    </div>
+
+    <!-- ── 3. FFIEC ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">3</span> <span data-i18n="s3_title">FFIEC Guidance on AI/ML in Banking</span></div>
+      <ul class="check-list">
+        <li data-i18n="s3_c1">The Federal Financial Institutions Examination Council's 2025 joint statement on AI/ML established supervisory expectations across all five member agencies (OCC, FDIC, Federal Reserve, NCUA, and CFPB). Examiners now evaluate AI governance as part of safety and soundness examinations. <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s3_c2">FFIEC expects institutions to apply risk management practices proportional to the complexity and materiality of each AI use case. A chatbot answering FAQs does not require the same governance rigor as a credit underwriting model -- but both need documentation.</li>
+        <li data-i18n="s3_c3">Board and senior management oversight of AI is now a supervisory expectation. Examiners will ask whether your board has been briefed on AI deployments, associated risks, and the institution's AI risk appetite.</li>
+        <li data-i18n="s3_c4">FFIEC guidance emphasizes the need for explainability in consumer-facing AI decisions. If your model cannot produce an explanation that satisfies adverse action notice requirements under Regulation B or ECOA, it should not be deployed for credit decisions.</li>
+      </ul>
+    </div>
+
+    <!-- ── 4. SEC ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">4</span> <span data-i18n="s4_title">SEC AI Guidance &amp; Enforcement Signals</span></div>
+      <ul class="check-list">
+        <li data-i18n="s4_c1">The SEC's proposed rule on predictive data analytics (PDA) -- initially introduced in 2023 and refined through 2025 -- targets broker-dealers and investment advisers that use AI to optimize for their own revenue at the expense of investor interests. Even before final rulemaking, the Commission has signaled that existing fiduciary duties apply to AI-driven recommendations. <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s4_c2">The SEC's Division of Examinations has added AI governance to its annual examination priorities for 2026. Registered firms should expect questions about AI model inventories, conflicts-of-interest assessments for algorithmic recommendations, and AI-related disclosures to clients.</li>
+        <li data-i18n="s4_c3">AI-washing -- making misleading claims about AI capabilities in marketing materials or investor communications -- has drawn SEC enforcement attention. In 2025, the Commission settled charges against two advisory firms for overstating their AI capabilities. Ensure marketing claims match actual model functionality.</li>
+        <li data-i18n="s4_c4">For public company disclosure, the SEC staff has indicated that material AI risks (model failure, regulatory action, data breaches involving AI systems) may need to be disclosed in risk factor sections and MD&amp;A. Assess whether your AI program creates material risks warranting disclosure.</li>
+      </ul>
+    </div>
+
+    <!-- ── 5. OCC SR 11-7 ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">5</span> <span data-i18n="s5_title">OCC SR 11-7: Model Risk Management for AI</span></div>
+      <ul class="check-list">
+        <li data-i18n="s5_c1">OCC Supervisory Letter SR 11-7 (Supervision and Regulation Letter on Model Risk Management) remains the foundational guidance for AI model governance at national banks. The OCC confirmed in 2024 that SR 11-7 applies fully to AI and machine learning models, including deep learning and generative AI systems. <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s5_c2">SR 11-7 requires independent model validation. For AI models, this means a qualified team that did not build the model must validate its conceptual soundness, data integrity, performance metrics, and limitations before deployment -- and periodically thereafter.</li>
+        <li data-i18n="s5_c3">Model risk management must address the full lifecycle: development, implementation, use, and retirement. AI models that evolve through continuous learning or frequent retraining require validation triggers tied to material performance changes, not just calendar-based schedules. <span class="framework-tag tag-iso">SR 11-7</span></li>
+        <li data-i18n="s5_c4">Maintain model risk reporting to the board or a designated board committee. SR 11-7 expects aggregate model risk reporting that includes the number of models in use, validation status, exceptions, and material findings -- AI models must be included in this reporting.</li>
+      </ul>
+    </div>
+
+    <!-- ── 6. Fed Reserve ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">6</span> <span data-i18n="s6_title">Federal Reserve Guidance on AI Governance</span></div>
+      <ul class="check-list">
+        <li data-i18n="s6_c1">The Federal Reserve Board's SR 11-7 companion guidance (SR 15-18 and subsequent supervisory letters) applies to state member banks and bank holding companies. The Fed has emphasized that AI governance must be integrated into existing enterprise risk management frameworks rather than treated as a standalone program. <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s6_c2">The Fed's 2025 supervisory guidance on third-party relationships explicitly addresses AI vendors and foundation model providers. Institutions must assess whether third-party AI creates concentration risk, model dependency, or data sovereignty concerns.</li>
+        <li data-i18n="s6_c3">Fair lending implications of AI are a Federal Reserve enforcement priority. The Fed expects institutions using AI for credit decisions to conduct disparate impact testing and document any less discriminatory alternatives that were considered. <span class="framework-tag tag-eu">FAIR LENDING</span></li>
+        <li data-i18n="s6_c4">The Federal Reserve has joined other agencies in endorsing the NIST AI Risk Management Framework as a useful reference for financial institutions. While not mandatory, alignment with NIST AI RMF demonstrates good-faith governance to examiners.</li>
+      </ul>
+    </div>
+
+    <h2 data-i18n="h2_state">State-Level AI Regulation</h2>
+
+    <p data-i18n="state_intro">Beyond federal oversight, financial institutions must contend with a growing body of state AI legislation. These laws vary significantly in scope, but several directly affect financial services operations.</p>
+
+    <!-- ── 7. NYDFS ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">7</span> <span data-i18n="s7_title">NYDFS 23 NYCRR 500 &amp; AI Cybersecurity</span></div>
+      <ul class="check-list">
+        <li data-i18n="s7_c1">The New York Department of Financial Services cybersecurity regulation (23 NYCRR 500), as amended in 2023 and fully effective in 2025, imposes specific requirements on covered entities that extend to AI systems. Any AI system that accesses nonpublic information or connects to your information systems is an in-scope asset. <span class="framework-tag tag-eu">STATE</span></li>
+        <li data-i18n="s7_c2">23 NYCRR 500 requires a written cybersecurity policy approved by a senior officer or the board. That policy must now address AI-specific risks: model tampering, adversarial attacks, training data poisoning, and AI-enabled threat vectors targeting your institution.</li>
+        <li data-i18n="s7_c3">The regulation's access control, encryption, and audit trail requirements apply to AI infrastructure. Model training environments, inference APIs, and vector databases that store customer data must meet the same security controls as traditional information systems.</li>
+        <li data-i18n="s7_c4">Annual penetration testing and vulnerability assessments under 23 NYCRR 500 should now scope AI systems. NYDFS examiners are asking whether institutions have tested their AI models for adversarial vulnerabilities alongside traditional infrastructure testing.</li>
+      </ul>
+    </div>
+
+    <!-- ── 8. State AI Laws ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">8</span> <span data-i18n="s8_title">Emerging State AI Laws Affecting Financial Services</span></div>
+      <ul class="check-list">
+        <li data-i18n="s8_c1">Colorado's AI Act (SB 24-205), effective February 2026, requires deployers of high-risk AI systems -- including those making insurance and lending decisions -- to conduct impact assessments, disclose AI use to consumers, and provide opt-out mechanisms where feasible. <span class="framework-tag tag-eu">STATE</span></li>
+        <li data-i18n="s8_c2">Illinois' AI Video Interview Act and the proposed Illinois AI Accountability Act impose transparency requirements on automated decision-making in employment and financial services. Institutions with Illinois operations or customers must evaluate compliance obligations.</li>
+        <li data-i18n="s8_c3">Connecticut, Texas, Virginia, and California have enacted or proposed AI governance legislation that could affect financial services. California's proposed AI transparency and accountability framework, if enacted, would create disclosure and audit requirements for high-impact AI systems deployed in the state. <span class="framework-tag tag-eu">STATE</span></li>
+        <li data-i18n="s8_c4">Multi-state compliance is unavoidable. Financial institutions operating across state lines should adopt a highest-common-denominator approach: build AI governance to satisfy the most stringent state requirements and you will meet most others by default.</li>
+      </ul>
+    </div>
+
+    <h2 data-i18n="h2_checklist">Practical Compliance Checklist</h2>
+
+    <p data-i18n="checklist_intro">The following checklist synthesizes the regulatory requirements above into actionable steps. Each item is tagged to the frameworks it addresses, allowing your team to prioritize based on your institution's specific regulatory exposure.</p>
+
+    <!-- ── 9. Checklist ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">9</span> <span data-i18n="s9_title">AI Compliance Checklist for Financial Institutions</span></div>
+      <ul class="check-list">
+        <li data-i18n="s9_c1">Build and maintain a centralized AI model inventory with model owner, data inputs, use case classification, risk tier, validation status, and deployment date. Update it quarterly at minimum. <span class="framework-tag tag-nist">SR 11-7</span> <span class="framework-tag tag-iso">FFIEC</span></li>
+        <li data-i18n="s9_c2">Conduct AI-specific risk assessments for each model, evaluating fair lending risk, data privacy exposure (GLBA), financial reporting impact (SOX), and cybersecurity posture (23 NYCRR 500). <span class="framework-tag tag-nist">FEDERAL</span> <span class="framework-tag tag-eu">STATE</span></li>
+        <li data-i18n="s9_c3">Implement independent model validation per SR 11-7 for all material AI models. Ensure validation covers conceptual soundness, data quality, ongoing performance monitoring, and outcomes analysis. <span class="framework-tag tag-nist">SR 11-7</span></li>
+        <li data-i18n="s9_c4">Document AI governance policies and obtain board-level or senior management approval. Include AI risk appetite, acceptable use policies, and escalation procedures for model failures. <span class="framework-tag tag-iso">FFIEC</span></li>
+        <li data-i18n="s9_c5">Run disparate impact testing on all AI models used in credit, insurance, or employment decisions. Document the results and any less discriminatory alternatives considered. <span class="framework-tag tag-eu">FAIR LENDING</span></li>
+        <li data-i18n="s9_c6">Review AI vendor contracts for GLBA compliance, data residency, model training restrictions, and sub-processor controls. Assess concentration risk across foundation model providers. <span class="framework-tag tag-nist">FEDERAL</span></li>
+        <li data-i18n="s9_c7">Integrate AI systems into your SOX ICFR framework where models affect financial reporting. Establish change management procedures, human review checkpoints, and audit trails. <span class="framework-tag tag-nist">SOX</span></li>
+        <li data-i18n="s9_c8">Conduct annual AI-focused penetration testing and adversarial robustness assessments, particularly for institutions subject to 23 NYCRR 500. <span class="framework-tag tag-eu">NYDFS</span></li>
+        <li data-i18n="s9_c9">Prepare AI impact assessments for deployments in states with enacted AI legislation (Colorado, Illinois, Connecticut). Implement consumer disclosure and opt-out mechanisms where required. <span class="framework-tag tag-eu">STATE</span></li>
+        <li data-i18n="s9_c10">Establish an AI incident response playbook covering model failure, biased outputs, data breaches involving AI systems, and regulatory inquiries. Test it through tabletop exercises at least annually. <span class="framework-tag tag-iso">FFIEC</span> <span class="framework-tag tag-eu">NYDFS</span></li>
+      </ul>
+    </div>
+
+    <h2 data-i18n="h2_outlook">Looking Ahead: 2026-2027 Regulatory Outlook</h2>
+
+    <p data-i18n="outlook_1">The regulatory environment for AI in financial services will continue to tighten. The SEC's predictive data analytics rulemaking is expected to reach final form in late 2026 or early 2027. The CFPB has signaled increased scrutiny of AI-driven consumer lending, particularly around adverse action notice requirements for opaque models. Meanwhile, more states are introducing AI governance bills, and the federal government continues to explore comprehensive AI legislation, though bipartisan consensus remains elusive.</p>
+
+    <p data-i18n="outlook_2">For CTOs and CISOs, the strategic imperative is clear: build AI governance infrastructure now, while you can do it proactively rather than reactively. Institutions that treat AI compliance as an afterthought will face not only regulatory penalties but also reputational damage and operational disruption when examiners arrive. Those that embed compliance into their AI development lifecycle will gain a durable competitive advantage -- the ability to deploy AI faster and with confidence that they can withstand scrutiny.</p>
+
+    <p data-i18n="closing">The U.S. regulatory framework for AI in financial services is complex, but it is not unknowable. The agencies have been remarkably transparent about their expectations. The institutions that will thrive are those that listen, act, and document -- in that order.</p>
+
+    <!-- ── CTA ── -->
+    <div class="cta-box">
+      <h3 data-i18n="cta_title">Need Help Navigating AI Compliance?</h3>
+      <p data-i18n="cta_text">Our team advises U.S. financial institutions on AI governance, model risk management, and regulatory compliance. We help you build frameworks aligned with FFIEC, OCC SR 11-7, NYDFS, and emerging state requirements -- before examiners ask the questions.</p>
+      <a href="/#contact" class="cta-btn" data-i18n="cta_btn">Book a Consultation</a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>&copy; 2026 <a href="/">Consultations NovaWave</a> &mdash; Gatineau, QC, Canada</p>
+</footer>
+
+<!-- ── i18n ── -->
+<script>
+const translations = {
+  en: {
+    nav_back: "← Back to blog",
+    title: "AI Compliance for U.S. Financial Institutions: What CTOs and CISOs Need to Know",
+    author: "Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "September 18, 2026",
+    read_time: "11 min read",
+    intro_1: "Artificial intelligence is transforming the U.S. financial services industry at a pace that regulators are racing to match. From algorithmic trading and automated credit decisions to AI-powered fraud detection and customer service chatbots, banks, broker-dealers, insurance companies, and fintech firms are deploying machine learning models across every business function. But the regulatory landscape governing these deployments is neither simple nor unified. For CTOs and CISOs at American financial institutions, understanding the patchwork of federal and state requirements is no longer optional -- it is a fiduciary obligation.",
+    intro_2: "This guide maps the major U.S. regulatory frameworks that affect AI adoption in financial services, explains their practical implications, and provides a compliance checklist your team can act on immediately. Whether you are a community bank deploying your first AI model or a regional institution scaling an existing program, these are the rules you must navigate.",
+    h2_federal: "The Federal Regulatory Framework",
+    federal_intro: "Unlike the EU, which has enacted a single comprehensive AI Act, the United States regulates AI through a layered system of sector-specific statutes, agency guidance, and supervisory expectations. For financial institutions, several federal frameworks converge.",
+    s1_title: "GLBA (Gramm-Leach-Bliley Act) & AI Data Handling",
+    s1_c1: "The GLBA Safeguards Rule requires financial institutions to protect nonpublic personal information (NPI). When AI systems ingest, process, or generate outputs from customer NPI, they fall squarely within the Safeguards Rule's scope.",
+    s1_c2: "AI models trained on customer data must be inventoried as information systems under your GLBA risk assessment. Document what NPI each model accesses, how training data is stored, and whether inference outputs could re-identify individuals.",
+    s1_c3: "The FTC's 2024-2025 enforcement actions have clarified that algorithmic outputs derived from NPI are themselves protected information. If your AI system generates risk scores, customer profiles, or behavioral predictions, those outputs inherit GLBA protections.",
+    s1_c4: "Third-party AI vendors who receive NPI must be assessed under your GLBA service provider oversight program. The Safeguards Rule requires contractual protections and ongoing monitoring -- vendor assurances alone are insufficient.",
+    s2_title: "SOX (Sarbanes-Oxley) & AI in Financial Reporting",
+    s2_c1: "When AI systems contribute to financial reporting -- revenue forecasting, reserve calculations, impairment estimates, or journal entry analysis -- they become relevant to SOX Section 404 internal controls over financial reporting (ICFR).",
+    s2_c2: "Auditors are increasingly asking for model documentation, validation records, and change management logs for AI systems that feed financial statements. The PCAOB's 2025 staff guidance flagged AI-assisted estimates as an area of heightened audit risk.",
+    s2_c3: "Establish clear change control procedures for AI models that affect financial reporting. Any model retraining, feature engineering change, or threshold adjustment must go through your IT General Controls (ITGC) change management process.",
+    s2_c4: "Maintain human-in-the-loop review for AI-generated financial figures. SOX requires that management can attest to the accuracy of financial statements -- full automation of material estimates without human validation creates attestation risk.",
+    s3_title: "FFIEC Guidance on AI/ML in Banking",
+    s3_c1: "The Federal Financial Institutions Examination Council's 2025 joint statement on AI/ML established supervisory expectations across all five member agencies (OCC, FDIC, Federal Reserve, NCUA, and CFPB). Examiners now evaluate AI governance as part of safety and soundness examinations.",
+    s3_c2: "FFIEC expects institutions to apply risk management practices proportional to the complexity and materiality of each AI use case. A chatbot answering FAQs does not require the same governance rigor as a credit underwriting model -- but both need documentation.",
+    s3_c3: "Board and senior management oversight of AI is now a supervisory expectation. Examiners will ask whether your board has been briefed on AI deployments, associated risks, and the institution's AI risk appetite.",
+    s3_c4: "FFIEC guidance emphasizes the need for explainability in consumer-facing AI decisions. If your model cannot produce an explanation that satisfies adverse action notice requirements under Regulation B or ECOA, it should not be deployed for credit decisions.",
+    s4_title: "SEC AI Guidance & Enforcement Signals",
+    s4_c1: "The SEC's proposed rule on predictive data analytics (PDA) -- initially introduced in 2023 and refined through 2025 -- targets broker-dealers and investment advisers that use AI to optimize for their own revenue at the expense of investor interests. Even before final rulemaking, the Commission has signaled that existing fiduciary duties apply to AI-driven recommendations.",
+    s4_c2: "The SEC's Division of Examinations has added AI governance to its annual examination priorities for 2026. Registered firms should expect questions about AI model inventories, conflicts-of-interest assessments for algorithmic recommendations, and AI-related disclosures to clients.",
+    s4_c3: "AI-washing -- making misleading claims about AI capabilities in marketing materials or investor communications -- has drawn SEC enforcement attention. In 2025, the Commission settled charges against two advisory firms for overstating their AI capabilities. Ensure marketing claims match actual model functionality.",
+    s4_c4: "For public company disclosure, the SEC staff has indicated that material AI risks (model failure, regulatory action, data breaches involving AI systems) may need to be disclosed in risk factor sections and MD&A. Assess whether your AI program creates material risks warranting disclosure.",
+    s5_title: "OCC SR 11-7: Model Risk Management for AI",
+    s5_c1: "OCC Supervisory Letter SR 11-7 (Supervision and Regulation Letter on Model Risk Management) remains the foundational guidance for AI model governance at national banks. The OCC confirmed in 2024 that SR 11-7 applies fully to AI and machine learning models, including deep learning and generative AI systems.",
+    s5_c2: "SR 11-7 requires independent model validation. For AI models, this means a qualified team that did not build the model must validate its conceptual soundness, data integrity, performance metrics, and limitations before deployment -- and periodically thereafter.",
+    s5_c3: "Model risk management must address the full lifecycle: development, implementation, use, and retirement. AI models that evolve through continuous learning or frequent retraining require validation triggers tied to material performance changes, not just calendar-based schedules.",
+    s5_c4: "Maintain model risk reporting to the board or a designated board committee. SR 11-7 expects aggregate model risk reporting that includes the number of models in use, validation status, exceptions, and material findings -- AI models must be included in this reporting.",
+    s6_title: "Federal Reserve Guidance on AI Governance",
+    s6_c1: "The Federal Reserve Board's SR 11-7 companion guidance (SR 15-18 and subsequent supervisory letters) applies to state member banks and bank holding companies. The Fed has emphasized that AI governance must be integrated into existing enterprise risk management frameworks rather than treated as a standalone program.",
+    s6_c2: "The Fed's 2025 supervisory guidance on third-party relationships explicitly addresses AI vendors and foundation model providers. Institutions must assess whether third-party AI creates concentration risk, model dependency, or data sovereignty concerns.",
+    s6_c3: "Fair lending implications of AI are a Federal Reserve enforcement priority. The Fed expects institutions using AI for credit decisions to conduct disparate impact testing and document any less discriminatory alternatives that were considered.",
+    s6_c4: "The Federal Reserve has joined other agencies in endorsing the NIST AI Risk Management Framework as a useful reference for financial institutions. While not mandatory, alignment with NIST AI RMF demonstrates good-faith governance to examiners.",
+    h2_state: "State-Level AI Regulation",
+    state_intro: "Beyond federal oversight, financial institutions must contend with a growing body of state AI legislation. These laws vary significantly in scope, but several directly affect financial services operations.",
+    s7_title: "NYDFS 23 NYCRR 500 & AI Cybersecurity",
+    s7_c1: "The New York Department of Financial Services cybersecurity regulation (23 NYCRR 500), as amended in 2023 and fully effective in 2025, imposes specific requirements on covered entities that extend to AI systems. Any AI system that accesses nonpublic information or connects to your information systems is an in-scope asset.",
+    s7_c2: "23 NYCRR 500 requires a written cybersecurity policy approved by a senior officer or the board. That policy must now address AI-specific risks: model tampering, adversarial attacks, training data poisoning, and AI-enabled threat vectors targeting your institution.",
+    s7_c3: "The regulation's access control, encryption, and audit trail requirements apply to AI infrastructure. Model training environments, inference APIs, and vector databases that store customer data must meet the same security controls as traditional information systems.",
+    s7_c4: "Annual penetration testing and vulnerability assessments under 23 NYCRR 500 should now scope AI systems. NYDFS examiners are asking whether institutions have tested their AI models for adversarial vulnerabilities alongside traditional infrastructure testing.",
+    s8_title: "Emerging State AI Laws Affecting Financial Services",
+    s8_c1: "Colorado's AI Act (SB 24-205), effective February 2026, requires deployers of high-risk AI systems -- including those making insurance and lending decisions -- to conduct impact assessments, disclose AI use to consumers, and provide opt-out mechanisms where feasible.",
+    s8_c2: "Illinois' AI Video Interview Act and the proposed Illinois AI Accountability Act impose transparency requirements on automated decision-making in employment and financial services. Institutions with Illinois operations or customers must evaluate compliance obligations.",
+    s8_c3: "Connecticut, Texas, Virginia, and California have enacted or proposed AI governance legislation that could affect financial services. California's proposed AI transparency and accountability framework, if enacted, would create disclosure and audit requirements for high-impact AI systems deployed in the state.",
+    s8_c4: "Multi-state compliance is unavoidable. Financial institutions operating across state lines should adopt a highest-common-denominator approach: build AI governance to satisfy the most stringent state requirements and you will meet most others by default.",
+    h2_checklist: "Practical Compliance Checklist",
+    checklist_intro: "The following checklist synthesizes the regulatory requirements above into actionable steps. Each item is tagged to the frameworks it addresses, allowing your team to prioritize based on your institution's specific regulatory exposure.",
+    s9_title: "AI Compliance Checklist for Financial Institutions",
+    s9_c1: "Build and maintain a centralized AI model inventory with model owner, data inputs, use case classification, risk tier, validation status, and deployment date. Update it quarterly at minimum.",
+    s9_c2: "Conduct AI-specific risk assessments for each model, evaluating fair lending risk, data privacy exposure (GLBA), financial reporting impact (SOX), and cybersecurity posture (23 NYCRR 500).",
+    s9_c3: "Implement independent model validation per SR 11-7 for all material AI models. Ensure validation covers conceptual soundness, data quality, ongoing performance monitoring, and outcomes analysis.",
+    s9_c4: "Document AI governance policies and obtain board-level or senior management approval. Include AI risk appetite, acceptable use policies, and escalation procedures for model failures.",
+    s9_c5: "Run disparate impact testing on all AI models used in credit, insurance, or employment decisions. Document the results and any less discriminatory alternatives considered.",
+    s9_c6: "Review AI vendor contracts for GLBA compliance, data residency, model training restrictions, and sub-processor controls. Assess concentration risk across foundation model providers.",
+    s9_c7: "Integrate AI systems into your SOX ICFR framework where models affect financial reporting. Establish change management procedures, human review checkpoints, and audit trails.",
+    s9_c8: "Conduct annual AI-focused penetration testing and adversarial robustness assessments, particularly for institutions subject to 23 NYCRR 500.",
+    s9_c9: "Prepare AI impact assessments for deployments in states with enacted AI legislation (Colorado, Illinois, Connecticut). Implement consumer disclosure and opt-out mechanisms where required.",
+    s9_c10: "Establish an AI incident response playbook covering model failure, biased outputs, data breaches involving AI systems, and regulatory inquiries. Test it through tabletop exercises at least annually.",
+    h2_outlook: "Looking Ahead: 2026-2027 Regulatory Outlook",
+    outlook_1: "The regulatory environment for AI in financial services will continue to tighten. The SEC's predictive data analytics rulemaking is expected to reach final form in late 2026 or early 2027. The CFPB has signaled increased scrutiny of AI-driven consumer lending, particularly around adverse action notice requirements for opaque models. Meanwhile, more states are introducing AI governance bills, and the federal government continues to explore comprehensive AI legislation, though bipartisan consensus remains elusive.",
+    outlook_2: "For CTOs and CISOs, the strategic imperative is clear: build AI governance infrastructure now, while you can do it proactively rather than reactively. Institutions that treat AI compliance as an afterthought will face not only regulatory penalties but also reputational damage and operational disruption when examiners arrive. Those that embed compliance into their AI development lifecycle will gain a durable competitive advantage -- the ability to deploy AI faster and with confidence that they can withstand scrutiny.",
+    closing: "The U.S. regulatory framework for AI in financial services is complex, but it is not unknowable. The agencies have been remarkably transparent about their expectations. The institutions that will thrive are those that listen, act, and document -- in that order.",
+    cta_title: "Need Help Navigating AI Compliance?",
+    cta_text: "Our team advises U.S. financial institutions on AI governance, model risk management, and regulatory compliance. We help you build frameworks aligned with FFIEC, OCC SR 11-7, NYDFS, and emerging state requirements -- before examiners ask the questions.",
+    cta_btn: "Book a Consultation"
+  },
+  fr: {
+    nav_back: "← Retour au blogue",
+    title: "Conformité de l’IA pour les institutions financières américaines : ce que les DSI et les RSSI doivent savoir",
+    author: "Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "18 septembre 2026",
+    read_time: "11 min de lecture",
+    intro_1: "L’intelligence artificielle transforme le secteur des services financiers américains à un rythme que les régulateurs peinent à suivre. Du trading algorithmique aux décisions de crédit automatisées, en passant par la détection de fraude assistée par l’IA et les agents conversationnels de service client, les banques, les courtiers, les compagnies d’assurance et les fintechs déploient des modèles d’apprentissage automatique dans toutes leurs fonctions métier. Or, le cadre réglementaire qui régit ces déploiements n’est ni simple ni unifié. Pour les DSI et les RSSI des institutions financières américaines, comprendre cet ensemble fragmenté d’exigences fédérales et étatiques n’est plus facultatif — c’est une obligation fiduciaire.",
+    intro_2: "Ce guide cartographie les principaux cadres réglementaires américains qui affectent l’adoption de l’IA dans les services financiers, explique leurs implications pratiques et fournit une liste de contrôle de conformité que votre équipe peut mettre en œuvre immédiatement. Que vous soyez une banque communautaire déployant son premier modèle d’IA ou une institution régionale qui étend un programme existant, voici les règles que vous devez maîtriser.",
+    h2_federal: "Le cadre réglementaire fédéral",
+    federal_intro: "Contrairement à l’UE, qui a adopté un règlement unique et global sur l’IA, les États-Unis régulent l’IA au moyen d’un système stratifié de lois sectorielles, de directives d’agences et d’attentes prudentielles. Pour les institutions financières, plusieurs cadres fédéraux convergent.",
+    s1_title: "GLBA (Gramm-Leach-Bliley Act) et traitement des données par l’IA",
+    s1_c1: "La règle de protection du GLBA exige que les institutions financières protègent les informations personnelles non publiques (NPI). Lorsque des systèmes d’IA ingèrent, traitent ou génèrent des résultats à partir de NPI de clients, ils relèvent pleinement du champ d’application de la règle de protection.",
+    s1_c2: "Les modèles d’IA entraînés sur des données clients doivent être répertoriés comme systèmes d’information dans votre évaluation des risques GLBA. Documentez quelles NPI chaque modèle utilise, comment les données d’entraînement sont stockées et si les résultats d’inférence pourraient ré-identifier des individus.",
+    s1_c3: "Les mesures d’application de la FTC en 2024-2025 ont précisé que les résultats algorithmiques dérivés de NPI sont eux-mêmes des informations protégées. Si votre système d’IA génère des scores de risque, des profils clients ou des prédictions comportementales, ces résultats héritent des protections du GLBA.",
+    s1_c4: "Les fournisseurs d’IA tiers qui reçoivent des NPI doivent être évalués dans le cadre de votre programme de surveillance des prestataires GLBA. La règle de protection exige des protections contractuelles et une surveillance continue — les assurances des fournisseurs seules ne suffisent pas.",
+    s2_title: "SOX (Sarbanes-Oxley) et l’IA dans l’information financière",
+    s2_c1: "Lorsque des systèmes d’IA contribuent à l’information financière — prévisions de revenus, calculs de provisions, estimations de dépréciation ou analyse des écritures comptables — ils deviennent pertinents pour les contrôles internes sur l’information financière (ICFR) de la section 404 de SOX.",
+    s2_c2: "Les auditeurs demandent de plus en plus la documentation des modèles, les dossiers de validation et les journaux de gestion des changements pour les systèmes d’IA qui alimentent les états financiers. Les directives du PCAOB de 2025 ont signalé les estimations assistées par l’IA comme un domaine de risque d’audit accru.",
+    s2_c3: "Établissez des procédures claires de contrôle des changements pour les modèles d’IA qui affectent l’information financière. Tout réentraînement, modification de l’ingénierie des caractéristiques ou ajustement de seuil doit passer par votre processus de gestion des changements ITGC.",
+    s2_c4: "Maintenez une révision humaine pour les chiffres financiers générés par l’IA. SOX exige que la direction puisse attester de l’exactitude des états financiers — l’automatisation complète des estimations significatives sans validation humaine crée un risque d’attestation.",
+    s3_title: "Directives du FFIEC sur l’IA/ML dans le secteur bancaire",
+    s3_c1: "La déclaration conjointe du FFIEC de 2025 sur l’IA/ML a établi des attentes prudentielles pour les cinq agences membres (OCC, FDIC, Réserve fédérale, NCUA et CFPB). Les examinateurs évaluent désormais la gouvernance de l’IA dans le cadre des examens de solidité.",
+    s3_c2: "Le FFIEC attend des institutions qu’elles appliquent des pratiques de gestion des risques proportionnelles à la complexité et à l’importance de chaque cas d’utilisation de l’IA. Un agent conversationnel répondant aux questions fréquentes ne requiert pas la même rigueur qu’un modèle de souscription de crédit — mais les deux nécessitent une documentation.",
+    s3_c3: "La supervision de l’IA par le conseil d’administration et la direction générale est désormais une attente prudentielle. Les examinateurs demanderont si votre conseil a été informé des déploiements d’IA, des risques associés et de l’appétit pour le risque IA de l’institution.",
+    s3_c4: "Les directives du FFIEC soulignent la nécessité d’explicabilité dans les décisions d’IA affectant les consommateurs. Si votre modèle ne peut produire une explication conforme aux exigences d’avis d’action négative du Règlement B ou de l’ECOA, il ne devrait pas être utilisé pour les décisions de crédit.",
+    s4_title: "Directives de la SEC sur l’IA et signaux d’application",
+    s4_c1: "La règle proposée par la SEC sur l’analytique prédictive (PDA) — introduite en 2023 et affinée jusqu’en 2025 — cible les courtiers et conseillers en investissement qui utilisent l’IA pour optimiser leurs propres revenus au détriment des intérêts des investisseurs. Même avant la réglementation finale, la Commission a signalé que les obligations fiduciaires existantes s’appliquent aux recommandations pilotées par l’IA.",
+    s4_c2: "La Division des examens de la SEC a ajouté la gouvernance de l’IA à ses priorités d’examen annuelles pour 2026. Les entreprises enregistrées doivent s’attendre à des questions sur les inventaires de modèles d’IA, les évaluations de conflits d’intérêts et les divulgations liées à l’IA aux clients.",
+    s4_c3: "L’« AI-washing » — faire des déclarations trompeuses sur les capacités d’IA dans les supports marketing ou les communications aux investisseurs — a attiré l’attention répressive de la SEC. En 2025, la Commission a réglé des accusations contre deux sociétés de conseil pour avoir exagéré leurs capacités d’IA. Assurez-vous que vos affirmations marketing correspondent à la fonctionnalité réelle de vos modèles.",
+    s4_c4: "Pour la divulgation des sociétés cotées, le personnel de la SEC a indiqué que les risques matériels liés à l’IA (défaillance de modèle, action réglementaire, violations de données impliquant des systèmes d’IA) pourraient devoir être divulgués dans les sections des facteurs de risque et du rapport de gestion.",
+    s5_title: "OCC SR 11-7 : gestion du risque de modèle pour l’IA",
+    s5_c1: "La lettre prudentielle SR 11-7 de l’OCC demeure la référence fondamentale pour la gouvernance des modèles d’IA dans les banques nationales. L’OCC a confirmé en 2024 que SR 11-7 s’applique pleinement aux modèles d’IA et d’apprentissage automatique, y compris les systèmes d’apprentissage profond et d’IA générative.",
+    s5_c2: "SR 11-7 exige une validation indépendante des modèles. Pour les modèles d’IA, cela signifie qu’une équipe qualifiée n’ayant pas construit le modèle doit valider sa solidité conceptuelle, l’intégrité des données, les métriques de performance et les limites avant le déploiement — et périodiquement par la suite.",
+    s5_c3: "La gestion du risque de modèle doit couvrir l’ensemble du cycle de vie : développement, mise en œuvre, utilisation et mise hors service. Les modèles d’IA qui évoluent par apprentissage continu ou réentraînement fréquent nécessitent des déclencheurs de validation liés aux changements significatifs de performance, pas seulement des calendriers fixes.",
+    s5_c4: "Maintenez un rapport de risque de modèle au conseil d’administration ou à un comité désigné. SR 11-7 attend un rapport agrégé de risque de modèle incluant le nombre de modèles en usage, le statut de validation, les exceptions et les constats significatifs — les modèles d’IA doivent être inclus.",
+    s6_title: "Directives de la Réserve fédérale sur la gouvernance de l’IA",
+    s6_c1: "Les directives complémentaires de la Réserve fédérale (SR 15-18 et lettres prudentielles ultérieures) s’appliquent aux banques membres et aux holdings bancaires. La Fed a souligné que la gouvernance de l’IA doit être intégrée aux cadres existants de gestion des risques d’entreprise plutôt que traitée comme un programme isolé.",
+    s6_c2: "Les directives de 2025 de la Fed sur les relations avec les tiers traitent explicitement des fournisseurs d’IA et des fournisseurs de modèles fondamentaux. Les institutions doivent évaluer si l’IA tierce crée un risque de concentration, une dépendance aux modèles ou des préoccupations de souveraineté des données.",
+    s6_c3: "Les implications de l’IA en matière de prêt équitable sont une priorité d’application de la Réserve fédérale. La Fed attend des institutions utilisant l’IA pour les décisions de crédit qu’elles effectuent des tests d’impact disparate et documentent toute alternative moins discriminatoire examinée.",
+    s6_c4: "La Réserve fédérale a rejoint les autres agences pour recommander le cadre NIST AI RMF comme référence utile pour les institutions financières. Bien que non obligatoire, l’alignement avec le NIST AI RMF démontre une gouvernance de bonne foi auprès des examinateurs.",
+    h2_state: "La réglementation de l’IA au niveau des États",
+    state_intro: "Au-delà de la surveillance fédérale, les institutions financières doivent composer avec un corpus croissant de lois étatiques sur l’IA. Ces lois varient considérablement en portée, mais plusieurs touchent directement les opérations de services financiers.",
+    s7_title: "NYDFS 23 NYCRR 500 et cybersécurité de l’IA",
+    s7_c1: "Le règlement de cybersécurité du NYDFS (23 NYCRR 500), modifié en 2023 et pleinement effectif en 2025, impose des exigences spécifiques aux entités couvertes qui s’étendent aux systèmes d’IA. Tout système d’IA accédant à des informations non publiques ou se connectant à vos systèmes d’information est un actif visé.",
+    s7_c2: "Le règlement 23 NYCRR 500 exige une politique de cybersécurité écrite approuvée par un dirigeant ou le conseil. Cette politique doit désormais couvrir les risques spécifiques à l’IA : altération de modèles, attaques adverses, empoisonnement des données d’entraînement et vecteurs de menaces liés à l’IA ciblant votre institution.",
+    s7_c3: "Les exigences de contrôle d’accès, de chiffrement et de piste d’audit du règlement s’appliquent à l’infrastructure d’IA. Les environnements d’entraînement, les API d’inférence et les bases vectorielles stockant des données clients doivent répondre aux mêmes contrôles de sécurité que les systèmes d’information traditionnels.",
+    s7_c4: "Les tests de pénétration et évaluations de vulnérabilités annuels sous 23 NYCRR 500 doivent désormais inclure les systèmes d’IA. Les examinateurs du NYDFS demandent si les institutions ont testé leurs modèles d’IA pour des vulnérabilités adverses en même temps que les tests d’infrastructure traditionnels.",
+    s8_title: "Lois étatiques émergentes affectant les services financiers",
+    s8_c1: "La loi du Colorado sur l’IA (SB 24-205), effective en février 2026, exige des déployeurs de systèmes d’IA à haut risque — y compris ceux prenant des décisions d’assurance et de crédit — de réaliser des évaluations d’impact, de divulguer l’utilisation de l’IA aux consommateurs et de fournir des mécanismes de désinscription si possible.",
+    s8_c2: "La loi de l’Illinois sur les entrevues vidéo par IA et le projet de loi sur la responsabilité de l’IA imposent des exigences de transparence sur la prise de décision automatisée dans l’emploi et les services financiers. Les institutions ayant des activités ou des clients en Illinois doivent évaluer leurs obligations de conformité.",
+    s8_c3: "Le Connecticut, le Texas, la Virginie et la Californie ont adopté ou proposé des législations de gouvernance de l’IA qui pourraient affecter les services financiers. Le cadre proposé par la Californie en matière de transparence et de responsabilité de l’IA créerait des exigences de divulgation et d’audit pour les systèmes d’IA à fort impact déployés dans cet État.",
+    s8_c4: "La conformité multi-étatique est inévitable. Les institutions financières opérant dans plusieurs États devraient adopter une approche du dénominateur commun le plus élevé : construire une gouvernance de l’IA satisfaisant les exigences étatiques les plus strictes vous permettra de respecter la plupart des autres par défaut.",
+    h2_checklist: "Liste de contrôle pratique de conformité",
+    checklist_intro: "La liste de contrôle suivante synthétise les exigences réglementaires ci-dessus en étapes concrètes. Chaque point est associé aux cadres qu’il couvre, permettant à votre équipe de prioriser en fonction de l’exposition réglementaire spécifique de votre institution.",
+    s9_title: "Liste de contrôle de conformité IA pour les institutions financières",
+    s9_c1: "Construire et maintenir un inventaire centralisé des modèles d’IA avec le responsable, les données d’entrée, la classification du cas d’utilisation, le niveau de risque, le statut de validation et la date de déploiement. Le mettre à jour au minimum chaque trimestre.",
+    s9_c2: "Réaliser des évaluations de risques spécifiques à l’IA pour chaque modèle, couvrant le risque de prêt équitable, l’exposition en matière de protection des données (GLBA), l’impact sur l’information financière (SOX) et la posture de cybersécurité (23 NYCRR 500).",
+    s9_c3: "Mettre en œuvre une validation indépendante des modèles conformément à SR 11-7 pour tous les modèles d’IA significatifs. S’assurer que la validation couvre la solidité conceptuelle, la qualité des données, le suivi continu des performances et l’analyse des résultats.",
+    s9_c4: "Documenter les politiques de gouvernance de l’IA et obtenir l’approbation du conseil ou de la direction générale. Inclure l’appétit pour le risque IA, les politiques d’utilisation acceptable et les procédures d’escalade en cas de défaillance de modèle.",
+    s9_c5: "Effectuer des tests d’impact disparate sur tous les modèles d’IA utilisés dans les décisions de crédit, d’assurance ou d’emploi. Documenter les résultats et toute alternative moins discriminatoire examinée.",
+    s9_c6: "Examiner les contrats des fournisseurs d’IA pour la conformité GLBA, la résidence des données, les restrictions d’entraînement de modèles et les contrôles des sous-traitants. Évaluer le risque de concentration parmi les fournisseurs de modèles fondamentaux.",
+    s9_c7: "Intégrer les systèmes d’IA dans votre cadre SOX ICFR lorsque les modèles affectent l’information financière. Établir des procédures de gestion des changements, des points de contrôle humain et des pistes d’audit.",
+    s9_c8: "Réaliser annuellement des tests de pénétration ciblant l’IA et des évaluations de robustesse adversarielle, particulièrement pour les institutions soumises au 23 NYCRR 500.",
+    s9_c9: "Préparer des évaluations d’impact de l’IA pour les déploiements dans les États disposant de législations IA (Colorado, Illinois, Connecticut). Mettre en place des mécanismes de divulgation et de désinscription pour les consommateurs lorsque requis.",
+    s9_c10: "Établir un cahier de réponse aux incidents IA couvrant les défaillances de modèles, les résultats biaisés, les violations de données impliquant des systèmes d’IA et les enquêtes réglementaires. Le tester par des exercices de simulation au moins une fois par an.",
+    h2_outlook: "Perspectives : horizon réglementaire 2026-2027",
+    outlook_1: "L’environnement réglementaire de l’IA dans les services financiers continuera de se resserrer. La réglementation de la SEC sur l’analytique prédictive devrait atteindre sa forme finale fin 2026 ou début 2027. Le CFPB a signalé un examen accru du crédit à la consommation piloté par l’IA, notamment autour des exigences d’avis d’action négative pour les modèles opaques. Parallèlement, de plus en plus d’États introduisent des projets de loi sur la gouvernance de l’IA, et le gouvernement fédéral continue d’explorer une législation globale sur l’IA, bien que le consensus bipartisan reste difficile à atteindre.",
+    outlook_2: "Pour les DSI et les RSSI, l’impératif stratégique est clair : construire l’infrastructure de gouvernance de l’IA maintenant, tant que vous pouvez le faire de manière proactive plutôt que réactive. Les institutions qui traitent la conformité IA comme une réflexion après coup feront face non seulement à des sanctions réglementaires, mais aussi à des atteintes à leur réputation et à des perturbations opérationnelles lorsque les examinateurs se présenteront. Celles qui intègrent la conformité dans leur cycle de développement de l’IA acquerront un avantage concurrentiel durable.",
+    closing: "Le cadre réglementaire américain pour l’IA dans les services financiers est complexe, mais il n’est pas insondable. Les agences ont fait preuve d’une transparence remarquable quant à leurs attentes. Les institutions qui prospéreront sont celles qui écoutent, agissent et documentent — dans cet ordre.",
+    cta_title: "Besoin d’aide pour naviguer la conformité IA ?",
+    cta_text: "Notre équipe conseille les institutions financières américaines en matière de gouvernance de l’IA, de gestion du risque de modèle et de conformité réglementaire. Nous vous aidons à construire des cadres alignés sur le FFIEC, l’OCC SR 11-7, le NYDFS et les exigences étatiques émergentes — avant que les examinateurs ne posent les questions.",
+    cta_btn: "Réserver une consultation"
+  },
+  es: {
+    nav_back: "← Volver al blog",
+    title: "Cumplimiento de IA para instituciones financieras de EE. UU.: lo que los CTO y CISO deben saber",
+    author: "Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "18 de septiembre de 2026",
+    read_time: "11 min de lectura",
+    intro_1: "La inteligencia artificial está transformando el sector de servicios financieros de Estados Unidos a un ritmo que los reguladores luchan por igualar. Desde el trading algorítmico y las decisiones de crédito automatizadas hasta la detección de fraude impulsada por IA y los chatbots de atención al cliente, bancos, corredores de bolsa, compañías de seguros y empresas fintech están desplegando modelos de aprendizaje automático en todas sus funciones de negocio. Sin embargo, el panorama regulatorio que gobierna estos despliegues no es ni simple ni unificado. Para los CTO y CISO de las instituciones financieras estadounidenses, comprender este mosaico de requisitos federales y estatales ya no es opcional: es una obligación fiduciaria.",
+    intro_2: "Esta guía traza los principales marcos regulatorios estadounidenses que afectan la adopción de IA en los servicios financieros, explica sus implicaciones prácticas y proporciona una lista de verificación de cumplimiento que su equipo puede implementar de inmediato. Ya sea que dirija un banco comunitario desplegando su primer modelo de IA o una institución regional que escala un programa existente, estas son las reglas que debe dominar.",
+    h2_federal: "El marco regulatorio federal",
+    federal_intro: "A diferencia de la UE, que ha promulgado una ley única e integral sobre IA, Estados Unidos regula la IA a través de un sistema estratificado de leyes sectoriales, directrices de agencias y expectativas de supervisión. Para las instituciones financieras, varios marcos federales convergen.",
+    s1_title: "GLBA (Ley Gramm-Leach-Bliley) y manejo de datos por IA",
+    s1_c1: "La Regla de Salvaguardas de la GLBA exige que las instituciones financieras protejan la información personal no pública (NPI). Cuando los sistemas de IA ingieren, procesan o generan resultados a partir de NPI de clientes, quedan plenamente dentro del ámbito de la Regla de Salvaguardas.",
+    s1_c2: "Los modelos de IA entrenados con datos de clientes deben inventariarse como sistemas de información en su evaluación de riesgos GLBA. Documente qué NPI utiliza cada modelo, cómo se almacenan los datos de entrenamiento y si los resultados de inferencia podrían reidentificar a individuos.",
+    s1_c3: "Las acciones de aplicación de la FTC en 2024-2025 han aclarado que los resultados algorítmicos derivados de NPI son en sí mismos información protegida. Si su sistema de IA genera puntuaciones de riesgo, perfiles de clientes o predicciones de comportamiento, esos resultados heredan las protecciones de la GLBA.",
+    s1_c4: "Los proveedores de IA de terceros que reciben NPI deben evaluarse dentro de su programa de supervisión de proveedores de servicios GLBA. La Regla de Salvaguardas exige protecciones contractuales y monitoreo continuo; las garantías del proveedor por sí solas no son suficientes.",
+    s2_title: "SOX (Sarbanes-Oxley) y la IA en la información financiera",
+    s2_c1: "Cuando los sistemas de IA contribuyen a la información financiera — pronósticos de ingresos, cálculos de reservas, estimaciones de deterioro o análisis de asientos contables — se vuelven relevantes para los controles internos sobre información financiera (ICFR) de la Sección 404 de SOX.",
+    s2_c2: "Los auditores piden cada vez más la documentación de modelos, los registros de validación y los registros de gestión de cambios para los sistemas de IA que alimentan los estados financieros. La guía del PCAOB de 2025 señaló las estimaciones asistidas por IA como un área de riesgo de auditoría elevado.",
+    s2_c3: "Establezca procedimientos claros de control de cambios para los modelos de IA que afectan la información financiera. Cualquier reentrenamiento, cambio en la ingeniería de características o ajuste de umbrales debe pasar por su proceso de gestión de cambios ITGC.",
+    s2_c4: "Mantenga revisión humana para las cifras financieras generadas por IA. SOX exige que la dirección pueda dar fe de la exactitud de los estados financieros; la automatización total de estimaciones materiales sin validación humana genera riesgo de atestación.",
+    s3_title: "Directrices del FFIEC sobre IA/ML en la banca",
+    s3_c1: "La declaración conjunta del FFIEC de 2025 sobre IA/ML estableció expectativas de supervisión en las cinco agencias miembros (OCC, FDIC, Reserva Federal, NCUA y CFPB). Los examinadores ahora evalúan la gobernanza de la IA como parte de los exámenes de solidez.",
+    s3_c2: "El FFIEC espera que las instituciones apliquen prácticas de gestión de riesgos proporcionales a la complejidad e importancia de cada caso de uso de IA. Un chatbot que responde preguntas frecuentes no requiere el mismo rigor de gobernanza que un modelo de suscripción de crédito, pero ambos necesitan documentación.",
+    s3_c3: "La supervisión de la IA por parte del consejo y la alta dirección es ahora una expectativa de supervisión. Los examinadores preguntarán si su consejo ha sido informado sobre los despliegues de IA, los riesgos asociados y el apetito de riesgo de IA de la institución.",
+    s3_c4: "Las directrices del FFIEC enfatizan la necesidad de explicabilidad en las decisiones de IA que afectan a los consumidores. Si su modelo no puede producir una explicación que cumpla con los requisitos de notificación de acción adversa bajo el Reglamento B o ECOA, no debería desplegarse para decisiones de crédito.",
+    s4_title: "Directrices de la SEC sobre IA y señales de aplicación",
+    s4_c1: "La norma propuesta por la SEC sobre analítica de datos predictivos (PDA) — introducida en 2023 y refinada hasta 2025 — se dirige a los corredores de bolsa y asesores de inversión que utilizan IA para optimizar sus propios ingresos a expensas de los intereses de los inversores. Incluso antes de la normativa final, la Comisión ha señalado que las obligaciones fiduciarias existentes se aplican a las recomendaciones impulsadas por IA.",
+    s4_c2: "La División de Exámenes de la SEC ha añadido la gobernanza de la IA a sus prioridades de examen anuales para 2026. Las firmas registradas deben esperar preguntas sobre inventarios de modelos de IA, evaluaciones de conflictos de interés para recomendaciones algorítmicas y divulgaciones relacionadas con IA a los clientes.",
+    s4_c3: "El «AI-washing» — hacer afirmaciones engañosas sobre capacidades de IA en materiales de marketing o comunicaciones a inversores — ha atraído la atención sancionadora de la SEC. En 2025, la Comisión resolvió cargos contra dos firmas de asesoría por exagerar sus capacidades de IA. Asegúrese de que sus afirmaciones de marketing coincidan con la funcionalidad real del modelo.",
+    s4_c4: "Para la divulgación de empresas públicas, el personal de la SEC ha indicado que los riesgos materiales de IA (fallo de modelo, acción regulatoria, violaciones de datos que involucren sistemas de IA) podrían necesitar divulgarse en las secciones de factores de riesgo y MD&A.",
+    s5_title: "OCC SR 11-7: gestión del riesgo de modelo para IA",
+    s5_c1: "La carta de supervisión SR 11-7 del OCC sigue siendo la guía fundamental para la gobernanza de modelos de IA en bancos nacionales. El OCC confirmó en 2024 que SR 11-7 se aplica plenamente a los modelos de IA y aprendizaje automático, incluidos los sistemas de aprendizaje profundo e IA generativa.",
+    s5_c2: "SR 11-7 requiere validación independiente de modelos. Para modelos de IA, esto significa que un equipo cualificado que no construyó el modelo debe validar su solidez conceptual, integridad de datos, métricas de rendimiento y limitaciones antes del despliegue, y periódicamente después.",
+    s5_c3: "La gestión del riesgo de modelo debe cubrir todo el ciclo de vida: desarrollo, implementación, uso y retiro. Los modelos de IA que evolucionan mediante aprendizaje continuo o reentrenamiento frecuente requieren disparadores de validación vinculados a cambios significativos en el rendimiento, no solo calendarios fijos.",
+    s5_c4: "Mantener informes de riesgo de modelo al consejo o a un comité designado. SR 11-7 espera informes agregados de riesgo de modelo que incluyan el número de modelos en uso, estado de validación, excepciones y hallazgos materiales; los modelos de IA deben incluirse.",
+    s6_title: "Directrices de la Reserva Federal sobre gobernanza de IA",
+    s6_c1: "Las directrices complementarias de la Reserva Federal (SR 15-18 y cartas de supervisión posteriores) se aplican a los bancos miembros estatales y holdings bancarios. La Fed ha enfatizado que la gobernanza de la IA debe integrarse en los marcos existentes de gestión de riesgos empresariales en lugar de tratarse como un programa aislado.",
+    s6_c2: "La guía de 2025 de la Fed sobre relaciones con terceros aborda explícitamente a los proveedores de IA y de modelos fundacionales. Las instituciones deben evaluar si la IA de terceros crea riesgo de concentración, dependencia de modelos o preocupaciones de soberanía de datos.",
+    s6_c3: "Las implicaciones de la IA para los préstamos justos son una prioridad de aplicación de la Reserva Federal. La Fed espera que las instituciones que usen IA para decisiones de crédito realicen pruebas de impacto dispar y documenten cualquier alternativa menos discriminatoria considerada.",
+    s6_c4: "La Reserva Federal se ha unido a otras agencias al respaldar el NIST AI RMF como referencia útil para las instituciones financieras. Aunque no es obligatorio, la alineación con el NIST AI RMF demuestra gobernanza de buena fe ante los examinadores.",
+    h2_state: "Regulación de la IA a nivel estatal",
+    state_intro: "Más allá de la supervisión federal, las instituciones financieras deben enfrentar un cuerpo creciente de legislación estatal sobre IA. Estas leyes varían significativamente en alcance, pero varias afectan directamente las operaciones de servicios financieros.",
+    s7_title: "NYDFS 23 NYCRR 500 y ciberseguridad de la IA",
+    s7_c1: "El reglamento de ciberseguridad del NYDFS (23 NYCRR 500), modificado en 2023 y plenamente vigente en 2025, impone requisitos específicos a las entidades cubiertas que se extienden a los sistemas de IA. Cualquier sistema de IA que acceda a información no pública o se conecte a sus sistemas de información es un activo en alcance.",
+    s7_c2: "El 23 NYCRR 500 exige una política de ciberseguridad escrita aprobada por un alto directivo o el consejo. Esa política debe abordar ahora los riesgos específicos de la IA: manipulación de modelos, ataques adversarios, envenenamiento de datos de entrenamiento y vectores de amenazas habilitados por IA dirigidos a su institución.",
+    s7_c3: "Los requisitos de control de acceso, cifrado y pistas de auditoría del reglamento se aplican a la infraestructura de IA. Los entornos de entrenamiento, las API de inferencia y las bases de datos vectoriales que almacenan datos de clientes deben cumplir los mismos controles de seguridad que los sistemas de información tradicionales.",
+    s7_c4: "Las pruebas de penetración anuales y las evaluaciones de vulnerabilidades bajo el 23 NYCRR 500 deben incluir ahora los sistemas de IA. Los examinadores del NYDFS preguntan si las instituciones han probado sus modelos de IA para vulnerabilidades adversarias junto con las pruebas de infraestructura tradicionales.",
+    s8_title: "Leyes estatales emergentes que afectan los servicios financieros",
+    s8_c1: "La Ley de IA de Colorado (SB 24-205), vigente desde febrero de 2026, exige a los implementadores de sistemas de IA de alto riesgo — incluidos los que toman decisiones de seguros y crédito — realizar evaluaciones de impacto, divulgar el uso de IA a los consumidores y proporcionar mecanismos de exclusión cuando sea factible.",
+    s8_c2: "La Ley de Entrevistas en Video con IA de Illinois y el proyecto de Ley de Responsabilidad de la IA imponen requisitos de transparencia en la toma de decisiones automatizada en el empleo y los servicios financieros. Las instituciones con operaciones o clientes en Illinois deben evaluar sus obligaciones de cumplimiento.",
+    s8_c3: "Connecticut, Texas, Virginia y California han promulgado o propuesto legislación de gobernanza de IA que podría afectar los servicios financieros. El marco propuesto por California sobre transparencia y responsabilidad de la IA crearía requisitos de divulgación y auditoría para sistemas de IA de alto impacto desplegados en el estado.",
+    s8_c4: "El cumplimiento multiestatal es inevitable. Las instituciones financieras que operan en varios estados deben adoptar un enfoque del máximo común denominador: construir una gobernanza de IA que satisfaga los requisitos estatales más estrictos les permitirá cumplir la mayoría de los demás por defecto.",
+    h2_checklist: "Lista de verificación práctica de cumplimiento",
+    checklist_intro: "La siguiente lista de verificación sintetiza los requisitos regulatorios anteriores en pasos concretos. Cada elemento está etiquetado con los marcos que aborda, lo que permite a su equipo priorizar según la exposición regulatoria específica de su institución.",
+    s9_title: "Lista de verificación de cumplimiento de IA para instituciones financieras",
+    s9_c1: "Construir y mantener un inventario centralizado de modelos de IA con el responsable, las entradas de datos, la clasificación del caso de uso, el nivel de riesgo, el estado de validación y la fecha de despliegue. Actualizarlo al menos trimestralmente.",
+    s9_c2: "Realizar evaluaciones de riesgo específicas de IA para cada modelo, evaluando el riesgo de préstamos justos, la exposición de privacidad de datos (GLBA), el impacto en la información financiera (SOX) y la postura de ciberseguridad (23 NYCRR 500).",
+    s9_c3: "Implementar validación independiente de modelos según SR 11-7 para todos los modelos de IA materiales. Asegurar que la validación cubra solidez conceptual, calidad de datos, monitoreo continuo del rendimiento y análisis de resultados.",
+    s9_c4: "Documentar las políticas de gobernanza de IA y obtener la aprobación del consejo o la alta dirección. Incluir apetito de riesgo de IA, políticas de uso aceptable y procedimientos de escalamiento para fallos de modelos.",
+    s9_c5: "Ejecutar pruebas de impacto dispar en todos los modelos de IA utilizados en decisiones de crédito, seguros o empleo. Documentar los resultados y cualquier alternativa menos discriminatoria considerada.",
+    s9_c6: "Revisar los contratos de proveedores de IA para cumplimiento de GLBA, residencia de datos, restricciones de entrenamiento de modelos y controles de subprocesadores. Evaluar el riesgo de concentración entre proveedores de modelos fundacionales.",
+    s9_c7: "Integrar los sistemas de IA en su marco SOX ICFR cuando los modelos afecten la información financiera. Establecer procedimientos de gestión de cambios, puntos de control humano y pistas de auditoría.",
+    s9_c8: "Realizar anualmente pruebas de penetración enfocadas en IA y evaluaciones de robustez adversarial, particularmente para instituciones sujetas al 23 NYCRR 500.",
+    s9_c9: "Preparar evaluaciones de impacto de IA para despliegues en estados con legislación de IA vigente (Colorado, Illinois, Connecticut). Implementar mecanismos de divulgación y exclusión para consumidores cuando sea requerido.",
+    s9_c10: "Establecer un manual de respuesta a incidentes de IA que cubra fallos de modelos, resultados sesgados, violaciones de datos que involucren sistemas de IA e investigaciones regulatorias. Probarlo mediante ejercicios de simulación al menos anualmente.",
+    h2_outlook: "Perspectivas: horizonte regulatorio 2026-2027",
+    outlook_1: "El entorno regulatorio para la IA en los servicios financieros seguirá endureciéndose. Se espera que la normativa de la SEC sobre analítica de datos predictivos alcance su forma final a finales de 2026 o principios de 2027. El CFPB ha señalado mayor escrutinio del crédito al consumo impulsado por IA, especialmente en torno a los requisitos de notificación de acción adversa para modelos opacos. Mientras tanto, más estados introducen proyectos de ley de gobernanza de IA y el gobierno federal continúa explorando legislación integral sobre IA, aunque el consenso bipartidista sigue siendo esquivo.",
+    outlook_2: "Para los CTO y CISO, el imperativo estratégico es claro: construir la infraestructura de gobernanza de IA ahora, mientras puedan hacerlo de manera proactiva en lugar de reactiva. Las instituciones que traten el cumplimiento de IA como algo secundario enfrentarán no solo sanciones regulatorias sino también daño reputacional y disrupciones operativas cuando lleguen los examinadores. Las que integren el cumplimiento en su ciclo de desarrollo de IA obtendrán una ventaja competitiva duradera.",
+    closing: "El marco regulatorio estadounidense para la IA en los servicios financieros es complejo, pero no es inescrutable. Las agencias han sido notablemente transparentes sobre sus expectativas. Las instituciones que prosperarán son las que escuchen, actúen y documenten, en ese orden.",
+    cta_title: "¿Necesita ayuda para navegar el cumplimiento de IA?",
+    cta_text: "Nuestro equipo asesora a instituciones financieras estadounidenses en gobernanza de IA, gestión del riesgo de modelo y cumplimiento regulatorio. Le ayudamos a construir marcos alineados con FFIEC, OCC SR 11-7, NYDFS y los requisitos estatales emergentes, antes de que los examinadores hagan las preguntas.",
+    cta_btn: "Reservar una consulta"
+  },
+  pt: {
+    nav_back: "← Voltar ao blog",
+    title: "Conformidade de IA para instituições financeiras dos EUA: o que CTOs e CISOs precisam saber",
+    author: "Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "18 de setembro de 2026",
+    read_time: "11 min de leitura",
+    intro_1: "A inteligência artificial está transformando o setor de serviços financeiros dos Estados Unidos a um ritmo que os reguladores lutam para acompanhar. Do trading algorítmico e decisões de crédito automatizadas à detecção de fraudes por IA e chatbots de atendimento ao cliente, bancos, corretoras, seguradoras e fintechs estão implantando modelos de aprendizado de máquina em todas as funções de negócio. No entanto, o panorama regulatório que governa essas implantações não é simples nem unificado. Para CTOs e CISOs de instituições financeiras americanas, compreender esse mosaico de requisitos federais e estaduais não é mais opcional — é uma obrigação fiduciária.",
+    intro_2: "Este guia mapeia os principais marcos regulatórios americanos que afetam a adoção de IA nos serviços financeiros, explica suas implicações práticas e fornece uma lista de verificação de conformidade que sua equipe pode implementar imediatamente. Seja um banco comunitário implantando seu primeiro modelo de IA ou uma instituição regional expandindo um programa existente, estas são as regras que você precisa dominar.",
+    h2_federal: "O marco regulatório federal",
+    federal_intro: "Diferentemente da UE, que promulgou uma lei única e abrangente sobre IA, os Estados Unidos regulam a IA por meio de um sistema estratificado de leis setoriais, diretrizes de agências e expectativas de supervisão. Para as instituições financeiras, vários marcos federais convergem.",
+    s1_title: "GLBA (Lei Gramm-Leach-Bliley) e tratamento de dados pela IA",
+    s1_c1: "A Regra de Salvaguardas da GLBA exige que as instituições financeiras protejam informações pessoais não públicas (NPI). Quando sistemas de IA ingerem, processam ou geram resultados a partir de NPI de clientes, eles se enquadram plenamente no escopo da Regra de Salvaguardas.",
+    s1_c2: "Os modelos de IA treinados com dados de clientes devem ser inventariados como sistemas de informação em sua avaliação de riscos GLBA. Documente quais NPI cada modelo acessa, como os dados de treinamento são armazenados e se os resultados de inferência poderiam reidentificar indivíduos.",
+    s1_c3: "As ações de aplicação da FTC em 2024-2025 esclareceram que os resultados algorítmicos derivados de NPI são, por si só, informações protegidas. Se seu sistema de IA gera pontuações de risco, perfis de clientes ou previsões comportamentais, esses resultados herdam as proteções da GLBA.",
+    s1_c4: "Fornecedores de IA terceirizados que recebem NPI devem ser avaliados dentro do seu programa de supervisão de prestadores de serviços GLBA. A Regra de Salvaguardas exige proteções contratuais e monitoramento contínuo — garantias do fornecedor isoladamente não são suficientes.",
+    s2_title: "SOX (Sarbanes-Oxley) e a IA na informação financeira",
+    s2_c1: "Quando sistemas de IA contribuem para a informação financeira — previsões de receita, cálculos de provisões, estimativas de imparidade ou análise de lançamentos contábeis — eles se tornam relevantes para os controles internos sobre informação financeira (ICFR) da Seção 404 da SOX.",
+    s2_c2: "Os auditores estão pedindo cada vez mais a documentação de modelos, registros de validação e logs de gestão de mudanças para sistemas de IA que alimentam demonstrações financeiras. A orientação do PCAOB de 2025 sinalizou as estimativas assistidas por IA como uma área de risco de auditoria elevado.",
+    s2_c3: "Estabeleça procedimentos claros de controle de mudanças para modelos de IA que afetam a informação financeira. Qualquer retreinamento, alteração na engenharia de características ou ajuste de limiares deve passar pelo seu processo de gestão de mudanças ITGC.",
+    s2_c4: "Mantenha revisão humana para números financeiros gerados por IA. A SOX exige que a administração possa atestar a precisão das demonstrações financeiras — a automação completa de estimativas materiais sem validação humana cria risco de atestação.",
+    s3_title: "Diretrizes do FFIEC sobre IA/ML no setor bancário",
+    s3_c1: "A declaração conjunta do FFIEC de 2025 sobre IA/ML estabeleceu expectativas de supervisão para as cinco agências membros (OCC, FDIC, Federal Reserve, NCUA e CFPB). Os examinadores agora avaliam a governança da IA como parte dos exames de solidez.",
+    s3_c2: "O FFIEC espera que as instituições apliquem práticas de gestão de riscos proporcionais à complexidade e materialidade de cada caso de uso de IA. Um chatbot que responde perguntas frequentes não requer o mesmo rigor de governança que um modelo de subscrição de crédito — mas ambos precisam de documentação.",
+    s3_c3: "A supervisão da IA pelo conselho de administração e pela alta direção é agora uma expectativa de supervisão. Os examinadores perguntarão se seu conselho foi informado sobre as implantações de IA, os riscos associados e o apetite de risco de IA da instituição.",
+    s3_c4: "As diretrizes do FFIEC enfatizam a necessidade de explicabilidade nas decisões de IA voltadas ao consumidor. Se seu modelo não consegue produzir uma explicação que satisfaça os requisitos de notificação de ação adversa sob o Regulamento B ou ECOA, não deve ser implantado para decisões de crédito.",
+    s4_title: "Diretrizes da SEC sobre IA e sinais de aplicação",
+    s4_c1: "A regra proposta pela SEC sobre analítica de dados preditivos (PDA) — introduzida em 2023 e refinada até 2025 — visa corretoras e consultores de investimento que usam IA para otimizar suas próprias receitas em detrimento dos interesses dos investidores. Mesmo antes da regulamentação final, a Comissão sinalizou que os deveres fiduciários existentes se aplicam a recomendações impulsionadas por IA.",
+    s4_c2: "A Divisão de Exames da SEC adicionou a governança de IA às suas prioridades de exame anuais para 2026. As firmas registradas devem esperar perguntas sobre inventários de modelos de IA, avaliações de conflitos de interesses para recomendações algorítmicas e divulgações relacionadas à IA aos clientes.",
+    s4_c3: "O «AI-washing» — fazer afirmações enganosas sobre capacidades de IA em materiais de marketing ou comunicações a investidores — atraiu a atenção de aplicação da SEC. Em 2025, a Comissão resolveu acusações contra duas firmas de consultoria por exagerar suas capacidades de IA. Certifique-se de que suas afirmações de marketing correspondam à funcionalidade real do modelo.",
+    s4_c4: "Para divulgação de empresas de capital aberto, o pessoal da SEC indicou que riscos materiais de IA (falha de modelo, ação regulatória, violações de dados envolvendo sistemas de IA) podem precisar ser divulgados nas seções de fatores de risco e MD&A.",
+    s5_title: "OCC SR 11-7: gestão de risco de modelo para IA",
+    s5_c1: "A carta de supervisão SR 11-7 do OCC permanece como a diretriz fundamental para governança de modelos de IA em bancos nacionais. O OCC confirmou em 2024 que a SR 11-7 se aplica integralmente a modelos de IA e aprendizado de máquina, incluindo sistemas de aprendizado profundo e IA generativa.",
+    s5_c2: "A SR 11-7 exige validação independente de modelos. Para modelos de IA, isso significa que uma equipe qualificada que não construiu o modelo deve validar sua solidez conceitual, integridade dos dados, métricas de desempenho e limitações antes da implantação — e periodicamente após.",
+    s5_c3: "A gestão de risco de modelo deve cobrir todo o ciclo de vida: desenvolvimento, implementação, uso e aposentadoria. Modelos de IA que evoluem por aprendizado contínuo ou retreinamento frequente requerem gatilhos de validação vinculados a mudanças significativas de desempenho, não apenas calendários fixos.",
+    s5_c4: "Manter relatórios de risco de modelo ao conselho ou a um comitê designado. A SR 11-7 espera relatórios agregados de risco de modelo incluindo o número de modelos em uso, status de validação, exceções e achados materiais — os modelos de IA devem ser incluídos.",
+    s6_title: "Diretrizes do Federal Reserve sobre governança de IA",
+    s6_c1: "As diretrizes complementares do Federal Reserve (SR 15-18 e cartas de supervisão subsequentes) aplicam-se a bancos membros estaduais e holdings bancárias. O Fed enfatizou que a governança de IA deve ser integrada aos frameworks existentes de gestão de riscos empresariais, em vez de tratada como um programa isolado.",
+    s6_c2: "As diretrizes de 2025 do Fed sobre relações com terceiros abordam explicitamente fornecedores de IA e de modelos fundacionais. As instituições devem avaliar se a IA de terceiros cria risco de concentração, dependência de modelos ou preocupações de soberania de dados.",
+    s6_c3: "As implicações da IA para empréstimos justos são uma prioridade de aplicação do Federal Reserve. O Fed espera que instituições usando IA para decisões de crédito conduzam testes de impacto díspar e documentem qualquer alternativa menos discriminatória considerada.",
+    s6_c4: "O Federal Reserve juntou-se a outras agências ao endossar o NIST AI RMF como referência útil para instituições financeiras. Embora não obrigatório, o alinhamento com o NIST AI RMF demonstra governança de boa-fé perante os examinadores.",
+    h2_state: "Regulamentação da IA em nível estadual",
+    state_intro: "Além da supervisão federal, as instituições financeiras devem lidar com um corpo crescente de legislação estadual sobre IA. Essas leis variam significativamente em escopo, mas várias afetam diretamente as operações de serviços financeiros.",
+    s7_title: "NYDFS 23 NYCRR 500 e cibersegurança da IA",
+    s7_c1: "O regulamento de cibersegurança do NYDFS (23 NYCRR 500), alterado em 2023 e plenamente vigente em 2025, impõe requisitos específicos às entidades cobertas que se estendem aos sistemas de IA. Qualquer sistema de IA que acesse informações não públicas ou se conecte aos seus sistemas de informação é um ativo no escopo.",
+    s7_c2: "O 23 NYCRR 500 exige uma política de cibersegurança escrita aprovada por um alto executivo ou pelo conselho. Essa política deve agora abordar riscos específicos da IA: adulteração de modelos, ataques adversariais, envenenamento de dados de treinamento e vetores de ameaças habilitados por IA direcionados à sua instituição.",
+    s7_c3: "Os requisitos de controle de acesso, criptografia e trilha de auditoria do regulamento aplicam-se à infraestrutura de IA. Ambientes de treinamento, APIs de inferência e bancos de dados vetoriais que armazenam dados de clientes devem atender aos mesmos controles de segurança dos sistemas de informação tradicionais.",
+    s7_c4: "Os testes de penetração anuais e avaliações de vulnerabilidades sob o 23 NYCRR 500 devem agora incluir sistemas de IA. Os examinadores do NYDFS estão perguntando se as instituições testaram seus modelos de IA para vulnerabilidades adversariais juntamente com os testes de infraestrutura tradicionais.",
+    s8_title: "Leis estaduais emergentes que afetam serviços financeiros",
+    s8_c1: "A Lei de IA do Colorado (SB 24-205), vigente desde fevereiro de 2026, exige que implantadores de sistemas de IA de alto risco — incluindo os que tomam decisões de seguros e crédito — realizem avaliações de impacto, divulguem o uso de IA aos consumidores e forneçam mecanismos de exclusão quando viável.",
+    s8_c2: "A Lei de Entrevistas em Vídeo com IA de Illinois e o projeto de Lei de Responsabilidade da IA impõem requisitos de transparência na tomada de decisão automatizada no emprego e nos serviços financeiros. Instituições com operações ou clientes em Illinois devem avaliar suas obrigações de conformidade.",
+    s8_c3: "Connecticut, Texas, Virgínia e Califórnia promulgaram ou propuseram legislação de governança de IA que poderia afetar serviços financeiros. O marco proposto pela Califórnia sobre transparência e responsabilidade da IA criaria requisitos de divulgação e auditoria para sistemas de IA de alto impacto implantados no estado.",
+    s8_c4: "A conformidade multiestadual é inevitável. Instituições financeiras que operam em vários estados devem adotar uma abordagem do máximo denominador comum: construir uma governança de IA que satisfaça os requisitos estaduais mais rigorosos permitirá cumprir a maioria dos demais por padrão.",
+    h2_checklist: "Lista de verificação prática de conformidade",
+    checklist_intro: "A lista de verificação a seguir sintetiza os requisitos regulatórios acima em etapas concretas. Cada item está associado aos marcos que aborda, permitindo que sua equipe priorize com base na exposição regulatória específica da sua instituição.",
+    s9_title: "Lista de verificação de conformidade de IA para instituições financeiras",
+    s9_c1: "Construir e manter um inventário centralizado de modelos de IA com o responsável, as entradas de dados, a classificação do caso de uso, o nível de risco, o status de validação e a data de implantação. Atualizá-lo no mínimo trimestralmente.",
+    s9_c2: "Realizar avaliações de risco específicas de IA para cada modelo, avaliando risco de empréstimos justos, exposição de privacidade de dados (GLBA), impacto na informação financeira (SOX) e postura de cibersegurança (23 NYCRR 500).",
+    s9_c3: "Implementar validação independente de modelos conforme SR 11-7 para todos os modelos de IA materiais. Garantir que a validação cubra solidez conceitual, qualidade dos dados, monitoramento contínuo de desempenho e análise de resultados.",
+    s9_c4: "Documentar as políticas de governança de IA e obter aprovação do conselho ou da alta direção. Incluir apetite de risco de IA, políticas de uso aceitável e procedimentos de escalonamento para falhas de modelos.",
+    s9_c5: "Executar testes de impacto díspar em todos os modelos de IA usados em decisões de crédito, seguros ou emprego. Documentar os resultados e qualquer alternativa menos discriminatória considerada.",
+    s9_c6: "Revisar os contratos de fornecedores de IA para conformidade com GLBA, residência de dados, restrições de treinamento de modelos e controles de subprocessadores. Avaliar o risco de concentração entre fornecedores de modelos fundacionais.",
+    s9_c7: "Integrar os sistemas de IA ao seu framework SOX ICFR quando os modelos afetarem a informação financeira. Estabelecer procedimentos de gestão de mudanças, pontos de controle humano e trilhas de auditoria.",
+    s9_c8: "Realizar anualmente testes de penetração focados em IA e avaliações de robustez adversarial, particularmente para instituições sujeitas ao 23 NYCRR 500.",
+    s9_c9: "Preparar avaliações de impacto de IA para implantações em estados com legislação de IA vigente (Colorado, Illinois, Connecticut). Implementar mecanismos de divulgação e exclusão para consumidores quando exigido.",
+    s9_c10: "Estabelecer um manual de resposta a incidentes de IA cobrindo falhas de modelos, resultados enviesados, violações de dados envolvendo sistemas de IA e investigações regulatórias. Testá-lo por meio de exercícios de simulação ao menos anualmente.",
+    h2_outlook: "Perspectivas: horizonte regulatório 2026-2027",
+    outlook_1: "O ambiente regulatório para IA nos serviços financeiros continuará se apertando. Espera-se que a regulamentação da SEC sobre analítica de dados preditivos alcance sua forma final no final de 2026 ou início de 2027. O CFPB sinalizou maior escrutínio do crédito ao consumidor impulsionado por IA, especialmente em torno dos requisitos de notificação de ação adversa para modelos opacos. Enquanto isso, mais estados introduzem projetos de lei de governança de IA e o governo federal continua explorando legislação abrangente sobre IA, embora o consenso bipartidário permaneça elusivo.",
+    outlook_2: "Para CTOs e CISOs, o imperativo estratégico é claro: construir a infraestrutura de governança de IA agora, enquanto é possível fazê-lo de forma proativa e não reativa. Instituições que tratem a conformidade de IA como algo secundário enfrentarão não apenas sanções regulatórias, mas também danos à reputação e interrupções operacionais quando os examinadores chegarem. Aquelas que integrarem a conformidade em seu ciclo de desenvolvimento de IA obterão uma vantagem competitiva duradoura.",
+    closing: "O marco regulatório americano para IA nos serviços financeiros é complexo, mas não é insondável. As agências têm sido notavelmente transparentes sobre suas expectativas. As instituições que prosperarão são aquelas que ouvem, agem e documentam — nessa ordem.",
+    cta_title: "Precisa de ajuda para navegar a conformidade de IA?",
+    cta_text: "Nossa equipe assessora instituições financeiras americanas em governança de IA, gestão de risco de modelo e conformidade regulatória. Ajudamos você a construir frameworks alinhados com FFIEC, OCC SR 11-7, NYDFS e requisitos estaduais emergentes — antes que os examinadores façam as perguntas.",
+    cta_btn: "Agendar uma consulta"
+  }
+};
+
+function applyLang(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      if (el.tagName === 'A' || el.tagName === 'BUTTON') {
+        el.textContent = t[key];
+      } else {
+        const tags = el.querySelectorAll('.framework-tag');
+        if (tags.length > 0) {
+          const tagHTML = Array.from(tags).map(tag => ' ' + tag.outerHTML).join('');
+          el.innerHTML = t[key] + tagHTML;
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    }
+  });
+  document.documentElement.lang = lang;
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let savedLang = 'en';
+  try { savedLang = localStorage.getItem('novawave_lang') || 'en'; } catch(e) {}
+  const switcher = document.getElementById('langSwitcher');
+  if (switcher) {
+    switcher.value = savedLang;
+    switcher.addEventListener('change', e => applyLang(e.target.value));
+  }
+  applyLang(savedLang);
+});
+</script>
+
+</body>
+</html>

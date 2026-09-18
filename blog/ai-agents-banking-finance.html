@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deploying AI Agents in Banking & Financial Services: A Security-First Approach | Consultations NovaWave</title>
+<meta name="description" content="A security-first guide to deploying AI agents in US banking and financial services. Covers fraud detection, KYC/AML automation, regulatory compliance with FFIEC, OCC SR 11-7, SEC, and CFPB, plus architecture patterns for agent orchestration.">
+<link rel="canonical" href="https://cnovawave.com/blog/ai-agents-banking-finance.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Deploying AI Agents in Banking & Financial Services: A Security-First Approach",
+  "description": "A security-first guide to deploying AI agents in US banking and financial services. Covers fraud detection, KYC/AML automation, regulatory compliance with FFIEC, OCC SR 11-7, SEC, and CFPB, plus architecture patterns for agent orchestration.",
+  "author": {
+    "@type": "Person",
+    "name": "Christian Antoine, Founder & Lead Consultant | CISA, PCIP"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Consultations NovaWave",
+    "url": "https://cnovawave.com"
+  },
+  "datePublished": "2026-09-18",
+  "dateModified": "2026-09-18",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cnovawave.com/blog/ai-agents-banking-finance.html"
+  },
+  "url": "https://cnovawave.com/blog/ai-agents-banking-finance.html",
+  "inLanguage": "en",
+  "keywords": ["AI agents", "banking", "financial services", "fraud detection", "KYC", "AML", "FFIEC", "OCC SR 11-7", "SEC", "CFPB", "agent orchestration", "cybersecurity", "compliance"]
+}
+</script>
+<style>
+:root {
+  --dark: #04090f;
+  --dark2: #070f1e;
+  --cyan: #00d4f0;
+  --green: #00f0a0;
+  --purple: #8b5cf6;
+  --amber: #f59e0b;
+  --off: #f2f6ff;
+  --muted: #a8b8d0;
+  --max-w: 760px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--dark);
+  color: var(--off);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; line-height: 1.25; }
+
+/* -- NAV -- */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 48px);
+  background: rgba(4,9,15,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0,212,240,.1);
+}
+.nav-brand {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem;
+  color: var(--off); text-decoration: none; white-space: nowrap;
+}
+.nav-brand span {
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-right { display: flex; align-items: center; gap: 18px; }
+.lang-select {
+  background: transparent; color: var(--muted); border: 1px solid rgba(0,212,240,.25);
+  border-radius: 6px; padding: 4px 8px; font-size: .82rem; font-family: 'Inter', sans-serif;
+  cursor: pointer; outline: none;
+}
+.lang-select option { background: var(--dark2); color: var(--off); }
+.nav-back {
+  color: var(--cyan); text-decoration: none; font-size: .88rem; font-weight: 500;
+  transition: color .2s;
+}
+.nav-back:hover { color: var(--green); }
+
+/* -- ARTICLE -- */
+.article-wrapper {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 56px 16px 80px;
+}
+.article-tag {
+  display: inline-block; font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--dark); background: var(--cyan);
+  padding: 3px 10px; border-radius: 4px; margin-bottom: 20px;
+}
+.article-title {
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 800;
+  margin-bottom: 20px; color: var(--off);
+}
+.article-meta {
+  display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center;
+  color: var(--muted); font-size: .85rem; font-weight: 400;
+  padding-bottom: 28px; margin-bottom: 36px;
+  border-bottom: 1px solid rgba(0,212,240,.12);
+}
+.article-meta .sep { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--cyan); vertical-align: middle; }
+.article-intro {
+  font-size: 1.08rem; font-weight: 300; color: var(--muted); line-height: 1.85;
+  margin-bottom: 40px;
+}
+
+/* -- CONTENT CARDS (use-case cards with left cyan border) -- */
+.q-card {
+  background: var(--dark2);
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 10px 10px 0;
+  padding: 28px 28px 24px;
+  margin-bottom: 32px;
+  transition: border-color .3s;
+}
+.q-card:hover { border-color: var(--green); }
+.q-number {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: .78rem;
+  color: var(--cyan); text-transform: uppercase; letter-spacing: .12em;
+  margin-bottom: 6px;
+}
+.q-card h2 {
+  font-size: 1.18rem; font-weight: 700; margin-bottom: 14px; color: var(--off);
+}
+.q-card p {
+  color: var(--muted); font-size: .94rem; margin-bottom: 12px; line-height: 1.75;
+}
+.q-card p:last-child { margin-bottom: 0; }
+.q-card strong { color: var(--off); font-weight: 600; }
+
+/* -- SECTION HEADINGS -- */
+.section-heading {
+  font-size: 1.35rem; font-weight: 700; color: var(--off);
+  margin: 48px 0 20px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,212,240,.12);
+}
+.section-heading .heading-num {
+  color: var(--cyan); margin-right: 8px;
+}
+
+/* -- BODY TEXT -- */
+.article-body p {
+  color: var(--muted); font-size: .95rem; margin-bottom: 18px; line-height: 1.78;
+}
+.article-body strong { color: var(--off); font-weight: 600; }
+.article-body ul {
+  color: var(--muted); font-size: .94rem; margin: 0 0 18px 20px; line-height: 1.78;
+}
+.article-body ul li { margin-bottom: 6px; }
+.article-body ul li strong { color: var(--off); }
+
+/* -- CTA -- */
+.cta-box {
+  text-align: center; margin-top: 56px; padding: 44px 24px;
+  border: 1px solid rgba(0,212,240,.15); border-radius: 14px;
+  background: linear-gradient(160deg, rgba(0,212,240,.04), rgba(0,240,160,.03));
+}
+.cta-box h3 {
+  font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--off);
+}
+.cta-box p { color: var(--muted); font-size: .95rem; margin-bottom: 24px; }
+.cta-btn {
+  display: inline-block; padding: 13px 36px; border-radius: 8px; font-weight: 600;
+  font-size: .95rem; text-decoration: none; color: var(--dark);
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  transition: opacity .25s;
+}
+.cta-btn:hover { opacity: .88; }
+
+/* -- FOOTER -- */
+.footer {
+  text-align: center; padding: 36px 16px;
+  border-top: 1px solid rgba(0,212,240,.08);
+  color: var(--muted); font-size: .8rem;
+}
+
+/* -- RESPONSIVE -- */
+@media (max-width: 600px) {
+  .q-card { padding: 20px 18px 18px; }
+  .nav-brand { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-brand">Consultations <span>NovaWave</span></a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSelect" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+    </select>
+    <a href="/blog.html" class="nav-back" data-i18n="nav_back">&larr; Back to blog</a>
+  </div>
+</nav>
+
+<!-- ARTICLE -->
+<article class="article-wrapper">
+
+  <span class="article-tag" data-i18n="tag">AI Agents</span>
+
+  <h1 class="article-title" data-i18n="title">Deploying AI Agents in Banking &amp; Financial Services: A Security-First Approach</h1>
+
+  <div class="article-meta">
+    <span data-i18n="author">By Christian Antoine, Founder &amp; Lead Consultant | CISA, PCIP</span>
+    <span class="sep"></span>
+    <span data-i18n="date">September 18, 2026</span>
+    <span class="sep"></span>
+    <span data-i18n="read_time">10 min read</span>
+  </div>
+
+  <p class="article-intro" data-i18n="intro">AI agents are no longer a research curiosity. They are production systems making real-time decisions inside American banks &mdash; flagging suspicious wire transfers, onboarding new customers, and monitoring trading desks for compliance violations. But unlike traditional machine learning models that score and recommend, AI agents act. They call APIs, trigger workflows, and execute multi-step processes with varying degrees of autonomy. That capability makes them powerful. It also makes them dangerous if deployed without the right security architecture and regulatory guardrails. This guide is a practical framework for US banking and financial services teams evaluating or deploying AI agents in 2026.</p>
+
+  <div class="article-body">
+
+    <!-- SECTION 1: What AI Agents Are -->
+    <h2 class="section-heading" data-i18n="s1_heading"><span class="heading-num">01.</span> What AI Agents Are &mdash; and Why They Are Different</h2>
+
+    <p data-i18n="s1_p1">A traditional ML model takes an input, runs it through a trained function, and returns an output &mdash; a credit score, a fraud probability, a sentiment classification. The model does not decide what to do next. A human or a rule engine reads the output and acts on it.</p>
+
+    <p data-i18n="s1_p2">An AI agent is fundamentally different. It receives a goal or instruction, reasons about how to achieve it, selects from a set of available tools, executes actions, observes the results, and iterates until the task is complete. A fraud detection agent does not just score a transaction &mdash; it can freeze the account, notify the customer, file a SAR draft, and escalate to a human investigator, all within a single workflow. That loop of perception, reasoning, and action is what separates agents from models.</p>
+
+    <p data-i18n="s1_p3">For financial institutions, this distinction matters because agents introduce a new category of operational risk. A model that produces a bad score is correctable at the decision layer. An agent that takes a bad action has already changed the state of the system &mdash; funds have been moved, accounts have been locked, regulatory filings have been initiated. The blast radius of a failure is larger, and the speed at which it propagates is faster.</p>
+
+    <!-- SECTION 2: Use Cases -->
+    <h2 class="section-heading" data-i18n="s2_heading"><span class="heading-num">02.</span> High-Value Use Cases in US Banking</h2>
+
+    <p data-i18n="s2_intro">The following use cases represent where AI agents are delivering measurable results in American financial institutions today. Each comes with specific security considerations that traditional AI deployments did not require.</p>
+
+  </div>
+
+  <!-- USE CASE CARDS -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="uc1_num">Use Case 01</div>
+    <h2 data-i18n="uc1_title">Fraud Detection &amp; Response Agents</h2>
+    <p data-i18n="uc1_p1">Modern fraud agents go beyond transaction scoring. They correlate signals across channels &mdash; card-present, ACH, wire, Zelle, and real-time payments &mdash; and execute response playbooks autonomously. When a pattern matches known fraud typologies, the agent can place temporary holds, trigger step-up authentication, and generate draft SARs for BSA officers to review.</p>
+    <p data-i18n="uc1_p2"><strong>Security consideration:</strong> Fraud agents require access to core banking systems and payment rails. Their tool permissions must be scoped precisely &mdash; an agent authorized to place a temporary hold should not have the ability to close an account or reverse a settled transaction. Every action must produce an immutable audit record that ties the decision back to the input signals.</p>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number" data-i18n="uc2_num">Use Case 02</div>
+    <h2 data-i18n="uc2_title">KYC/AML Automation Agents</h2>
+    <p data-i18n="uc2_p1">Customer due diligence is one of the most labor-intensive processes in banking. KYC agents can pull data from public registries, cross-reference sanctions lists (OFAC SDN, UN, EU), verify beneficial ownership structures, and compile risk profiles. For ongoing monitoring, they flag changes in customer behavior that may indicate layering or structuring activity.</p>
+    <p data-i18n="uc2_p2"><strong>Security consideration:</strong> KYC agents handle PII and sensitive financial data subject to the Gramm-Leach-Bliley Act (GLBA). Data accessed during the verification process must not persist in agent memory or context windows beyond the transaction. All external API calls &mdash; to OFAC, credit bureaus, or state registries &mdash; must be logged and auditable.</p>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number" data-i18n="uc3_num">Use Case 03</div>
+    <h2 data-i18n="uc3_title">Trading Compliance Monitoring</h2>
+    <p data-i18n="uc3_p1">For broker-dealers and investment banks, compliance agents can monitor communications and trading activity in real time for potential market manipulation, insider trading signals, and best-execution violations. These agents analyze structured trade data alongside unstructured communications &mdash; emails, chat transcripts, voice-to-text &mdash; to identify patterns that rule-based systems miss.</p>
+    <p data-i18n="uc3_p2"><strong>Security consideration:</strong> These agents operate under SEC and FINRA oversight. Their outputs may become evidence in enforcement actions. The agent's reasoning chain and the data it accessed must be preserved with forensic integrity. Model updates cannot retroactively change how prior alerts were generated.</p>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number" data-i18n="uc4_num">Use Case 04</div>
+    <h2 data-i18n="uc4_title">Customer Service &amp; Account Management Agents</h2>
+    <p data-i18n="uc4_p1">Customer-facing agents handle account inquiries, dispute resolution, loan pre-qualification, and product recommendations. The best implementations use agents that can access core banking data, understand account history, and resolve issues without transferring to a human &mdash; while knowing exactly when to escalate.</p>
+    <p data-i18n="uc4_p2"><strong>Security consideration:</strong> Customer-facing agents must never disclose account information to unauthorized parties. Multi-factor identity verification must precede any account-level action. Fair lending laws (ECOA, Fair Housing Act) apply to any agent making credit-related statements or recommendations &mdash; outputs must be tested for disparate impact.</p>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number" data-i18n="uc5_num">Use Case 05</div>
+    <h2 data-i18n="uc5_title">Credit Risk Assessment Agents</h2>
+    <p data-i18n="uc5_p1">Credit agents synthesize data from bureau reports, bank statements, tax returns, and alternative data sources to generate underwriting recommendations. Unlike static scorecards, these agents can request additional documentation, ask clarifying questions, and adapt their analysis based on the borrower's specific profile and the institution's current risk appetite.</p>
+    <p data-i18n="uc5_p2"><strong>Security consideration:</strong> Credit agents fall squarely under OCC model risk management guidance (SR 11-7). They require full model validation, including sensitivity analysis, stress testing, and ongoing performance monitoring. Adverse action notices generated by these agents must comply with ECOA and FCRA requirements, including specific and accurate reasons for denial.</p>
+  </div>
+
+  <div class="article-body">
+
+    <!-- SECTION 3: Security -->
+    <h2 class="section-heading" data-i18n="s3_heading"><span class="heading-num">03.</span> Security Architecture: Controlling Agent Autonomy</h2>
+
+    <p data-i18n="s3_p1">The core security challenge with AI agents is managing autonomy. An agent that can reason and act independently is only as safe as the boundaries placed around its decision space. Three principles should govern every financial services agent deployment:</p>
+
+    <p data-i18n="s3_p2"><strong>Agent autonomy boundaries.</strong> Every agent must operate within a defined action space. This means explicit whitelists of permitted tools, APIs, and data sources &mdash; not blacklists of prohibited ones. A fraud agent authorized to place 24-hour holds should have that specific capability granted, not a broad "account management" permission that happens to include holds. Permissions should be tiered: low-risk actions (read account data, generate a report) can execute autonomously, while high-risk actions (freeze assets, submit regulatory filings, execute trades) require human approval before execution.</p>
+
+    <p data-i18n="s3_p3"><strong>Human-in-the-loop requirements.</strong> Not every agent action needs human review, but every high-consequence action does. The HITL design must be thoughtful &mdash; if every decision requires approval, the agent adds latency without value. The right approach is risk-based escalation: define dollar thresholds, customer impact levels, and regulatory sensitivity tiers that trigger mandatory human review. For SAR filings, the BSA officer must review and approve. For large-value transaction holds above a defined threshold, a supervisor must confirm. For routine account inquiries, the agent operates independently.</p>
+
+    <p data-i18n="s3_p4"><strong>Audit trails.</strong> Every agent action, every tool call, every piece of data accessed, and every reasoning step must be logged to an immutable, tamper-evident audit trail. This is not optional &mdash; it is a regulatory expectation under FFIEC examination procedures and OCC guidance. The audit trail must capture the agent's input, the tools it selected, the data it retrieved, its intermediate reasoning, and its final action. Examiners will ask for this. Litigators will subpoena it. Build it from day one.</p>
+
+    <!-- SECTION 4: Regulatory -->
+    <h2 class="section-heading" data-i18n="s4_heading"><span class="heading-num">04.</span> Regulatory Guardrails for US Financial Institutions</h2>
+
+    <p data-i18n="s4_p1">AI agents in banking do not operate in a regulatory vacuum. Existing frameworks apply, and examiners are actively incorporating AI agent oversight into examination procedures. Here is how the major regulatory frameworks map to agent deployments:</p>
+
+    <ul>
+      <li data-i18n="s4_li1"><strong>FFIEC (Federal Financial Institutions Examination Council):</strong> The FFIEC IT Examination Handbook addresses automated decision systems and expects institutions to demonstrate that automated processes are controlled, auditable, and subject to change management. AI agents fall within this scope. Examiners will look for documented agent governance policies, tested rollback procedures, and evidence that agents are included in the institution's information security program.</li>
+      <li data-i18n="s4_li2"><strong>OCC Model Risk Management (SR 11-7 / OCC 2011-12):</strong> The OCC treats any quantitative method used for decision-making as a "model." AI agents that make or materially influence credit, compliance, or risk decisions are subject to full model risk management requirements &mdash; independent validation, ongoing monitoring, outcome analysis, and documented model inventories. The agent's reasoning architecture, not just its outputs, must be validated.</li>
+      <li data-i18n="s4_li3"><strong>SEC and FINRA:</strong> For broker-dealers and investment advisers, agents that interact with trading systems, generate investment recommendations, or monitor communications for compliance purposes operate under SEC Rule 206(4)-7 (compliance programs) and FINRA Rules 3110 and 3120 (supervision). The use of an AI agent does not reduce the firm's supervisory obligations &mdash; it may increase them.</li>
+      <li data-i18n="s4_li4"><strong>CFPB Fair Lending:</strong> The CFPB has been explicit that the use of AI does not exempt institutions from fair lending obligations. Agents involved in credit decisions, pricing, marketing, or servicing must be tested for disparate impact on protected classes. "The algorithm decided" is not an acceptable explanation for discriminatory outcomes. Institutions must be able to explain, in specific terms, why an agent took a particular action.</li>
+    </ul>
+
+    <!-- SECTION 5: Architecture -->
+    <h2 class="section-heading" data-i18n="s5_heading"><span class="heading-num">05.</span> Architecture Patterns for Secure Agent Deployment</h2>
+
+    <p data-i18n="s5_p1">Deploying agents in a regulated environment requires architecture decisions that go beyond typical software engineering. Four patterns are essential:</p>
+
+    <p data-i18n="s5_p2"><strong>1. Agent orchestration layer.</strong> Do not give individual agents direct access to production systems. Route all agent actions through an orchestration layer that enforces permissions, rate limits, and approval workflows. The orchestrator acts as a policy enforcement point &mdash; it validates that the agent's requested action falls within its authorized scope before executing it. This pattern also enables centralized monitoring and kill switches that can halt all agent activity instantly if an anomaly is detected.</p>
+
+    <p data-i18n="s5_p3"><strong>2. Tool access control.</strong> Each tool (API endpoint, database query, external service call) available to an agent must be individually permissioned. Use a capability-based security model: the agent receives explicit tokens for each tool it is authorized to use, scoped to specific operations and data sets. A KYC agent can read from the customer database but cannot write to it. A fraud agent can place holds but cannot reverse transactions. These permissions must be defined in code, version-controlled, and reviewed as part of the change management process.</p>
+
+    <p data-i18n="s5_p4"><strong>3. Sandboxing and isolation.</strong> Agent execution environments must be isolated from each other and from production systems. Each agent session should run in its own sandboxed environment with no shared memory or state across sessions unless explicitly designed. This prevents a compromised or malfunctioning agent from affecting other agents or accessing data outside its scope. For agents processing sensitive data (PII, account numbers, SSNs), the sandbox must enforce data egress controls that prevent sensitive information from leaking into logs, error messages, or external API calls.</p>
+
+    <p data-i18n="s5_p5"><strong>4. Output validation.</strong> Never trust agent output without validation. Every action an agent proposes should pass through a validation layer that checks for policy compliance, data integrity, and reasonableness. If a fraud agent attempts to freeze 500 accounts simultaneously, the validation layer should flag that as anomalous and require human review. If a credit agent generates an adverse action notice, the validation layer should verify that the stated reasons are consistent with the data in the application. Output validation is your last line of defense before an agent's decision affects a customer or the institution.</p>
+
+    <!-- SECTION 6: Community vs Large -->
+    <h2 class="section-heading" data-i18n="s6_heading"><span class="heading-num">06.</span> Deployment Realities: Community Banks vs. Large Institutions</h2>
+
+    <p data-i18n="s6_p1">The path to deploying AI agents looks different depending on institutional size. Large banks with dedicated AI teams, established model risk management frameworks, and existing orchestration infrastructure can build custom agent systems tailored to their specific risk profiles and regulatory relationships. They have the engineering staff to implement fine-grained tool access controls, the compliance teams to validate agent behavior against regulatory requirements, and the budget to maintain the ongoing monitoring and validation that agents demand.</p>
+
+    <p data-i18n="s6_p2">Community banks and mid-size institutions face a different reality. Most will adopt agents through their existing core banking vendors or through specialized fintech partnerships rather than building in-house. This is not a weakness &mdash; it is practical. But it shifts the risk management challenge from building agents to governing vendor-provided agents. The questions change: What actions can the vendor's agent take in our environment? Where does our data go when the agent processes it? Can we audit the agent's decision-making? Do we have a kill switch? Can we get the audit trail in a format our examiners will accept?</p>
+
+    <p data-i18n="s6_p3">Regardless of size, every institution deploying AI agents needs three things: a documented agent governance policy that maps to existing risk management frameworks, a tested incident response plan that specifically addresses agent failures (not just data breaches), and an ongoing monitoring program that tracks agent performance, fairness metrics, and drift over time. The examiners are coming. The institutions that can demonstrate controlled, auditable, well-governed agent deployments will be the ones that earn regulatory confidence &mdash; and competitive advantage.</p>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3 data-i18n="cta_title">Planning an AI Agent Deployment in Financial Services?</h3>
+    <p data-i18n="cta_text">We help banks and financial institutions design secure, compliant AI agent architectures &mdash; from governance frameworks and regulatory mapping to technical implementation and examiner readiness. Let&rsquo;s talk about your deployment.</p>
+    <a href="/#contact" class="cta-btn" data-i18n="cta_btn">Book a Consultation</a>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>&copy; 2026 Consultations NovaWave &mdash; Gatineau, QC, Canada</p>
+</footer>
+
+<script>
+const translations = {
+  en: {
+    nav_back: "← Back to blog",
+    tag: "AI Agents",
+    title: "Deploying AI Agents in Banking & Financial Services: A Security-First Approach",
+    author: "By Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "September 18, 2026",
+    read_time: "10 min read",
+    intro: "AI agents are no longer a research curiosity. They are production systems making real-time decisions inside American banks — flagging suspicious wire transfers, onboarding new customers, and monitoring trading desks for compliance violations. But unlike traditional machine learning models that score and recommend, AI agents act. They call APIs, trigger workflows, and execute multi-step processes with varying degrees of autonomy. That capability makes them powerful. It also makes them dangerous if deployed without the right security architecture and regulatory guardrails. This guide is a practical framework for US banking and financial services teams evaluating or deploying AI agents in 2026.",
+    s1_heading: "<span class=\"heading-num\">01.</span> What AI Agents Are — and Why They Are Different",
+    s1_p1: "A traditional ML model takes an input, runs it through a trained function, and returns an output — a credit score, a fraud probability, a sentiment classification. The model does not decide what to do next. A human or a rule engine reads the output and acts on it.",
+    s1_p2: "An AI agent is fundamentally different. It receives a goal or instruction, reasons about how to achieve it, selects from a set of available tools, executes actions, observes the results, and iterates until the task is complete. A fraud detection agent does not just score a transaction — it can freeze the account, notify the customer, file a SAR draft, and escalate to a human investigator, all within a single workflow. That loop of perception, reasoning, and action is what separates agents from models.",
+    s1_p3: "For financial institutions, this distinction matters because agents introduce a new category of operational risk. A model that produces a bad score is correctable at the decision layer. An agent that takes a bad action has already changed the state of the system — funds have been moved, accounts have been locked, regulatory filings have been initiated. The blast radius of a failure is larger, and the speed at which it propagates is faster.",
+    s2_heading: "<span class=\"heading-num\">02.</span> High-Value Use Cases in US Banking",
+    s2_intro: "The following use cases represent where AI agents are delivering measurable results in American financial institutions today. Each comes with specific security considerations that traditional AI deployments did not require.",
+    uc1_num: "Use Case 01", uc1_title: "Fraud Detection & Response Agents",
+    uc1_p1: "Modern fraud agents go beyond transaction scoring. They correlate signals across channels — card-present, ACH, wire, Zelle, and real-time payments — and execute response playbooks autonomously. When a pattern matches known fraud typologies, the agent can place temporary holds, trigger step-up authentication, and generate draft SARs for BSA officers to review.",
+    uc1_p2: "<strong>Security consideration:</strong> Fraud agents require access to core banking systems and payment rails. Their tool permissions must be scoped precisely — an agent authorized to place a temporary hold should not have the ability to close an account or reverse a settled transaction. Every action must produce an immutable audit record that ties the decision back to the input signals.",
+    uc2_num: "Use Case 02", uc2_title: "KYC/AML Automation Agents",
+    uc2_p1: "Customer due diligence is one of the most labor-intensive processes in banking. KYC agents can pull data from public registries, cross-reference sanctions lists (OFAC SDN, UN, EU), verify beneficial ownership structures, and compile risk profiles. For ongoing monitoring, they flag changes in customer behavior that may indicate layering or structuring activity.",
+    uc2_p2: "<strong>Security consideration:</strong> KYC agents handle PII and sensitive financial data subject to the Gramm-Leach-Bliley Act (GLBA). Data accessed during the verification process must not persist in agent memory or context windows beyond the transaction. All external API calls — to OFAC, credit bureaus, or state registries — must be logged and auditable.",
+    uc3_num: "Use Case 03", uc3_title: "Trading Compliance Monitoring",
+    uc3_p1: "For broker-dealers and investment banks, compliance agents can monitor communications and trading activity in real time for potential market manipulation, insider trading signals, and best-execution violations. These agents analyze structured trade data alongside unstructured communications — emails, chat transcripts, voice-to-text — to identify patterns that rule-based systems miss.",
+    uc3_p2: "<strong>Security consideration:</strong> These agents operate under SEC and FINRA oversight. Their outputs may become evidence in enforcement actions. The agent's reasoning chain and the data it accessed must be preserved with forensic integrity. Model updates cannot retroactively change how prior alerts were generated.",
+    uc4_num: "Use Case 04", uc4_title: "Customer Service & Account Management Agents",
+    uc4_p1: "Customer-facing agents handle account inquiries, dispute resolution, loan pre-qualification, and product recommendations. The best implementations use agents that can access core banking data, understand account history, and resolve issues without transferring to a human — while knowing exactly when to escalate.",
+    uc4_p2: "<strong>Security consideration:</strong> Customer-facing agents must never disclose account information to unauthorized parties. Multi-factor identity verification must precede any account-level action. Fair lending laws (ECOA, Fair Housing Act) apply to any agent making credit-related statements or recommendations — outputs must be tested for disparate impact.",
+    uc5_num: "Use Case 05", uc5_title: "Credit Risk Assessment Agents",
+    uc5_p1: "Credit agents synthesize data from bureau reports, bank statements, tax returns, and alternative data sources to generate underwriting recommendations. Unlike static scorecards, these agents can request additional documentation, ask clarifying questions, and adapt their analysis based on the borrower's specific profile and the institution's current risk appetite.",
+    uc5_p2: "<strong>Security consideration:</strong> Credit agents fall squarely under OCC model risk management guidance (SR 11-7). They require full model validation, including sensitivity analysis, stress testing, and ongoing performance monitoring. Adverse action notices generated by these agents must comply with ECOA and FCRA requirements, including specific and accurate reasons for denial.",
+    s3_heading: "<span class=\"heading-num\">03.</span> Security Architecture: Controlling Agent Autonomy",
+    s3_p1: "The core security challenge with AI agents is managing autonomy. An agent that can reason and act independently is only as safe as the boundaries placed around its decision space. Three principles should govern every financial services agent deployment:",
+    s3_p2: "<strong>Agent autonomy boundaries.</strong> Every agent must operate within a defined action space. This means explicit whitelists of permitted tools, APIs, and data sources — not blacklists of prohibited ones. A fraud agent authorized to place 24-hour holds should have that specific capability granted, not a broad \"account management\" permission that happens to include holds. Permissions should be tiered: low-risk actions (read account data, generate a report) can execute autonomously, while high-risk actions (freeze assets, submit regulatory filings, execute trades) require human approval before execution.",
+    s3_p3: "<strong>Human-in-the-loop requirements.</strong> Not every agent action needs human review, but every high-consequence action does. The HITL design must be thoughtful — if every decision requires approval, the agent adds latency without value. The right approach is risk-based escalation: define dollar thresholds, customer impact levels, and regulatory sensitivity tiers that trigger mandatory human review. For SAR filings, the BSA officer must review and approve. For large-value transaction holds above a defined threshold, a supervisor must confirm. For routine account inquiries, the agent operates independently.",
+    s3_p4: "<strong>Audit trails.</strong> Every agent action, every tool call, every piece of data accessed, and every reasoning step must be logged to an immutable, tamper-evident audit trail. This is not optional — it is a regulatory expectation under FFIEC examination procedures and OCC guidance. The audit trail must capture the agent's input, the tools it selected, the data it retrieved, its intermediate reasoning, and its final action. Examiners will ask for this. Litigators will subpoena it. Build it from day one.",
+    s4_heading: "<span class=\"heading-num\">04.</span> Regulatory Guardrails for US Financial Institutions",
+    s4_p1: "AI agents in banking do not operate in a regulatory vacuum. Existing frameworks apply, and examiners are actively incorporating AI agent oversight into examination procedures. Here is how the major regulatory frameworks map to agent deployments:",
+    s4_li1: "<strong>FFIEC (Federal Financial Institutions Examination Council):</strong> The FFIEC IT Examination Handbook addresses automated decision systems and expects institutions to demonstrate that automated processes are controlled, auditable, and subject to change management. AI agents fall within this scope. Examiners will look for documented agent governance policies, tested rollback procedures, and evidence that agents are included in the institution's information security program.",
+    s4_li2: "<strong>OCC Model Risk Management (SR 11-7 / OCC 2011-12):</strong> The OCC treats any quantitative method used for decision-making as a \"model.\" AI agents that make or materially influence credit, compliance, or risk decisions are subject to full model risk management requirements — independent validation, ongoing monitoring, outcome analysis, and documented model inventories. The agent's reasoning architecture, not just its outputs, must be validated.",
+    s4_li3: "<strong>SEC and FINRA:</strong> For broker-dealers and investment advisers, agents that interact with trading systems, generate investment recommendations, or monitor communications for compliance purposes operate under SEC Rule 206(4)-7 (compliance programs) and FINRA Rules 3110 and 3120 (supervision). The use of an AI agent does not reduce the firm's supervisory obligations — it may increase them.",
+    s4_li4: "<strong>CFPB Fair Lending:</strong> The CFPB has been explicit that the use of AI does not exempt institutions from fair lending obligations. Agents involved in credit decisions, pricing, marketing, or servicing must be tested for disparate impact on protected classes. \"The algorithm decided\" is not an acceptable explanation for discriminatory outcomes. Institutions must be able to explain, in specific terms, why an agent took a particular action.",
+    s5_heading: "<span class=\"heading-num\">05.</span> Architecture Patterns for Secure Agent Deployment",
+    s5_p1: "Deploying agents in a regulated environment requires architecture decisions that go beyond typical software engineering. Four patterns are essential:",
+    s5_p2: "<strong>1. Agent orchestration layer.</strong> Do not give individual agents direct access to production systems. Route all agent actions through an orchestration layer that enforces permissions, rate limits, and approval workflows. The orchestrator acts as a policy enforcement point — it validates that the agent's requested action falls within its authorized scope before executing it. This pattern also enables centralized monitoring and kill switches that can halt all agent activity instantly if an anomaly is detected.",
+    s5_p3: "<strong>2. Tool access control.</strong> Each tool (API endpoint, database query, external service call) available to an agent must be individually permissioned. Use a capability-based security model: the agent receives explicit tokens for each tool it is authorized to use, scoped to specific operations and data sets. A KYC agent can read from the customer database but cannot write to it. A fraud agent can place holds but cannot reverse transactions. These permissions must be defined in code, version-controlled, and reviewed as part of the change management process.",
+    s5_p4: "<strong>3. Sandboxing and isolation.</strong> Agent execution environments must be isolated from each other and from production systems. Each agent session should run in its own sandboxed environment with no shared memory or state across sessions unless explicitly designed. This prevents a compromised or malfunctioning agent from affecting other agents or accessing data outside its scope. For agents processing sensitive data (PII, account numbers, SSNs), the sandbox must enforce data egress controls that prevent sensitive information from leaking into logs, error messages, or external API calls.",
+    s5_p5: "<strong>4. Output validation.</strong> Never trust agent output without validation. Every action an agent proposes should pass through a validation layer that checks for policy compliance, data integrity, and reasonableness. If a fraud agent attempts to freeze 500 accounts simultaneously, the validation layer should flag that as anomalous and require human review. If a credit agent generates an adverse action notice, the validation layer should verify that the stated reasons are consistent with the data in the application. Output validation is your last line of defense before an agent's decision affects a customer or the institution.",
+    s6_heading: "<span class=\"heading-num\">06.</span> Deployment Realities: Community Banks vs. Large Institutions",
+    s6_p1: "The path to deploying AI agents looks different depending on institutional size. Large banks with dedicated AI teams, established model risk management frameworks, and existing orchestration infrastructure can build custom agent systems tailored to their specific risk profiles and regulatory relationships. They have the engineering staff to implement fine-grained tool access controls, the compliance teams to validate agent behavior against regulatory requirements, and the budget to maintain the ongoing monitoring and validation that agents demand.",
+    s6_p2: "Community banks and mid-size institutions face a different reality. Most will adopt agents through their existing core banking vendors or through specialized fintech partnerships rather than building in-house. This is not a weakness — it is practical. But it shifts the risk management challenge from building agents to governing vendor-provided agents. The questions change: What actions can the vendor's agent take in our environment? Where does our data go when the agent processes it? Can we audit the agent's decision-making? Do we have a kill switch? Can we get the audit trail in a format our examiners will accept?",
+    s6_p3: "Regardless of size, every institution deploying AI agents needs three things: a documented agent governance policy that maps to existing risk management frameworks, a tested incident response plan that specifically addresses agent failures (not just data breaches), and an ongoing monitoring program that tracks agent performance, fairness metrics, and drift over time. The examiners are coming. The institutions that can demonstrate controlled, auditable, well-governed agent deployments will be the ones that earn regulatory confidence — and competitive advantage.",
+    cta_title: "Planning an AI Agent Deployment in Financial Services?",
+    cta_text: "We help banks and financial institutions design secure, compliant AI agent architectures — from governance frameworks and regulatory mapping to technical implementation and examiner readiness. Let’s talk about your deployment.",
+    cta_btn: "Book a Consultation"
+  },
+  fr: {
+    nav_back: "← Retour au blogue",
+    tag: "Agents IA",
+    title: "Déployer des agents IA dans les services bancaires et financiers : une approche axée sur la sécurité",
+    author: "Par Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "18 septembre 2026",
+    read_time: "10 min de lecture",
+    intro: "Les agents IA ne sont plus une curiosité de recherche. Ce sont des systèmes en production qui prennent des décisions en temps réel au sein des banques américaines — signalant des virements suspects, intégrant de nouveaux clients et surveillant les bureaux de négociation pour détecter les violations de conformité. Mais contrairement aux modèles traditionnels d’apprentissage automatique qui évaluent et recommandent, les agents IA agissent. Ils appellent des API, déclenchent des flux de travail et exécutent des processus en plusieurs étapes avec différents degrés d’autonomie. Cette capacité les rend puissants. Elle les rend aussi dangereux s’ils sont déployés sans la bonne architecture de sécurité et les garde-fous réglementaires appropriés. Ce guide est un cadre pratique pour les équipes bancaires et de services financiers américaines qui évaluent ou déploient des agents IA en 2026.",
+    s1_heading: "<span class=\"heading-num\">01.</span> Ce que sont les agents IA — et pourquoi ils sont différents",
+    s1_p1: "Un modèle ML traditionnel prend une entrée, la traite à travers une fonction entraînée et renvoie une sortie — un score de crédit, une probabilité de fraude, une classification de sentiment. Le modèle ne décide pas de la suite. Un humain ou un moteur de règles lit la sortie et agit en conséquence.",
+    s1_p2: "Un agent IA est fondamentalement différent. Il reçoit un objectif ou une instruction, raisonne sur la manière de l’atteindre, sélectionne parmi un ensemble d’outils disponibles, exécute des actions, observe les résultats et itère jusqu’à ce que la tâche soit terminée. Un agent de détection de fraude ne se contente pas de noter une transaction — il peut geler le compte, notifier le client, rédiger un brouillon de déclaration de soupçon et escalader vers un enquêteur humain, le tout dans un seul flux de travail.",
+    s1_p3: "Pour les institutions financières, cette distinction compte car les agents introduisent une nouvelle catégorie de risque opérationnel. Un modèle qui produit un mauvais score est corrigeable au niveau décisionnel. Un agent qui prend une mauvaise action a déjà modifié l’état du système — des fonds ont été déplacés, des comptes verrouillés, des déclarations réglementaires initiées. Le rayon d’impact d’une défaillance est plus large et la vitesse de propagation plus rapide.",
+    s2_heading: "<span class=\"heading-num\">02.</span> Cas d’utilisation à forte valeur dans la banque américaine",
+    s2_intro: "Les cas d’utilisation suivants représentent les domaines où les agents IA produisent des résultats mesurables dans les institutions financières américaines aujourd’hui. Chacun comporte des considérations de sécurité spécifiques que les déploiements IA traditionnels ne nécessitaient pas.",
+    uc1_num: "Cas d’utilisation 01", uc1_title: "Agents de détection et de réponse à la fraude",
+    uc1_p1: "Les agents de fraude modernes vont au-delà de la notation des transactions. Ils corrèlent les signaux à travers les canaux — carte présente, ACH, virement, Zelle et paiements en temps réel — et exécutent des procédures de réponse de manière autonome. Lorsqu’un schéma correspond à des typologies de fraude connues, l’agent peut placer des blocages temporaires, déclencher une authentification renforcée et générer des brouillons de déclarations de soupçon pour examen par les responsables BSA.",
+    uc1_p2: "<strong>Considération de sécurité :</strong> Les agents de fraude nécessitent un accès aux systèmes bancaires centraux et aux rails de paiement. Leurs autorisations d’outils doivent être précisément délimitées — un agent autorisé à placer un blocage temporaire ne devrait pas pouvoir clôturer un compte ou annuler une transaction réglée.",
+    uc2_num: "Cas d’utilisation 02", uc2_title: "Agents d’automatisation KYC/LBA",
+    uc2_p1: "La diligence raisonnable client est l’un des processus les plus exigeants en main-d’œuvre dans la banque. Les agents KYC peuvent extraire des données de registres publics, croiser les listes de sanctions (OFAC SDN, ONU, UE), vérifier les structures de propriété effective et compiler des profils de risque.",
+    uc2_p2: "<strong>Considération de sécurité :</strong> Les agents KYC manipulent des données personnelles et financières sensibles soumises au Gramm-Leach-Bliley Act (GLBA). Les données consultées pendant le processus de vérification ne doivent pas persister dans la mémoire de l’agent au-delà de la transaction.",
+    uc3_num: "Cas d’utilisation 03", uc3_title: "Surveillance de la conformité des opérations de marché",
+    uc3_p1: "Pour les courtiers et les banques d’investissement, les agents de conformité peuvent surveiller les communications et l’activité de négociation en temps réel pour détecter les manipulations de marché potentielles, les signaux de délit d’initié et les violations de meilleure exécution.",
+    uc3_p2: "<strong>Considération de sécurité :</strong> Ces agents opèrent sous la supervision de la SEC et de la FINRA. Leurs résultats peuvent devenir des preuves dans des actions répressives. La chaîne de raisonnement de l’agent et les données consultées doivent être préservées avec une intégrité médico-légale.",
+    uc4_num: "Cas d’utilisation 04", uc4_title: "Agents de service client et de gestion de compte",
+    uc4_p1: "Les agents orientés client gèrent les demandes de renseignements, la résolution de litiges, la préqualification de prêts et les recommandations de produits. Les meilleures implémentations utilisent des agents capables d’accéder aux données bancaires centrales et de résoudre les problèmes sans transférer à un humain.",
+    uc4_p2: "<strong>Considération de sécurité :</strong> Les agents orientés client ne doivent jamais divulguer d’informations de compte à des parties non autorisées. La vérification d’identité multifacteur doit précéder toute action au niveau du compte.",
+    uc5_num: "Cas d’utilisation 05", uc5_title: "Agents d’évaluation du risque de crédit",
+    uc5_p1: "Les agents de crédit synthétisent des données provenant de rapports de bureaux, de relevés bancaires, de déclarations fiscales et de sources de données alternatives pour générer des recommandations de souscription.",
+    uc5_p2: "<strong>Considération de sécurité :</strong> Les agents de crédit relèvent directement des directives de gestion du risque de modèle de l’OCC (SR 11-7). Ils nécessitent une validation complète du modèle, incluant l’analyse de sensibilité, les tests de résistance et la surveillance continue des performances.",
+    s3_heading: "<span class=\"heading-num\">03.</span> Architecture de sécurité : contrôler l’autonomie des agents",
+    s3_p1: "Le défi de sécurité fondamental avec les agents IA est la gestion de l’autonomie. Un agent capable de raisonner et d’agir de manière indépendante n’est sûr qu’à hauteur des limites placées autour de son espace décisionnel. Trois principes doivent régir chaque déploiement d’agent dans les services financiers :",
+    s3_p2: "<strong>Limites d’autonomie des agents.</strong> Chaque agent doit opérer dans un espace d’action défini. Cela signifie des listes blanches explicites d’outils, d’API et de sources de données autorisés — pas des listes noires d’éléments interdits. Les autorisations doivent être échelonnées : les actions à faible risque peuvent s’exécuter de manière autonome, tandis que les actions à haut risque nécessitent une approbation humaine.",
+    s3_p3: "<strong>Exigences d’intervention humaine.</strong> Chaque action à conséquences élevées nécessite une révision humaine. La bonne approche est l’escalade basée sur le risque : définir des seuils de montant, des niveaux d’impact client et des niveaux de sensibilité réglementaire qui déclenchent une révision humaine obligatoire.",
+    s3_p4: "<strong>Pistes d’audit.</strong> Chaque action d’agent, chaque appel d’outil, chaque donnée consultée et chaque étape de raisonnement doit être consigné dans une piste d’audit immuable et inviolable. Ce n’est pas optionnel — c’est une attente réglementaire en vertu des procédures d’examen du FFIEC et des directives de l’OCC.",
+    s4_heading: "<span class=\"heading-num\">04.</span> Garde-fous réglementaires pour les institutions financières américaines",
+    s4_p1: "Les agents IA dans la banque n’opèrent pas dans un vide réglementaire. Les cadres existants s’appliquent et les examinateurs intègrent activement la supervision des agents IA dans les procédures d’examen. Voici comment les principaux cadres réglementaires s’appliquent aux déploiements d’agents :",
+    s4_li1: "<strong>FFIEC :</strong> Le Manuel d’examen informatique du FFIEC traite des systèmes de décision automatisés et exige que les institutions démontrent que les processus automatisés sont contrôlés, auditables et soumis à la gestion du changement. Les examinateurs rechercheront des politiques de gouvernance d’agents documentées et des procédures de restauration testées.",
+    s4_li2: "<strong>Gestion du risque de modèle de l’OCC (SR 11-7) :</strong> L’OCC traite toute méthode quantitative utilisée pour la prise de décision comme un « modèle ». Les agents IA qui prennent ou influencent matériellement des décisions de crédit, de conformité ou de risque sont soumis aux exigences complètes de gestion du risque de modèle.",
+    s4_li3: "<strong>SEC et FINRA :</strong> Pour les courtiers et les conseillers en investissement, les agents qui interagissent avec les systèmes de négociation ou génèrent des recommandations d’investissement opèrent sous les règles de conformité de la SEC et les règles de supervision de la FINRA. L’utilisation d’un agent IA ne réduit pas les obligations de supervision de la firme.",
+    s4_li4: "<strong>CFPB et prêts équitables :</strong> Le CFPB a été explicite : l’utilisation de l’IA n’exempte pas les institutions de leurs obligations en matière de prêts équitables. Les agents impliqués dans les décisions de crédit doivent être testés pour l’impact disparate sur les classes protégées. « L’algorithme a décidé » n’est pas une explication acceptable pour des résultats discriminatoires.",
+    s5_heading: "<span class=\"heading-num\">05.</span> Modèles d’architecture pour un déploiement sécurisé d’agents",
+    s5_p1: "Déployer des agents dans un environnement réglementé nécessite des décisions architecturales qui dépassent l’ingénierie logicielle classique. Quatre modèles sont essentiels :",
+    s5_p2: "<strong>1. Couche d’orchestration des agents.</strong> Ne donnez pas aux agents individuels un accès direct aux systèmes de production. Acheminez toutes les actions des agents via une couche d’orchestration qui applique les autorisations, les limites de débit et les flux d’approbation. L’orchestrateur agit comme un point d’application des politiques.",
+    s5_p3: "<strong>2. Contrôle d’accès aux outils.</strong> Chaque outil disponible pour un agent doit être autorisé individuellement. Utilisez un modèle de sécurité basé sur les capacités : l’agent reçoit des jetons explicites pour chaque outil qu’il est autorisé à utiliser, délimités à des opérations et des ensembles de données spécifiques.",
+    s5_p4: "<strong>3. Isolation et bac à sable.</strong> Les environnements d’exécution des agents doivent être isolés les uns des autres et des systèmes de production. Chaque session d’agent doit fonctionner dans son propre environnement isolé sans mémoire ou état partagé entre les sessions.",
+    s5_p5: "<strong>4. Validation des sorties.</strong> Ne faites jamais confiance aux sorties d’un agent sans validation. Chaque action proposée par un agent doit passer par une couche de validation qui vérifie la conformité aux politiques, l’intégrité des données et la plausibilité. La validation des sorties est votre dernière ligne de défense.",
+    s6_heading: "<span class=\"heading-num\">06.</span> Réalités du déploiement : banques communautaires vs grandes institutions",
+    s6_p1: "Le parcours de déploiement des agents IA diffère selon la taille de l’institution. Les grandes banques avec des équipes IA dédiées, des cadres de gestion du risque de modèle établis et une infrastructure d’orchestration existante peuvent construire des systèmes d’agents personnalisés adaptés à leurs profils de risque spécifiques.",
+    s6_p2: "Les banques communautaires et les institutions de taille moyenne font face à une réalité différente. La plupart adopteront des agents via leurs fournisseurs de solutions bancaires centrales existants ou par des partenariats fintech spécialisés plutôt que de développer en interne. Ce n’est pas une faiblesse — c’est pratique. Mais cela déplace le défi de gestion des risques de la construction d’agents vers la gouvernance d’agents fournis par des tiers.",
+    s6_p3: "Quelle que soit la taille, chaque institution déployant des agents IA a besoin de trois choses : une politique de gouvernance des agents documentée, un plan de réponse aux incidents testé qui traite spécifiquement des défaillances d’agents, et un programme de surveillance continue qui suit les performances, les métriques d’équité et la dérive au fil du temps. Les examinateurs arrivent. Les institutions capables de démontrer des déploiements d’agents contrôlés, auditables et bien gouvernés gagneront la confiance réglementaire — et l’avantage concurrentiel.",
+    cta_title: "Vous planifiez un déploiement d’agents IA dans les services financiers ?",
+    cta_text: "Nous aidons les banques et institutions financières à concevoir des architectures d’agents IA sécurisées et conformes — des cadres de gouvernance à la mise en œuvre technique et la préparation aux examens. Parlons de votre déploiement.",
+    cta_btn: "Réserver une consultation"
+  },
+  es: {
+    nav_back: "← Volver al blog",
+    tag: "Agentes IA",
+    title: "Despliegue de agentes IA en banca y servicios financieros: un enfoque centrado en la seguridad",
+    author: "Por Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "18 de septiembre de 2026",
+    read_time: "10 min de lectura",
+    intro: "Los agentes IA ya no son una curiosidad de investigación. Son sistemas en producción que toman decisiones en tiempo real dentro de los bancos estadounidenses — señalando transferencias sospechosas, incorporando nuevos clientes y monitoreando mesas de negociación en busca de violaciones de cumplimiento. Pero a diferencia de los modelos tradicionales de aprendizaje automático que evalúan y recomiendan, los agentes IA actúan. Llaman a APIs, activan flujos de trabajo y ejecutan procesos de múltiples pasos con distintos grados de autonomía. Esa capacidad los hace poderosos. También los hace peligrosos si se despliegan sin la arquitectura de seguridad y las salvaguardas regulatorias adecuadas. Esta guía es un marco práctico para los equipos bancarios y de servicios financieros estadounidenses que evalúan o despliegan agentes IA en 2026.",
+    s1_heading: "<span class=\"heading-num\">01.</span> Qué son los agentes IA — y por qué son diferentes",
+    s1_p1: "Un modelo ML tradicional toma una entrada, la procesa a través de una función entrenada y devuelve una salida — un puntaje crediticio, una probabilidad de fraude, una clasificación de sentimiento. El modelo no decide qué hacer después. Un humano o un motor de reglas lee la salida y actúa en consecuencia.",
+    s1_p2: "Un agente IA es fundamentalmente diferente. Recibe un objetivo o instrucción, razona sobre cómo lograrlo, selecciona entre un conjunto de herramientas disponibles, ejecuta acciones, observa los resultados e itera hasta completar la tarea. Un agente de detección de fraude no solo califica una transacción — puede congelar la cuenta, notificar al cliente, redactar un borrador de SAR y escalar a un investigador humano, todo dentro de un solo flujo de trabajo.",
+    s1_p3: "Para las instituciones financieras, esta distinción importa porque los agentes introducen una nueva categoría de riesgo operativo. Un modelo que produce un puntaje erróneo es corregible en la capa de decisión. Un agente que toma una acción errónea ya ha cambiado el estado del sistema — se han movido fondos, se han bloqueado cuentas, se han iniciado presentaciones regulatorias.",
+    s2_heading: "<span class=\"heading-num\">02.</span> Casos de uso de alto valor en la banca estadounidense",
+    s2_intro: "Los siguientes casos de uso representan dónde los agentes IA están entregando resultados medibles en las instituciones financieras estadounidenses hoy. Cada uno incluye consideraciones de seguridad específicas que los despliegues IA tradicionales no requerían.",
+    uc1_num: "Caso de uso 01", uc1_title: "Agentes de detección y respuesta al fraude",
+    uc1_p1: "Los agentes de fraude modernos van más allá de la calificación de transacciones. Correlacionan señales a través de canales — tarjeta presente, ACH, transferencia, Zelle y pagos en tiempo real — y ejecutan procedimientos de respuesta de forma autónoma.",
+    uc1_p2: "<strong>Consideración de seguridad:</strong> Los agentes de fraude requieren acceso a los sistemas bancarios centrales y a las vías de pago. Sus permisos de herramientas deben estar delimitados con precisión — un agente autorizado para colocar retenciones temporales no debería poder cerrar una cuenta o revertir una transacción liquidada.",
+    uc2_num: "Caso de uso 02", uc2_title: "Agentes de automatización KYC/AML",
+    uc2_p1: "La diligencia debida del cliente es uno de los procesos más intensivos en mano de obra en la banca. Los agentes KYC pueden extraer datos de registros públicos, cruzar listas de sanciones (OFAC SDN, ONU, UE), verificar estructuras de beneficiarios finales y compilar perfiles de riesgo.",
+    uc2_p2: "<strong>Consideración de seguridad:</strong> Los agentes KYC manejan datos personales y financieros sensibles sujetos al Gramm-Leach-Bliley Act (GLBA). Los datos consultados durante el proceso de verificación no deben persistir en la memoria del agente más allá de la transacción.",
+    uc3_num: "Caso de uso 03", uc3_title: "Monitoreo de cumplimiento en negociación",
+    uc3_p1: "Para corredores de bolsa y bancos de inversión, los agentes de cumplimiento pueden monitorear comunicaciones y actividad de negociación en tiempo real para detectar manipulación de mercado potencial, señales de uso de información privilegiada y violaciones de mejor ejecución.",
+    uc3_p2: "<strong>Consideración de seguridad:</strong> Estos agentes operan bajo la supervisión de la SEC y FINRA. Sus resultados pueden convertirse en evidencia en acciones de cumplimiento. La cadena de razonamiento del agente debe preservarse con integridad forense.",
+    uc4_num: "Caso de uso 04", uc4_title: "Agentes de servicio al cliente y gestión de cuentas",
+    uc4_p1: "Los agentes orientados al cliente gestionan consultas de cuenta, resolución de disputas, precalificación de préstamos y recomendaciones de productos. Las mejores implementaciones utilizan agentes que pueden acceder a datos bancarios centrales y resolver problemas sin transferir a un humano.",
+    uc4_p2: "<strong>Consideración de seguridad:</strong> Los agentes orientados al cliente nunca deben divulgar información de cuenta a partes no autorizadas. La verificación de identidad multifactor debe preceder cualquier acción a nivel de cuenta.",
+    uc5_num: "Caso de uso 05", uc5_title: "Agentes de evaluación de riesgo crediticio",
+    uc5_p1: "Los agentes de crédito sintetizan datos de informes de burós, estados de cuenta bancarios, declaraciones de impuestos y fuentes de datos alternativas para generar recomendaciones de suscripción.",
+    uc5_p2: "<strong>Consideración de seguridad:</strong> Los agentes de crédito están directamente bajo las directrices de gestión de riesgo de modelo de la OCC (SR 11-7). Requieren validación completa del modelo, incluyendo análisis de sensibilidad, pruebas de estrés y monitoreo continuo del rendimiento.",
+    s3_heading: "<span class=\"heading-num\">03.</span> Arquitectura de seguridad: controlando la autonomía de los agentes",
+    s3_p1: "El desafío de seguridad central con los agentes IA es gestionar la autonomía. Un agente que puede razonar y actuar de forma independiente solo es tan seguro como los límites establecidos alrededor de su espacio de decisión. Tres principios deben regir cada despliegue de agentes en servicios financieros:",
+    s3_p2: "<strong>Límites de autonomía del agente.</strong> Cada agente debe operar dentro de un espacio de acción definido. Esto significa listas blancas explícitas de herramientas, APIs y fuentes de datos permitidos. Los permisos deben estar escalonados: las acciones de bajo riesgo pueden ejecutarse de forma autónoma, mientras que las acciones de alto riesgo requieren aprobación humana.",
+    s3_p3: "<strong>Requisitos de intervención humana.</strong> No toda acción del agente necesita revisión humana, pero toda acción de alto impacto sí. El enfoque correcto es la escalada basada en riesgo: definir umbrales de monto, niveles de impacto al cliente y niveles de sensibilidad regulatoria que activen la revisión humana obligatoria.",
+    s3_p4: "<strong>Pistas de auditoría.</strong> Cada acción del agente, cada llamada a herramienta, cada dato consultado y cada paso de razonamiento debe registrarse en una pista de auditoría inmutable e inviolable. Esto no es opcional — es una expectativa regulatoria bajo los procedimientos de examen del FFIEC y las directrices de la OCC.",
+    s4_heading: "<span class=\"heading-num\">04.</span> Salvaguardas regulatorias para instituciones financieras estadounidenses",
+    s4_p1: "Los agentes IA en la banca no operan en un vacío regulatorio. Los marcos existentes se aplican y los examinadores están incorporando activamente la supervisión de agentes IA en los procedimientos de examen:",
+    s4_li1: "<strong>FFIEC:</strong> El Manual de Examen de TI del FFIEC aborda los sistemas de decisión automatizados y espera que las instituciones demuestren que los procesos automatizados están controlados, son auditables y están sujetos a gestión de cambios. Los examinadores buscarán políticas de gobernanza de agentes documentadas y procedimientos de reversión probados.",
+    s4_li2: "<strong>Gestión de riesgo de modelo de la OCC (SR 11-7):</strong> La OCC trata cualquier método cuantitativo utilizado para la toma de decisiones como un \"modelo\". Los agentes IA que toman o influyen materialmente en decisiones de crédito, cumplimiento o riesgo están sujetos a los requisitos completos de gestión de riesgo de modelo.",
+    s4_li3: "<strong>SEC y FINRA:</strong> Para corredores de bolsa y asesores de inversión, los agentes que interactúan con sistemas de negociación o generan recomendaciones de inversión operan bajo las reglas de cumplimiento de la SEC y las reglas de supervisión de FINRA.",
+    s4_li4: "<strong>CFPB y préstamos justos:</strong> El CFPB ha sido explícito: el uso de IA no exime a las instituciones de sus obligaciones de préstamos justos. Los agentes involucrados en decisiones crediticias deben ser evaluados por impacto disparate en clases protegidas.",
+    s5_heading: "<span class=\"heading-num\">05.</span> Patrones de arquitectura para un despliegue seguro de agentes",
+    s5_p1: "Desplegar agentes en un entorno regulado requiere decisiones de arquitectura que van más allá de la ingeniería de software típica. Cuatro patrones son esenciales:",
+    s5_p2: "<strong>1. Capa de orquestación de agentes.</strong> No dé a los agentes individuales acceso directo a los sistemas de producción. Enrute todas las acciones de los agentes a través de una capa de orquestación que aplique permisos, límites de velocidad y flujos de aprobación.",
+    s5_p3: "<strong>2. Control de acceso a herramientas.</strong> Cada herramienta disponible para un agente debe tener permisos individuales. Use un modelo de seguridad basado en capacidades: el agente recibe tokens explícitos para cada herramienta que está autorizado a usar.",
+    s5_p4: "<strong>3. Aislamiento y sandbox.</strong> Los entornos de ejecución de los agentes deben estar aislados entre sí y de los sistemas de producción. Cada sesión de agente debe ejecutarse en su propio entorno aislado sin memoria o estado compartido.",
+    s5_p5: "<strong>4. Validación de salidas.</strong> Nunca confíe en la salida de un agente sin validación. Cada acción que un agente propone debe pasar por una capa de validación que verifique el cumplimiento de políticas, la integridad de datos y la razonabilidad.",
+    s6_heading: "<span class=\"heading-num\">06.</span> Realidades del despliegue: bancos comunitarios vs. grandes instituciones",
+    s6_p1: "El camino para desplegar agentes IA se ve diferente según el tamaño institucional. Los grandes bancos con equipos de IA dedicados, marcos de gestión de riesgo de modelo establecidos e infraestructura de orquestación existente pueden construir sistemas de agentes personalizados adaptados a sus perfiles de riesgo específicos.",
+    s6_p2: "Los bancos comunitarios e instituciones medianas enfrentan una realidad diferente. La mayoría adoptará agentes a través de sus proveedores de banca central existentes o asociaciones fintech especializadas. Esto no es una debilidad — es práctico. Pero desplaza el desafío de gestión de riesgos de construir agentes a gobernar agentes proporcionados por proveedores.",
+    s6_p3: "Independientemente del tamaño, cada institución que despliega agentes IA necesita tres cosas: una política de gobernanza de agentes documentada, un plan de respuesta a incidentes probado que aborde específicamente las fallas de agentes, y un programa de monitoreo continuo que rastree el rendimiento, las métricas de equidad y la deriva a lo largo del tiempo.",
+    cta_title: "¿Planifica un despliegue de agentes IA en servicios financieros?",
+    cta_text: "Ayudamos a bancos e instituciones financieras a diseñar arquitecturas de agentes IA seguras y conformes — desde marcos de gobernanza y mapeo regulatorio hasta implementación técnica y preparación para exámenes. Hablemos de su despliegue.",
+    cta_btn: "Reservar una consulta"
+  },
+  pt: {
+    nav_back: "← Voltar ao blog",
+    tag: "Agentes IA",
+    title: "Implantação de agentes IA em bancos e serviços financeiros: uma abordagem focada em segurança",
+    author: "Por Christian Antoine, Founder & Lead Consultant | CISA, PCIP",
+    date: "18 de setembro de 2026",
+    read_time: "10 min de leitura",
+    intro: "Os agentes IA não são mais uma curiosidade de pesquisa. São sistemas em produção tomando decisões em tempo real dentro de bancos americanos — sinalizando transferências suspeitas, integrando novos clientes e monitorando mesas de operações em busca de violações de conformidade. Mas, ao contrário dos modelos tradicionais de aprendizado de máquina que avaliam e recomendam, os agentes IA agem. Eles chamam APIs, acionam fluxos de trabalho e executam processos de múltiplas etapas com diferentes graus de autonomia. Essa capacidade os torna poderosos. Também os torna perigosos se implantados sem a arquitetura de segurança e as salvaguardas regulatórias adequadas. Este guia é um framework prático para equipes bancárias e de serviços financeiros americanas que estão avaliando ou implantando agentes IA em 2026.",
+    s1_heading: "<span class=\"heading-num\">01.</span> O que são agentes IA — e por que são diferentes",
+    s1_p1: "Um modelo ML tradicional recebe uma entrada, a processa através de uma função treinada e retorna uma saída — um score de crédito, uma probabilidade de fraude, uma classificação de sentimento. O modelo não decide o que fazer a seguir. Um humano ou um motor de regras lê a saída e age com base nela.",
+    s1_p2: "Um agente IA é fundamentalmente diferente. Ele recebe um objetivo ou instrução, raciocina sobre como alcançá-lo, seleciona entre um conjunto de ferramentas disponíveis, executa ações, observa os resultados e itera até que a tarefa esteja concluída. Um agente de detecção de fraude não apenas classifica uma transação — ele pode congelar a conta, notificar o cliente, redigir um rascunho de SAR e escalar para um investigador humano, tudo em um único fluxo de trabalho.",
+    s1_p3: "Para as instituições financeiras, essa distinção importa porque os agentes introduzem uma nova categoria de risco operacional. Um modelo que produz um score ruim é corrigível na camada de decisão. Um agente que toma uma ação errada já alterou o estado do sistema — fundos foram movidos, contas foram bloqueadas, registros regulatórios foram iniciados.",
+    s2_heading: "<span class=\"heading-num\">02.</span> Casos de uso de alto valor na banca americana",
+    s2_intro: "Os seguintes casos de uso representam onde os agentes IA estão entregando resultados mensuráveis nas instituições financeiras americanas hoje. Cada um inclui considerações de segurança específicas que as implantações tradicionais de IA não exigiam.",
+    uc1_num: "Caso de uso 01", uc1_title: "Agentes de detecção e resposta a fraudes",
+    uc1_p1: "Os agentes de fraude modernos vão além da pontuação de transações. Eles correlacionam sinais através de canais — cartão presente, ACH, transferência, Zelle e pagamentos em tempo real — e executam procedimentos de resposta de forma autônoma.",
+    uc1_p2: "<strong>Consideração de segurança:</strong> Agentes de fraude requerem acesso aos sistemas bancários centrais e aos trilhos de pagamento. Suas permissões de ferramentas devem ser delimitadas com precisão — um agente autorizado a colocar retenções temporárias não deve poder fechar uma conta ou reverter uma transação liquidada.",
+    uc2_num: "Caso de uso 02", uc2_title: "Agentes de automação KYC/PLD",
+    uc2_p1: "A diligência devida do cliente é um dos processos mais intensivos em mão de obra na banca. Os agentes KYC podem extrair dados de registros públicos, cruzar listas de sanções (OFAC SDN, ONU, UE), verificar estruturas de beneficiários finais e compilar perfis de risco.",
+    uc2_p2: "<strong>Consideração de segurança:</strong> Os agentes KYC lidam com dados pessoais e financeiros sensíveis sujeitos ao Gramm-Leach-Bliley Act (GLBA). Os dados acessados durante o processo de verificação não devem persistir na memória do agente além da transação.",
+    uc3_num: "Caso de uso 03", uc3_title: "Monitoramento de conformidade em negociação",
+    uc3_p1: "Para corretoras e bancos de investimento, os agentes de conformidade podem monitorar comunicações e atividade de negociação em tempo real para detectar manipulação de mercado potencial, sinais de uso de informação privilegiada e violações de melhor execução.",
+    uc3_p2: "<strong>Consideração de segurança:</strong> Esses agentes operam sob a supervisão da SEC e FINRA. Seus resultados podem se tornar evidências em ações de fiscalização. A cadeia de raciocínio do agente deve ser preservada com integridade forense.",
+    uc4_num: "Caso de uso 04", uc4_title: "Agentes de atendimento ao cliente e gestão de contas",
+    uc4_p1: "Os agentes voltados ao cliente gerenciam consultas de conta, resolução de disputas, pré-qualificação de empréstimos e recomendações de produtos. As melhores implementações usam agentes que podem acessar dados bancários centrais e resolver problemas sem transferir para um humano.",
+    uc4_p2: "<strong>Consideração de segurança:</strong> Agentes voltados ao cliente nunca devem divulgar informações de conta a partes não autorizadas. A verificação de identidade multifator deve preceder qualquer ação no nível da conta.",
+    uc5_num: "Caso de uso 05", uc5_title: "Agentes de avaliação de risco de crédito",
+    uc5_p1: "Os agentes de crédito sintetizam dados de relatórios de burôs, extratos bancários, declarações de impostos e fontes de dados alternativas para gerar recomendações de subscrição.",
+    uc5_p2: "<strong>Consideração de segurança:</strong> Os agentes de crédito estão diretamente sob as diretrizes de gestão de risco de modelo da OCC (SR 11-7). Eles requerem validação completa do modelo, incluindo análise de sensibilidade, testes de estresse e monitoramento contínuo de desempenho.",
+    s3_heading: "<span class=\"heading-num\">03.</span> Arquitetura de segurança: controlando a autonomia dos agentes",
+    s3_p1: "O desafio de segurança central com agentes IA é gerenciar a autonomia. Um agente que pode raciocinar e agir de forma independente só é tão seguro quanto os limites colocados ao redor do seu espaço de decisão. Três princípios devem reger cada implantação de agentes em serviços financeiros:",
+    s3_p2: "<strong>Limites de autonomia do agente.</strong> Cada agente deve operar dentro de um espaço de ação definido. Isso significa listas brancas explícitas de ferramentas, APIs e fontes de dados permitidos. As permissões devem ser escalonadas: ações de baixo risco podem ser executadas autonomamente, enquanto ações de alto risco requerem aprovação humana.",
+    s3_p3: "<strong>Requisitos de intervenção humana.</strong> Nem toda ação do agente precisa de revisão humana, mas toda ação de alto impacto precisa. A abordagem correta é a escalação baseada em risco: definir limites de valores, níveis de impacto ao cliente e níveis de sensibilidade regulatória que acionem revisão humana obrigatória.",
+    s3_p4: "<strong>Trilhas de auditoria.</strong> Cada ação do agente, cada chamada de ferramenta, cada dado acessado e cada etapa de raciocínio deve ser registrado em uma trilha de auditoria imutável e inviolavel. Isso não é opcional — é uma expectativa regulatória sob os procedimentos de exame do FFIEC e as diretrizes da OCC.",
+    s4_heading: "<span class=\"heading-num\">04.</span> Salvaguardas regulatórias para instituições financeiras americanas",
+    s4_p1: "Os agentes IA na banca não operam em um vácuo regulatório. Os frameworks existentes se aplicam e os examinadores estão incorporando ativamente a supervisão de agentes IA nos procedimentos de exame:",
+    s4_li1: "<strong>FFIEC:</strong> O Manual de Exame de TI do FFIEC aborda sistemas de decisão automatizados e espera que as instituições demonstrem que os processos automatizados são controlados, auditáveis e sujeitos a gestão de mudanças. Os examinadores procurarão políticas de governança de agentes documentadas e procedimentos de reversão testados.",
+    s4_li2: "<strong>Gestão de risco de modelo da OCC (SR 11-7):</strong> A OCC trata qualquer método quantitativo usado para tomada de decisão como um \"modelo\". Os agentes IA que tomam ou influenciam materialmente decisões de crédito, conformidade ou risco estão sujeitos aos requisitos completos de gestão de risco de modelo.",
+    s4_li3: "<strong>SEC e FINRA:</strong> Para corretoras e consultores de investimento, os agentes que interagem com sistemas de negociação ou geram recomendações de investimento operam sob as regras de conformidade da SEC e as regras de supervisão da FINRA.",
+    s4_li4: "<strong>CFPB e empréstimos justos:</strong> O CFPB foi explícito: o uso de IA não isenta as instituições de suas obrigações de empréstimos justos. Os agentes envolvidos em decisões de crédito devem ser testados para impacto díspar em classes protegidas.",
+    s5_heading: "<span class=\"heading-num\">05.</span> Padrões de arquitetura para implantação segura de agentes",
+    s5_p1: "Implantar agentes em um ambiente regulado requer decisões de arquitetura que vão além da engenharia de software típica. Quatro padrões são essenciais:",
+    s5_p2: "<strong>1. Camada de orquestração de agentes.</strong> Não dê aos agentes individuais acesso direto aos sistemas de produção. Encaminhe todas as ações dos agentes através de uma camada de orquestração que aplique permissões, limites de taxa e fluxos de aprovação.",
+    s5_p3: "<strong>2. Controle de acesso a ferramentas.</strong> Cada ferramenta disponível para um agente deve ter permissões individuais. Use um modelo de segurança baseado em capacidades: o agente recebe tokens explícitos para cada ferramenta que está autorizado a usar.",
+    s5_p4: "<strong>3. Isolamento e sandbox.</strong> Os ambientes de execução dos agentes devem ser isolados uns dos outros e dos sistemas de produção. Cada sessão de agente deve ser executada em seu próprio ambiente isolado sem memória ou estado compartilhado.",
+    s5_p5: "<strong>4. Validação de saídas.</strong> Nunca confie na saída de um agente sem validação. Cada ação que um agente propõe deve passar por uma camada de validação que verifique a conformidade com políticas, a integridade dos dados e a razoabilidade.",
+    s6_heading: "<span class=\"heading-num\">06.</span> Realidades da implantação: bancos comunitários vs. grandes instituições",
+    s6_p1: "O caminho para implantar agentes IA é diferente dependendo do tamanho institucional. Os grandes bancos com equipes de IA dedicadas, frameworks de gestão de risco de modelo estabelecidos e infraestrutura de orquestração existente podem construir sistemas de agentes personalizados adaptados aos seus perfis de risco específicos.",
+    s6_p2: "Os bancos comunitários e instituições de médio porte enfrentam uma realidade diferente. A maioria adotará agentes através de seus fornecedores de soluções bancárias centrais existentes ou parcerias fintech especializadas. Isso não é uma fraqueza — é prático. Mas desloca o desafio de gestão de riscos de construir agentes para governar agentes fornecidos por terceiros.",
+    s6_p3: "Independentemente do tamanho, cada instituição que implanta agentes IA precisa de três coisas: uma política de governança de agentes documentada, um plano de resposta a incidentes testado que aborde especificamente falhas de agentes, e um programa de monitoramento contínuo que rastreie o desempenho, as métricas de equidade e a deriva ao longo do tempo. Os examinadores estão chegando. As instituições que puderem demonstrar implantações de agentes controladas, auditáveis e bem governadas serão as que ganharão confiança regulatória — e vantagem competitiva.",
+    cta_title: "Planejando uma implantação de agentes IA em serviços financeiros?",
+    cta_text: "Ajudamos bancos e instituições financeiras a projetar arquiteturas de agentes IA seguras e em conformidade — desde frameworks de governança e mapeamento regulatório até implementação técnica e preparação para exames. Vamos conversar sobre sua implantação.",
+    cta_btn: "Agendar uma consulta"
+  }
+};
+
+function applyLang(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = t[key];
+      } else {
+        el.innerHTML = t[key];
+      }
+    }
+  });
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sel = document.getElementById('langSelect');
+  let saved = 'en';
+  try { saved = localStorage.getItem('novawave_lang') || 'en'; } catch(e) {}
+  if (!translations[saved]) saved = 'en';
+  sel.value = saved;
+  applyLang(saved);
+  sel.addEventListener('change', () => applyLang(sel.value));
+});
+</script>
+</body>
+</html>
