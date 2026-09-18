@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Security Audit Checklist for Mid-Market Companies | Consultations NovaWave</title>
+<meta name="description" content="A comprehensive AI security audit checklist covering 10 critical domains for mid-market companies deploying AI/ML systems. Aligned with NIST AI RMF, EU AI Act, and ISO 42001.">
+<link rel="canonical" href="https://cnovawave.com/blog/ai-security-audit-checklist.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Security Audit Checklist for Mid-Market Companies",
+  "author": {
+    "@type": "Person",
+    "name": "Christian Antoine, PCIP"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Consultations NovaWave",
+    "url": "https://cnovawave.com"
+  },
+  "datePublished": "2026-09-18",
+  "dateModified": "2026-09-18",
+  "description": "A comprehensive AI security audit checklist covering 10 critical domains for mid-market companies deploying AI/ML systems. Aligned with NIST AI RMF, EU AI Act, and ISO 42001.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cnovawave.com/blog/ai-security-audit-checklist.html"
+  }
+}
+</script>
+<style>
+:root {
+  --dark: #04090f;
+  --dark2: #070f1e;
+  --cyan: #00d4f0;
+  --green: #00f0a0;
+  --purple: #8b5cf6;
+  --amber: #f59e0b;
+  --off: #f2f6ff;
+  --muted: #a8b8d0;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--dark);
+  color: var(--off);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.25; }
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(4, 9, 15, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 212, 240, 0.12);
+}
+.brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--off);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand span {
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.lang-select {
+  background: var(--dark2);
+  color: var(--muted);
+  border: 1px solid rgba(0, 212, 240, 0.2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+}
+.lang-select:focus { border-color: var(--cyan); }
+.back-link {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--green); }
+
+/* ── Article ── */
+.article-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 16px 80px;
+}
+.article-meta {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(0, 212, 240, 0.1);
+}
+.article-meta h1 {
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--off) 60%, var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+.meta-row .sep { color: rgba(168, 184, 208, 0.3); }
+
+.article-body p {
+  margin-bottom: 18px;
+  color: var(--off);
+  font-weight: 300;
+  font-size: 1.02rem;
+}
+.article-body h2 {
+  font-size: 1.35rem;
+  color: var(--cyan);
+  margin: 48px 0 12px;
+  padding-left: 14px;
+  border-left: 3px solid var(--cyan);
+}
+.article-body h3 {
+  font-size: 1.05rem;
+  color: var(--off);
+  margin: 28px 0 8px;
+  font-weight: 600;
+}
+
+/* ── Checklist Sections ── */
+.audit-section {
+  background: var(--dark2);
+  border: 1px solid rgba(0, 212, 240, 0.08);
+  border-radius: 10px;
+  padding: 24px 20px;
+  margin: 20px 0 32px;
+}
+.audit-section .section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--green);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(0, 240, 160, 0.1);
+  border: 1px solid rgba(0, 240, 160, 0.25);
+  font-size: 0.82rem;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.check-list { list-style: none; }
+.check-list li {
+  position: relative;
+  padding: 8px 0 8px 30px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--off);
+  line-height: 1.6;
+}
+.check-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 3px;
+  background: rgba(0, 212, 240, 0.06);
+}
+.check-list li::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 16px;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+  transform: rotate(-45deg);
+  opacity: 0.7;
+}
+.check-list li + li {
+  border-top: 1px solid rgba(168, 184, 208, 0.06);
+}
+
+.framework-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag-nist { background: rgba(139, 92, 246, 0.15); color: var(--purple); border: 1px solid rgba(139, 92, 246, 0.3); }
+.tag-eu { background: rgba(0, 212, 240, 0.1); color: var(--cyan); border: 1px solid rgba(0, 212, 240, 0.25); }
+.tag-iso { background: rgba(245, 158, 11, 0.1); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.25); }
+
+/* ── CTA ── */
+.cta-box {
+  margin-top: 56px;
+  padding: 32px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 212, 240, 0.06), rgba(0, 240, 160, 0.04));
+  border: 1px solid rgba(0, 212, 240, 0.15);
+  text-align: center;
+}
+.cta-box h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  color: var(--off);
+  margin-bottom: 10px;
+}
+.cta-box p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  color: var(--dark);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid rgba(0, 212, 240, 0.1);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { color: var(--green); }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .brand { font-size: 1rem; }
+  .nav-right { gap: 12px; }
+  .back-link { font-size: 0.8rem; }
+  .audit-section { padding: 18px 14px; }
+  .article-wrapper { padding: 32px 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <a href="/" class="brand">Consultations <span>NovaWave</span></a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSwitcher" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+    </select>
+    <a href="/blog.html" class="back-link" data-i18n="nav_back">&larr; Back to blog</a>
+  </div>
+</nav>
+
+<!-- ── Article ── -->
+<main class="article-wrapper">
+
+  <header class="article-meta">
+    <h1 data-i18n="title">AI Security Audit Checklist for Mid-Market Companies</h1>
+    <div class="meta-row">
+      <span data-i18n="author">Christian Antoine, PCIP</span>
+      <span class="sep">|</span>
+      <span data-i18n="date">September 18, 2026</span>
+      <span class="sep">|</span>
+      <span data-i18n="read_time">10 min read</span>
+    </div>
+  </header>
+
+  <article class="article-body">
+
+    <p data-i18n="intro_1">Mid-market companies are adopting AI at an unprecedented pace. From customer-facing chatbots to internal fraud detection models, organizations with 50 to 500 employees are deploying machine learning systems that handle sensitive data, make consequential decisions, and interface directly with production infrastructure. Yet most of these companies lack a structured approach to auditing the security posture of their AI systems.</p>
+
+    <p data-i18n="intro_2">This checklist distills the most critical audit domains into a practical framework that CISOs, IT directors, and security teams can apply immediately. Each domain is mapped to industry standards including the NIST AI Risk Management Framework (AI RMF), the EU AI Act, and ISO/IEC 42001 for AI management systems. Whether you are preparing for regulatory scrutiny, responding to a board-level inquiry, or building your AI security program from scratch, these 10 domains will give you comprehensive coverage.</p>
+
+    <!-- ── 1. Model Governance ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">1</span> <span data-i18n="s1_title">Model Governance &amp; Inventory</span></div>
+      <ul class="check-list">
+        <li data-i18n="s1_c1">Maintain a centralized inventory of all AI/ML models in production, staging, and development, including model type, training data sources, owner, and deployment date. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s1_c2">Establish a formal model approval workflow requiring sign-off from security, legal, and business stakeholders before any model reaches production.</li>
+        <li data-i18n="s1_c3">Document model lineage: track every version, retraining event, and hyperparameter change with immutable audit logs. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s1_c4">Define model retirement criteria and enforce decommissioning procedures for deprecated models to prevent shadow AI usage.</li>
+      </ul>
+    </div>
+
+    <!-- ── 2. Data Pipeline Security ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">2</span> <span data-i18n="s2_title">Data Pipeline Security</span></div>
+      <ul class="check-list">
+        <li data-i18n="s2_c1">Encrypt training and inference data at rest (AES-256) and in transit (TLS 1.3). Verify that feature stores, vector databases, and data lakes enforce encryption consistently.</li>
+        <li data-i18n="s2_c2">Implement data provenance tracking to ensure training datasets have not been tampered with, poisoned, or sourced from unauthorized origins. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s2_c3">Apply data minimization principles: collect and retain only the features necessary for model performance, and purge raw data according to your retention policy.</li>
+        <li data-i18n="s2_c4">Validate data pipeline integrity with checksums or cryptographic hashes at every transformation stage to detect injection or corruption.</li>
+      </ul>
+    </div>
+
+    <!-- ── 3. Access Controls ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">3</span> <span data-i18n="s3_title">Access Controls &amp; Authentication</span></div>
+      <ul class="check-list">
+        <li data-i18n="s3_c1">Enforce role-based access control (RBAC) on model training environments, inference endpoints, and model registries. Separate data scientist, MLOps, and production roles. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s3_c2">Require multi-factor authentication for access to model management platforms, Jupyter environments, and GPU clusters.</li>
+        <li data-i18n="s3_c3">Implement API authentication and rate limiting on all inference endpoints. Use short-lived tokens rather than static API keys wherever possible.</li>
+        <li data-i18n="s3_c4">Conduct quarterly access reviews to ensure departed employees, contractors, and expired service accounts have been deprovisioned from AI infrastructure.</li>
+      </ul>
+    </div>
+
+    <!-- ── 4. Input/Output Validation ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">4</span> <span data-i18n="s4_title">Model Input/Output Validation</span></div>
+      <ul class="check-list">
+        <li data-i18n="s4_c1">Validate and sanitize all inputs before they reach the model. For LLM-based systems, implement prompt injection detection and filtering layers.</li>
+        <li data-i18n="s4_c2">Apply output guardrails to prevent models from leaking training data, PII, internal system details, or generating harmful content in production responses.</li>
+        <li data-i18n="s4_c3">Set confidence-score thresholds and implement fallback mechanisms when model outputs fall below acceptable certainty levels. <span class="framework-tag tag-eu">EU AI Act</span></li>
+        <li data-i18n="s4_c4">Test for data leakage by running membership inference and model inversion attacks against your own systems during pre-deployment reviews.</li>
+      </ul>
+    </div>
+
+    <!-- ── 5. Adversarial Resistance ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">5</span> <span data-i18n="s5_title">Adversarial Attack Resistance</span></div>
+      <ul class="check-list">
+        <li data-i18n="s5_c1">Conduct adversarial robustness testing using established libraries (e.g., IBM ART, Microsoft Counterfit) to evaluate model behavior under evasion, poisoning, and extraction attacks. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s5_c2">Implement input perturbation detection to flag anomalous or adversarially crafted inputs before they reach inference pipelines.</li>
+        <li data-i18n="s5_c3">For LLM deployments, red-team the system against prompt injection, jailbreaking, and indirect prompt injection via retrieval-augmented generation (RAG) sources.</li>
+        <li data-i18n="s5_c4">Evaluate model extraction risk: assess whether query-response patterns could allow an attacker to reconstruct your proprietary model through repeated API calls.</li>
+      </ul>
+    </div>
+
+    <!-- ── 6. Bias & Fairness ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">6</span> <span data-i18n="s6_title">Bias &amp; Fairness Testing</span></div>
+      <ul class="check-list">
+        <li data-i18n="s6_c1">Run fairness metrics (demographic parity, equalized odds, calibration across groups) on all models that influence decisions about people, including hiring, lending, and risk scoring. <span class="framework-tag tag-eu">EU AI Act</span></li>
+        <li data-i18n="s6_c2">Document the demographic composition of training datasets and flag any significant underrepresentation of protected groups.</li>
+        <li data-i18n="s6_c3">Establish a bias incident reporting channel and remediation workflow with defined SLAs for investigating and correcting discriminatory model outputs. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s6_c4">Perform intersectional analysis, not just single-attribute testing, to catch compounding biases that emerge across multiple demographic dimensions.</li>
+      </ul>
+    </div>
+
+    <!-- ── 7. Logging & Monitoring ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">7</span> <span data-i18n="s7_title">Logging, Monitoring &amp; Drift Detection</span></div>
+      <ul class="check-list">
+        <li data-i18n="s7_c1">Log all inference requests and responses with timestamps, user/session identifiers, model version, and confidence scores. Retain logs per your compliance requirements. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s7_c2">Deploy model performance monitoring to detect data drift, concept drift, and prediction degradation in real time. Set automated alerts when metrics breach established thresholds.</li>
+        <li data-i18n="s7_c3">Integrate AI system logs into your SIEM platform to correlate model-layer anomalies with broader security events across your environment.</li>
+        <li data-i18n="s7_c4">Monitor resource consumption patterns on GPU/TPU infrastructure to detect unauthorized model training, cryptomining, or resource hijacking.</li>
+      </ul>
+    </div>
+
+    <!-- ── 8. Incident Response ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">8</span> <span data-i18n="s8_title">Incident Response for AI Systems</span></div>
+      <ul class="check-list">
+        <li data-i18n="s8_c1">Extend your incident response plan with AI-specific playbooks covering model compromise, training data poisoning, adversarial attacks, and unintended harmful outputs.</li>
+        <li data-i18n="s8_c2">Define rollback procedures: maintain the ability to revert any production model to its previous version within minutes, with automated health checks post-rollback.</li>
+        <li data-i18n="s8_c3">Conduct tabletop exercises at least annually simulating AI-specific incident scenarios, including supply-chain compromise of a third-party model. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s8_c4">Establish clear escalation paths and communication templates for notifying customers, regulators, and affected parties when an AI system produces harmful or discriminatory outcomes.</li>
+      </ul>
+    </div>
+
+    <!-- ── 9. Third-Party Risk ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">9</span> <span data-i18n="s9_title">Third-Party AI &amp; API Risk Management</span></div>
+      <ul class="check-list">
+        <li data-i18n="s9_c1">Inventory all third-party AI services, APIs, and foundation models in use. Document what data is sent to each provider and what processing occurs outside your perimeter.</li>
+        <li data-i18n="s9_c2">Review vendor agreements for data retention, model training on your data, and sub-processor clauses. Ensure your data is not used to improve the vendor's general-purpose models without explicit consent. <span class="framework-tag tag-eu">EU AI Act</span></li>
+        <li data-i18n="s9_c3">Evaluate vendor security certifications (SOC 2 Type II, ISO 27001) and request evidence of AI-specific security controls, including adversarial testing results.</li>
+        <li data-i18n="s9_c4">Implement circuit breakers and fallback logic for critical workflows that depend on third-party AI APIs, so that provider outages or model changes do not cascade into business disruptions.</li>
+      </ul>
+    </div>
+
+    <!-- ── 10. Regulatory Compliance ── -->
+    <div class="audit-section">
+      <div class="section-title"><span class="num">10</span> <span data-i18n="s10_title">Regulatory Compliance &amp; Framework Alignment</span></div>
+      <ul class="check-list">
+        <li data-i18n="s10_c1">Classify your AI systems by risk tier under the EU AI Act (unacceptable, high, limited, minimal risk). High-risk systems require conformity assessments, technical documentation, and human oversight mechanisms. <span class="framework-tag tag-eu">EU AI Act</span></li>
+        <li data-i18n="s10_c2">Map your AI security controls to the NIST AI RMF functions (Govern, Map, Measure, Manage) and document gaps. Use this mapping as the foundation for your remediation roadmap. <span class="framework-tag tag-nist">NIST AI RMF</span></li>
+        <li data-i18n="s10_c3">If pursuing formal certification, align your AI management system with ISO/IEC 42001 requirements, including leadership commitment, risk assessment methodology, and continual improvement processes. <span class="framework-tag tag-iso">ISO 42001</span></li>
+        <li data-i18n="s10_c4">Maintain audit-ready documentation: model cards, datasheets for datasets, impact assessments, and evidence of human oversight for every high-risk AI system in production.</li>
+        <li data-i18n="s10_c5">Track evolving regulations across jurisdictions. For Canadian organizations, monitor the Artificial Intelligence and Data Act (AIDA) and align cross-border AI deployments with both Canadian and international requirements.</li>
+      </ul>
+    </div>
+
+    <p data-i18n="closing_1">Completing this audit is not a one-time exercise. AI systems evolve with every retraining cycle, every dataset update, and every model version. The most effective security programs treat AI auditing as a continuous discipline, embedded into the MLOps lifecycle alongside performance monitoring and model validation.</p>
+
+    <p data-i18n="closing_2">For mid-market companies, the advantage is agility. You can implement these controls faster than an enterprise with thousands of models and years of technical debt. The key is to start now, before regulators, customers, or an incident force the issue.</p>
+
+    <!-- ── CTA ── -->
+    <div class="cta-box">
+      <h3 data-i18n="cta_title">Need Help With Your AI Security Audit?</h3>
+      <p data-i18n="cta_text">Our team specializes in AI security assessments for mid-market organizations. We can help you implement this checklist, identify gaps, and build a roadmap aligned with NIST AI RMF, the EU AI Act, and ISO 42001.</p>
+      <a href="/#contact" class="cta-btn" data-i18n="cta_btn">Book a Consultation</a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>&copy; 2026 <a href="/">Consultations NovaWave</a> &mdash; Gatineau, QC, Canada</p>
+</footer>
+
+<!-- ── i18n ── -->
+<script>
+const translations = {
+  en: {
+    nav_back: "← Back to blog",
+    title: "AI Security Audit Checklist for Mid-Market Companies",
+    author: "Christian Antoine, PCIP",
+    date: "September 18, 2026",
+    read_time: "10 min read",
+    intro_1: "Mid-market companies are adopting AI at an unprecedented pace. From customer-facing chatbots to internal fraud detection models, organizations with 50 to 500 employees are deploying machine learning systems that handle sensitive data, make consequential decisions, and interface directly with production infrastructure. Yet most of these companies lack a structured approach to auditing the security posture of their AI systems.",
+    intro_2: "This checklist distills the most critical audit domains into a practical framework that CISOs, IT directors, and security teams can apply immediately. Each domain is mapped to industry standards including the NIST AI Risk Management Framework (AI RMF), the EU AI Act, and ISO/IEC 42001 for AI management systems. Whether you are preparing for regulatory scrutiny, responding to a board-level inquiry, or building your AI security program from scratch, these 10 domains will give you comprehensive coverage.",
+    s1_title: "Model Governance & Inventory",
+    s1_c1: "Maintain a centralized inventory of all AI/ML models in production, staging, and development, including model type, training data sources, owner, and deployment date.",
+    s1_c2: "Establish a formal model approval workflow requiring sign-off from security, legal, and business stakeholders before any model reaches production.",
+    s1_c3: "Document model lineage: track every version, retraining event, and hyperparameter change with immutable audit logs.",
+    s1_c4: "Define model retirement criteria and enforce decommissioning procedures for deprecated models to prevent shadow AI usage.",
+    s2_title: "Data Pipeline Security",
+    s2_c1: "Encrypt training and inference data at rest (AES-256) and in transit (TLS 1.3). Verify that feature stores, vector databases, and data lakes enforce encryption consistently.",
+    s2_c2: "Implement data provenance tracking to ensure training datasets have not been tampered with, poisoned, or sourced from unauthorized origins.",
+    s2_c3: "Apply data minimization principles: collect and retain only the features necessary for model performance, and purge raw data according to your retention policy.",
+    s2_c4: "Validate data pipeline integrity with checksums or cryptographic hashes at every transformation stage to detect injection or corruption.",
+    s3_title: "Access Controls & Authentication",
+    s3_c1: "Enforce role-based access control (RBAC) on model training environments, inference endpoints, and model registries. Separate data scientist, MLOps, and production roles.",
+    s3_c2: "Require multi-factor authentication for access to model management platforms, Jupyter environments, and GPU clusters.",
+    s3_c3: "Implement API authentication and rate limiting on all inference endpoints. Use short-lived tokens rather than static API keys wherever possible.",
+    s3_c4: "Conduct quarterly access reviews to ensure departed employees, contractors, and expired service accounts have been deprovisioned from AI infrastructure.",
+    s4_title: "Model Input/Output Validation",
+    s4_c1: "Validate and sanitize all inputs before they reach the model. For LLM-based systems, implement prompt injection detection and filtering layers.",
+    s4_c2: "Apply output guardrails to prevent models from leaking training data, PII, internal system details, or generating harmful content in production responses.",
+    s4_c3: "Set confidence-score thresholds and implement fallback mechanisms when model outputs fall below acceptable certainty levels.",
+    s4_c4: "Test for data leakage by running membership inference and model inversion attacks against your own systems during pre-deployment reviews.",
+    s5_title: "Adversarial Attack Resistance",
+    s5_c1: "Conduct adversarial robustness testing using established libraries (e.g., IBM ART, Microsoft Counterfit) to evaluate model behavior under evasion, poisoning, and extraction attacks.",
+    s5_c2: "Implement input perturbation detection to flag anomalous or adversarially crafted inputs before they reach inference pipelines.",
+    s5_c3: "For LLM deployments, red-team the system against prompt injection, jailbreaking, and indirect prompt injection via retrieval-augmented generation (RAG) sources.",
+    s5_c4: "Evaluate model extraction risk: assess whether query-response patterns could allow an attacker to reconstruct your proprietary model through repeated API calls.",
+    s6_title: "Bias & Fairness Testing",
+    s6_c1: "Run fairness metrics (demographic parity, equalized odds, calibration across groups) on all models that influence decisions about people, including hiring, lending, and risk scoring.",
+    s6_c2: "Document the demographic composition of training datasets and flag any significant underrepresentation of protected groups.",
+    s6_c3: "Establish a bias incident reporting channel and remediation workflow with defined SLAs for investigating and correcting discriminatory model outputs.",
+    s6_c4: "Perform intersectional analysis, not just single-attribute testing, to catch compounding biases that emerge across multiple demographic dimensions.",
+    s7_title: "Logging, Monitoring & Drift Detection",
+    s7_c1: "Log all inference requests and responses with timestamps, user/session identifiers, model version, and confidence scores. Retain logs per your compliance requirements.",
+    s7_c2: "Deploy model performance monitoring to detect data drift, concept drift, and prediction degradation in real time. Set automated alerts when metrics breach established thresholds.",
+    s7_c3: "Integrate AI system logs into your SIEM platform to correlate model-layer anomalies with broader security events across your environment.",
+    s7_c4: "Monitor resource consumption patterns on GPU/TPU infrastructure to detect unauthorized model training, cryptomining, or resource hijacking.",
+    s8_title: "Incident Response for AI Systems",
+    s8_c1: "Extend your incident response plan with AI-specific playbooks covering model compromise, training data poisoning, adversarial attacks, and unintended harmful outputs.",
+    s8_c2: "Define rollback procedures: maintain the ability to revert any production model to its previous version within minutes, with automated health checks post-rollback.",
+    s8_c3: "Conduct tabletop exercises at least annually simulating AI-specific incident scenarios, including supply-chain compromise of a third-party model.",
+    s8_c4: "Establish clear escalation paths and communication templates for notifying customers, regulators, and affected parties when an AI system produces harmful or discriminatory outcomes.",
+    s9_title: "Third-Party AI & API Risk Management",
+    s9_c1: "Inventory all third-party AI services, APIs, and foundation models in use. Document what data is sent to each provider and what processing occurs outside your perimeter.",
+    s9_c2: "Review vendor agreements for data retention, model training on your data, and sub-processor clauses. Ensure your data is not used to improve the vendor’s general-purpose models without explicit consent.",
+    s9_c3: "Evaluate vendor security certifications (SOC 2 Type II, ISO 27001) and request evidence of AI-specific security controls, including adversarial testing results.",
+    s9_c4: "Implement circuit breakers and fallback logic for critical workflows that depend on third-party AI APIs, so that provider outages or model changes do not cascade into business disruptions.",
+    s10_title: "Regulatory Compliance & Framework Alignment",
+    s10_c1: "Classify your AI systems by risk tier under the EU AI Act (unacceptable, high, limited, minimal risk). High-risk systems require conformity assessments, technical documentation, and human oversight mechanisms.",
+    s10_c2: "Map your AI security controls to the NIST AI RMF functions (Govern, Map, Measure, Manage) and document gaps. Use this mapping as the foundation for your remediation roadmap.",
+    s10_c3: "If pursuing formal certification, align your AI management system with ISO/IEC 42001 requirements, including leadership commitment, risk assessment methodology, and continual improvement processes.",
+    s10_c4: "Maintain audit-ready documentation: model cards, datasheets for datasets, impact assessments, and evidence of human oversight for every high-risk AI system in production.",
+    s10_c5: "Track evolving regulations across jurisdictions. For Canadian organizations, monitor the Artificial Intelligence and Data Act (AIDA) and align cross-border AI deployments with both Canadian and international requirements.",
+    closing_1: "Completing this audit is not a one-time exercise. AI systems evolve with every retraining cycle, every dataset update, and every model version. The most effective security programs treat AI auditing as a continuous discipline, embedded into the MLOps lifecycle alongside performance monitoring and model validation.",
+    closing_2: "For mid-market companies, the advantage is agility. You can implement these controls faster than an enterprise with thousands of models and years of technical debt. The key is to start now, before regulators, customers, or an incident force the issue.",
+    cta_title: "Need Help With Your AI Security Audit?",
+    cta_text: "Our team specializes in AI security assessments for mid-market organizations. We can help you implement this checklist, identify gaps, and build a roadmap aligned with NIST AI RMF, the EU AI Act, and ISO 42001.",
+    cta_btn: "Book a Consultation"
+  },
+  fr: {
+    nav_back: "← Retour au blogue",
+    title: "Liste de contrôle d’audit de sécurité IA pour les entreprises de taille moyenne",
+    author: "Christian Antoine, PCIP",
+    date: "18 septembre 2026",
+    read_time: "10 min de lecture",
+    intro_1: "Les entreprises de taille moyenne adoptent l’IA à un rythme sans précédent. Des agents conversationnels destinés aux clients aux modèles internes de détection de fraude, les organisations de 50 à 500 employés déploient des systèmes d’apprentissage automatique qui traitent des données sensibles, prennent des décisions conséquentes et interagissent directement avec l’infrastructure de production. Pourtant, la plupart de ces entreprises n’ont pas d’approche structurée pour auditer la posture de sécurité de leurs systèmes d’IA.",
+    intro_2: "Cette liste de contrôle synthétise les domaines d’audit les plus critiques en un cadre pratique que les RSSI, directeurs TI et équipes de sécurité peuvent appliquer immédiatement. Chaque domaine est associé aux normes de l’industrie, notamment le NIST AI RMF, le Règlement européen sur l’IA et la norme ISO/IEC 42001 pour les systèmes de gestion de l’IA. Que vous prépariez un examen réglementaire, répondiez à une demande du conseil d’administration ou bâtissiez votre programme de sécurité IA à partir de zéro, ces 10 domaines vous offriront une couverture complète.",
+    s1_title: "Gouvernance et inventaire des modèles",
+    s1_c1: "Maintenir un inventaire centralisé de tous les modèles IA/ML en production, en préproduction et en développement, incluant le type de modèle, les sources de données d’entraînement, le responsable et la date de déploiement.",
+    s1_c2: "Établir un processus formel d’approbation des modèles exigeant la validation des parties prenantes en sécurité, juridique et métier avant toute mise en production.",
+    s1_c3: "Documenter la lignée des modèles : suivre chaque version, chaque réentraînement et chaque changement d’hyperparamètres avec des journaux d’audit immuables.",
+    s1_c4: "Définir des critères de mise à la retraite des modèles et appliquer des procédures de déclassement pour les modèles obsolètes afin de prévenir l’utilisation d’IA fantôme.",
+    s2_title: "Sécurité des pipelines de données",
+    s2_c1: "Chiffrer les données d’entraînement et d’inférence au repos (AES-256) et en transit (TLS 1.3). Vérifier que les magasins de caractéristiques, bases de données vectorielles et lacs de données appliquent le chiffrement de manière cohérente.",
+    s2_c2: "Mettre en œuvre le suivi de provenance des données pour s’assurer que les jeux de données d’entraînement n’ont pas été falsifiés, empoisonnés ou obtenus de sources non autorisées.",
+    s2_c3: "Appliquer les principes de minimisation des données : collecter et conserver uniquement les caractéristiques nécessaires à la performance du modèle, et purger les données brutes conformément à votre politique de rétention.",
+    s2_c4: "Valider l’intégrité du pipeline de données avec des sommes de contrôle ou des hachages cryptographiques à chaque étape de transformation pour détecter les injections ou corruptions.",
+    s3_title: "Contrôles d’accès et authentification",
+    s3_c1: "Appliquer le contrôle d’accès basé sur les rôles (RBAC) sur les environnements d’entraînement, les points d’inférence et les registres de modèles. Séparer les rôles de scientifique des données, MLOps et production.",
+    s3_c2: "Exiger l’authentification multifacteur pour l’accès aux plateformes de gestion des modèles, aux environnements Jupyter et aux grappes GPU.",
+    s3_c3: "Implémenter l’authentification API et la limitation du débit sur tous les points d’inférence. Utiliser des jetons à durée limitée plutôt que des clés API statiques dans la mesure du possible.",
+    s3_c4: "Effectuer des revues d’accès trimestrielles pour s’assurer que les employés départis, les contractuels et les comptes de service expirés ont été déprovisionnés de l’infrastructure IA.",
+    s4_title: "Validation des entrées/sorties des modèles",
+    s4_c1: "Valider et assainir toutes les entrées avant qu’elles n’atteignent le modèle. Pour les systèmes basés sur des LLM, implémenter des couches de détection et de filtrage des injections de prompts.",
+    s4_c2: "Appliquer des garde-fous en sortie pour empêcher les modèles de divulguer des données d’entraînement, des IIP, des détails système internes ou de générer du contenu nuisible dans les réponses de production.",
+    s4_c3: "Définir des seuils de score de confiance et implémenter des mécanismes de repli lorsque les sorties du modèle tombent sous les niveaux de certitude acceptables.",
+    s4_c4: "Tester les fuites de données en exécutant des attaques d’inférence d’appartenance et d’inversion de modèle contre vos propres systèmes lors des revues pré-déploiement.",
+    s5_title: "Résistance aux attaques adverses",
+    s5_c1: "Effectuer des tests de robustesse adversarielle en utilisant des bibliothèques établies (p. ex., IBM ART, Microsoft Counterfit) pour évaluer le comportement du modèle face aux attaques d’évasion, d’empoisonnement et d’extraction.",
+    s5_c2: "Implémenter la détection de perturbations d’entrée pour signaler les entrées anormales ou conçues de manière adversarielle avant qu’elles n’atteignent les pipelines d’inférence.",
+    s5_c3: "Pour les déploiements de LLM, effectuer des tests d’équipe rouge contre l’injection de prompts, le contournement et l’injection indirecte de prompts via les sources de génération augmentée par récupération (RAG).",
+    s5_c4: "Évaluer le risque d’extraction de modèle : déterminer si les schémas requête-réponse pourraient permettre à un attaquant de reconstruire votre modèle propriétaire par des appels API répétés.",
+    s6_title: "Tests de biais et d’équité",
+    s6_c1: "Exécuter des métriques d’équité (parité démographique, égalité des chances, calibration entre groupes) sur tous les modèles qui influencent des décisions concernant des personnes, y compris l’embauche, le crédit et l’évaluation des risques.",
+    s6_c2: "Documenter la composition démographique des jeux de données d’entraînement et signaler toute sous-représentation significative de groupes protégés.",
+    s6_c3: "Établir un canal de signalement des incidents de biais et un flux de remédiation avec des accords de niveau de service définis pour enquêter et corriger les sorties discriminatoires des modèles.",
+    s6_c4: "Effectuer une analyse intersectionnelle, pas seulement des tests mono-attribut, pour détecter les biais composés qui émergent à travers plusieurs dimensions démographiques.",
+    s7_title: "Journalisation, surveillance et détection de dérive",
+    s7_c1: "Journaliser toutes les requêtes et réponses d’inférence avec horodatages, identifiants utilisateur/session, version du modèle et scores de confiance. Conserver les journaux selon vos exigences de conformité.",
+    s7_c2: "Déployer la surveillance des performances du modèle pour détecter la dérive des données, la dérive conceptuelle et la dégradation des prédictions en temps réel. Configurer des alertes automatisées lorsque les métriques dépassent les seuils établis.",
+    s7_c3: "Intégrer les journaux des systèmes d’IA dans votre plateforme SIEM pour corréler les anomalies de la couche modèle avec les événements de sécurité plus larges de votre environnement.",
+    s7_c4: "Surveiller les schémas de consommation de ressources sur l’infrastructure GPU/TPU pour détecter l’entraînement non autorisé de modèles, le cryptominage ou le détournement de ressources.",
+    s8_title: "Réponse aux incidents pour les systèmes d’IA",
+    s8_c1: "Étendre votre plan de réponse aux incidents avec des cahiers de procédures spécifiques à l’IA couvrant la compromission de modèle, l’empoisonnement des données d’entraînement, les attaques adverses et les sorties nuisibles involontaires.",
+    s8_c2: "Définir des procédures de retour en arrière : maintenir la capacité de revenir à la version précédente de tout modèle de production en quelques minutes, avec des vérifications de santé automatisées après le retour.",
+    s8_c3: "Mener des exercices de simulation au moins annuellement, simulant des scénarios d’incidents spécifiques à l’IA, y compris la compromission de la chaîne d’approvisionnement d’un modèle tiers.",
+    s8_c4: "Établir des chemins d’escalade clairs et des modèles de communication pour notifier les clients, les régulateurs et les parties affectées lorsqu’un système d’IA produit des résultats nuisibles ou discriminatoires.",
+    s9_title: "Gestion des risques liés à l’IA et aux API tierces",
+    s9_c1: "Inventorier tous les services d’IA tiers, les API et les modèles fondamentaux utilisés. Documenter quelles données sont envoyées à chaque fournisseur et quel traitement se produit en dehors de votre périmètre.",
+    s9_c2: "Examiner les accords fournisseurs concernant la rétention des données, l’entraînement de modèles sur vos données et les clauses de sous-traitants. S’assurer que vos données ne sont pas utilisées pour améliorer les modèles génériques du fournisseur sans consentement explicite.",
+    s9_c3: "Évaluer les certifications de sécurité des fournisseurs (SOC 2 Type II, ISO 27001) et demander des preuves de contrôles de sécurité spécifiques à l’IA, y compris les résultats de tests adversariels.",
+    s9_c4: "Implémenter des disjoncteurs et une logique de repli pour les flux de travail critiques qui dépendent d’API d’IA tierces, afin que les pannes du fournisseur ou les changements de modèle ne se propagent pas en perturbations métier.",
+    s10_title: "Conformité réglementaire et alignement aux cadres",
+    s10_c1: "Classifier vos systèmes d’IA par niveau de risque selon le Règlement européen sur l’IA (risque inacceptable, élevé, limité, minimal). Les systèmes à haut risque nécessitent des évaluations de conformité, une documentation technique et des mécanismes de surveillance humaine.",
+    s10_c2: "Cartographier vos contrôles de sécurité IA sur les fonctions du NIST AI RMF (Gouverner, Cartographier, Mesurer, Gérer) et documenter les lacunes. Utiliser cette cartographie comme fondation pour votre feuille de route de remédiation.",
+    s10_c3: "Si vous visez une certification formelle, aligner votre système de gestion de l’IA avec les exigences de la norme ISO/IEC 42001, incluant l’engagement de la direction, la méthodologie d’évaluation des risques et les processus d’amélioration continue.",
+    s10_c4: "Maintenir une documentation prête pour l’audit : fiches de modèle, fiches de données pour les jeux de données, évaluations d’impact et preuves de surveillance humaine pour chaque système d’IA à haut risque en production.",
+    s10_c5: "Suivre l’évolution des réglementations entre les juridictions. Pour les organisations canadiennes, surveiller la Loi sur l’intelligence artificielle et les données (LIAD) et aligner les déploiements d’IA transfrontaliers avec les exigences canadiennes et internationales.",
+    closing_1: "Compléter cet audit n’est pas un exercice ponctuel. Les systèmes d’IA évoluent à chaque cycle de réentraînement, chaque mise à jour de données et chaque version de modèle. Les programmes de sécurité les plus efficaces traitent l’audit de l’IA comme une discipline continue, intégrée au cycle de vie MLOps aux côtés de la surveillance des performances et de la validation des modèles.",
+    closing_2: "Pour les entreprises de taille moyenne, l’avantage est l’agilité. Vous pouvez implémenter ces contrôles plus rapidement qu’une grande entreprise avec des milliers de modèles et des années de dette technique. L’essentiel est de commencer maintenant, avant que les régulateurs, les clients ou un incident ne vous y obligent.",
+    cta_title: "Besoin d’aide pour votre audit de sécurité IA ?",
+    cta_text: "Notre équipe se spécialise dans les évaluations de sécurité IA pour les organisations de taille moyenne. Nous pouvons vous aider à implémenter cette liste de contrôle, identifier les lacunes et construire une feuille de route alignée sur le NIST AI RMF, le Règlement européen sur l’IA et la norme ISO 42001.",
+    cta_btn: "Réserver une consultation"
+  },
+  es: {
+    nav_back: "← Volver al blog",
+    title: "Lista de verificación de auditoría de seguridad de IA para empresas medianas",
+    author: "Christian Antoine, PCIP",
+    date: "18 de septiembre de 2026",
+    read_time: "10 min de lectura",
+    intro_1: "Las empresas medianas están adoptando la IA a un ritmo sin precedentes. Desde chatbots orientados al cliente hasta modelos internos de detección de fraude, las organizaciones de 50 a 500 empleados están desplegando sistemas de aprendizaje automático que manejan datos sensibles, toman decisiones importantes e interactúan directamente con la infraestructura de producción. Sin embargo, la mayoría de estas empresas carecen de un enfoque estructurado para auditar la postura de seguridad de sus sistemas de IA.",
+    intro_2: "Esta lista de verificación sintetiza los dominios de auditoría más críticos en un marco práctico que los CISO, directores de TI y equipos de seguridad pueden aplicar de inmediato. Cada dominio está mapeado a estándares de la industria, incluidos el NIST AI RMF, la Ley Europea de IA e ISO/IEC 42001 para sistemas de gestión de IA. Ya sea que se esté preparando para un escrutinio regulatorio, respondiendo a una consulta de la junta directiva o construyendo su programa de seguridad de IA desde cero, estos 10 dominios le brindarán una cobertura integral.",
+    s1_title: "Gobernanza e inventario de modelos",
+    s1_c1: "Mantener un inventario centralizado de todos los modelos IA/ML en producción, pre-producción y desarrollo, incluyendo tipo de modelo, fuentes de datos de entrenamiento, responsable y fecha de despliegue.",
+    s1_c2: "Establecer un flujo de trabajo formal de aprobación de modelos que requiera la aprobación de las partes interesadas de seguridad, legal y negocio antes de que cualquier modelo llegue a producción.",
+    s1_c3: "Documentar el linaje del modelo: rastrear cada versión, evento de reentrenamiento y cambio de hiperparámetros con registros de auditoría inmutables.",
+    s1_c4: "Definir criterios de retiro de modelos y aplicar procedimientos de decomiso para modelos obsoletos a fin de prevenir el uso de IA en la sombra.",
+    s2_title: "Seguridad de las canalizaciones de datos",
+    s2_c1: "Cifrar los datos de entrenamiento e inferencia en reposo (AES-256) y en tránsito (TLS 1.3). Verificar que los almacenes de características, bases de datos vectoriales y lagos de datos apliquen el cifrado de manera consistente.",
+    s2_c2: "Implementar el seguimiento de la procedencia de los datos para asegurar que los conjuntos de datos de entrenamiento no hayan sido manipulados, envenenados u obtenidos de orígenes no autorizados.",
+    s2_c3: "Aplicar principios de minimización de datos: recopilar y retener solo las características necesarias para el rendimiento del modelo, y purgar los datos sin procesar según su política de retención.",
+    s2_c4: "Validar la integridad de la canalización de datos con sumas de verificación o hashes criptográficos en cada etapa de transformación para detectar inyecciones o corrupciones.",
+    s3_title: "Controles de acceso y autenticación",
+    s3_c1: "Aplicar el control de acceso basado en roles (RBAC) en los entornos de entrenamiento de modelos, los puntos de inferencia y los registros de modelos. Separar los roles de científico de datos, MLOps y producción.",
+    s3_c2: "Requerir autenticación multifactor para el acceso a plataformas de gestión de modelos, entornos Jupyter y clústeres GPU.",
+    s3_c3: "Implementar autenticación API y limitación de velocidad en todos los puntos de inferencia. Usar tokens de corta duración en lugar de claves API estáticas siempre que sea posible.",
+    s3_c4: "Realizar revisiones de acceso trimestrales para asegurar que los empleados que se fueron, los contratistas y las cuentas de servicio expiradas hayan sido desaprovisionados de la infraestructura de IA.",
+    s4_title: "Validación de entradas/salidas del modelo",
+    s4_c1: "Validar y sanitizar todas las entradas antes de que lleguen al modelo. Para sistemas basados en LLM, implementar capas de detección y filtrado de inyección de prompts.",
+    s4_c2: "Aplicar barreras de protección en la salida para evitar que los modelos filtren datos de entrenamiento, información personal, detalles internos del sistema o generen contenido dañino en las respuestas de producción.",
+    s4_c3: "Establecer umbrales de puntuación de confianza e implementar mecanismos de respaldo cuando las salidas del modelo caigan por debajo de los niveles de certeza aceptables.",
+    s4_c4: "Probar fugas de datos ejecutando ataques de inferencia de pertenencia e inversión de modelo contra sus propios sistemas durante las revisiones previas al despliegue.",
+    s5_title: "Resistencia a ataques adversarios",
+    s5_c1: "Realizar pruebas de robustez adversarial utilizando bibliotecas establecidas (p. ej., IBM ART, Microsoft Counterfit) para evaluar el comportamiento del modelo ante ataques de evasión, envenenamiento y extracción.",
+    s5_c2: "Implementar detección de perturbaciones de entrada para señalar entradas anómalas o elaboradas de manera adversarial antes de que lleguen a las canalizaciones de inferencia.",
+    s5_c3: "Para despliegues de LLM, realizar pruebas de equipo rojo contra la inyección de prompts, el jailbreaking y la inyección indirecta de prompts a través de fuentes de generación aumentada por recuperación (RAG).",
+    s5_c4: "Evaluar el riesgo de extracción de modelos: determinar si los patrones de consulta-respuesta podrían permitir a un atacante reconstruir su modelo propietario mediante llamadas API repetidas.",
+    s6_title: "Pruebas de sesgo y equidad",
+    s6_c1: "Ejecutar métricas de equidad (paridad demográfica, igualdad de oportunidades, calibración entre grupos) en todos los modelos que influyen en decisiones sobre personas, incluyendo contratación, crédito y evaluación de riesgos.",
+    s6_c2: "Documentar la composición demográfica de los conjuntos de datos de entrenamiento y señalar cualquier subrepresentación significativa de grupos protegidos.",
+    s6_c3: "Establecer un canal de reporte de incidentes de sesgo y un flujo de remediación con acuerdos de nivel de servicio definidos para investigar y corregir las salidas discriminatorias de los modelos.",
+    s6_c4: "Realizar análisis interseccional, no solo pruebas de un solo atributo, para detectar sesgos compuestos que emergen a través de múltiples dimensiones demográficas.",
+    s7_title: "Registro, monitoreo y detección de deriva",
+    s7_c1: "Registrar todas las solicitudes y respuestas de inferencia con marcas de tiempo, identificadores de usuario/sesión, versión del modelo y puntuaciones de confianza. Retener los registros según sus requisitos de cumplimiento.",
+    s7_c2: "Desplegar monitoreo de rendimiento del modelo para detectar deriva de datos, deriva conceptual y degradación de predicciones en tiempo real. Configurar alertas automatizadas cuando las métricas superen los umbrales establecidos.",
+    s7_c3: "Integrar los registros de los sistemas de IA en su plataforma SIEM para correlacionar las anomalías de la capa de modelo con los eventos de seguridad más amplios en su entorno.",
+    s7_c4: "Monitorear los patrones de consumo de recursos en la infraestructura GPU/TPU para detectar entrenamiento no autorizado de modelos, criptominería o secuestro de recursos.",
+    s8_title: "Respuesta a incidentes para sistemas de IA",
+    s8_c1: "Extender su plan de respuesta a incidentes con manuales de procedimientos específicos para IA que cubran el compromiso de modelos, el envenenamiento de datos de entrenamiento, los ataques adversarios y las salidas dañinas involuntarias.",
+    s8_c2: "Definir procedimientos de reversión: mantener la capacidad de revertir cualquier modelo de producción a su versión anterior en minutos, con verificaciones de salud automatizadas después de la reversión.",
+    s8_c3: "Realizar ejercicios de simulación al menos anualmente que simulen escenarios de incidentes específicos de IA, incluyendo el compromiso de la cadena de suministro de un modelo de terceros.",
+    s8_c4: "Establecer rutas de escalamiento claras y plantillas de comunicación para notificar a clientes, reguladores y partes afectadas cuando un sistema de IA produzca resultados dañinos o discriminatorios.",
+    s9_title: "Gestión de riesgos de IA y API de terceros",
+    s9_c1: "Inventariar todos los servicios de IA de terceros, API y modelos fundacionales en uso. Documentar qué datos se envían a cada proveedor y qué procesamiento ocurre fuera de su perímetro.",
+    s9_c2: "Revisar los acuerdos con proveedores sobre retención de datos, entrenamiento de modelos con sus datos y cláusulas de subprocesadores. Asegurar que sus datos no se utilicen para mejorar los modelos de propósito general del proveedor sin consentimiento explícito.",
+    s9_c3: "Evaluar las certificaciones de seguridad de los proveedores (SOC 2 Tipo II, ISO 27001) y solicitar evidencia de controles de seguridad específicos para IA, incluyendo resultados de pruebas adversariales.",
+    s9_c4: "Implementar disyuntores y lógica de respaldo para flujos de trabajo críticos que dependen de API de IA de terceros, para que las interrupciones del proveedor o los cambios de modelo no se propaguen en disrupciones del negocio.",
+    s10_title: "Cumplimiento regulatorio y alineación con marcos",
+    s10_c1: "Clasificar sus sistemas de IA por nivel de riesgo según la Ley Europea de IA (riesgo inaceptable, alto, limitado, mínimo). Los sistemas de alto riesgo requieren evaluaciones de conformidad, documentación técnica y mecanismos de supervisión humana.",
+    s10_c2: "Mapear sus controles de seguridad de IA a las funciones del NIST AI RMF (Gobernar, Mapear, Medir, Gestionar) y documentar las brechas. Usar este mapeo como base para su hoja de ruta de remediación.",
+    s10_c3: "Si busca la certificación formal, alinear su sistema de gestión de IA con los requisitos de ISO/IEC 42001, incluyendo el compromiso de la dirección, la metodología de evaluación de riesgos y los procesos de mejora continua.",
+    s10_c4: "Mantener documentación lista para auditoría: tarjetas de modelo, hojas de datos para conjuntos de datos, evaluaciones de impacto y evidencia de supervisión humana para cada sistema de IA de alto riesgo en producción.",
+    s10_c5: "Seguir las regulaciones en evolución en todas las jurisdicciones. Para las organizaciones canadienses, monitorear la Ley de Inteligencia Artificial y Datos (AIDA) y alinear los despliegues de IA transfronterizos con los requisitos canadienses e internacionales.",
+    closing_1: "Completar esta auditoría no es un ejercicio único. Los sistemas de IA evolucionan con cada ciclo de reentrenamiento, cada actualización de datos y cada versión de modelo. Los programas de seguridad más efectivos tratan la auditoría de IA como una disciplina continua, integrada en el ciclo de vida de MLOps junto con el monitoreo de rendimiento y la validación de modelos.",
+    closing_2: "Para las empresas medianas, la ventaja es la agilidad. Pueden implementar estos controles más rápido que una empresa grande con miles de modelos y años de deuda técnica. La clave es comenzar ahora, antes de que los reguladores, los clientes o un incidente lo obliguen.",
+    cta_title: "¿Necesita ayuda con su auditoría de seguridad de IA?",
+    cta_text: "Nuestro equipo se especializa en evaluaciones de seguridad de IA para organizaciones medianas. Podemos ayudarle a implementar esta lista de verificación, identificar brechas y construir una hoja de ruta alineada con NIST AI RMF, la Ley Europea de IA e ISO 42001.",
+    cta_btn: "Reservar una consulta"
+  },
+  pt: {
+    nav_back: "← Voltar ao blog",
+    title: "Lista de verificação de auditoria de segurança de IA para empresas de médio porte",
+    author: "Christian Antoine, PCIP",
+    date: "18 de setembro de 2026",
+    read_time: "10 min de leitura",
+    intro_1: "As empresas de médio porte estão adotando a IA em um ritmo sem precedentes. De chatbots voltados para clientes a modelos internos de detecção de fraudes, organizações com 50 a 500 funcionários estão implantando sistemas de aprendizado de máquina que lidam com dados sensíveis, tomam decisões consequentes e interagem diretamente com a infraestrutura de produção. No entanto, a maioria dessas empresas carece de uma abordagem estruturada para auditar a postura de segurança de seus sistemas de IA.",
+    intro_2: "Esta lista de verificação sintetiza os domínios de auditoria mais críticos em uma estrutura prática que CISOs, diretores de TI e equipes de segurança podem aplicar imediatamente. Cada domínio é mapeado para padrões da indústria, incluindo o NIST AI RMF, a Lei Europeia de IA e a ISO/IEC 42001 para sistemas de gestão de IA. Seja preparando-se para escrútinio regulatório, respondendo a uma consulta do conselho ou construindo seu programa de segurança de IA do zero, estes 10 domínios fornecerão cobertura abrangente.",
+    s1_title: "Governança e inventário de modelos",
+    s1_c1: "Manter um inventário centralizado de todos os modelos IA/ML em produção, homologação e desenvolvimento, incluindo tipo de modelo, fontes de dados de treinamento, responsável e data de implantação.",
+    s1_c2: "Estabelecer um fluxo de trabalho formal de aprovação de modelos exigindo a aprovação das partes interessadas de segurança, jurídico e negócios antes que qualquer modelo chegue à produção.",
+    s1_c3: "Documentar a linhagem do modelo: rastrear cada versão, evento de retreinamento e alteração de hiperparâmetros com registros de auditoria imutáveis.",
+    s1_c4: "Definir critérios de aposentadoria de modelos e aplicar procedimentos de descomissionamento para modelos obsoletos a fim de prevenir o uso de IA sombra.",
+    s2_title: "Segurança dos pipelines de dados",
+    s2_c1: "Criptografar dados de treinamento e inferência em repouso (AES-256) e em trânsito (TLS 1.3). Verificar que armazenamentos de características, bancos de dados vetoriais e data lakes apliquem a criptografia de forma consistente.",
+    s2_c2: "Implementar rastreamento de procedência de dados para garantir que os conjuntos de dados de treinamento não tenham sido adulterados, envenenados ou obtidos de origens não autorizadas.",
+    s2_c3: "Aplicar princípios de minimização de dados: coletar e reter apenas as características necessárias para o desempenho do modelo e purgar dados brutos de acordo com sua política de retenção.",
+    s2_c4: "Validar a integridade do pipeline de dados com somas de verificação ou hashes criptográficos em cada estágio de transformação para detectar injeções ou corrupções.",
+    s3_title: "Controles de acesso e autenticação",
+    s3_c1: "Aplicar controle de acesso baseado em funções (RBAC) nos ambientes de treinamento de modelos, endpoints de inferência e registros de modelos. Separar as funções de cientista de dados, MLOps e produção.",
+    s3_c2: "Exigir autenticação multifator para acesso a plataformas de gerenciamento de modelos, ambientes Jupyter e clusters GPU.",
+    s3_c3: "Implementar autenticação de API e limitação de taxa em todos os endpoints de inferência. Usar tokens de curta duração em vez de chaves de API estáticas sempre que possível.",
+    s3_c4: "Realizar revisões de acesso trimestrais para garantir que funcionários que saíram, contratados e contas de serviço expiradas tenham sido desprovisionados da infraestrutura de IA.",
+    s4_title: "Validação de entradas/saídas do modelo",
+    s4_c1: "Validar e sanitizar todas as entradas antes que cheguem ao modelo. Para sistemas baseados em LLM, implementar camadas de detecção e filtragem de injeção de prompts.",
+    s4_c2: "Aplicar barreiras de proteção na saída para impedir que modelos vazem dados de treinamento, informações pessoais, detalhes internos do sistema ou gerem conteúdo prejudicial nas respostas de produção.",
+    s4_c3: "Definir limiares de pontuação de confiança e implementar mecanismos de fallback quando as saídas do modelo caem abaixo dos níveis aceitáveis de certeza.",
+    s4_c4: "Testar vazamentos de dados executando ataques de inferência de associação e inversão de modelo contra seus próprios sistemas durante revisões pré-implantação.",
+    s5_title: "Resistência a ataques adversariais",
+    s5_c1: "Realizar testes de robustez adversarial usando bibliotecas estabelecidas (ex.: IBM ART, Microsoft Counterfit) para avaliar o comportamento do modelo sob ataques de evasão, envenenamento e extração.",
+    s5_c2: "Implementar detecção de perturbações de entrada para sinalizar entradas anômalas ou elaboradas de forma adversarial antes que alcancem os pipelines de inferência.",
+    s5_c3: "Para implantações de LLM, fazer red-team do sistema contra injeção de prompts, jailbreaking e injeção indireta de prompts via fontes de geração aumentada por recuperação (RAG).",
+    s5_c4: "Avaliar o risco de extração de modelo: determinar se os padrões de consulta-resposta poderiam permitir que um atacante reconstrua seu modelo proprietário através de chamadas de API repetidas.",
+    s6_title: "Testes de viés e equidade",
+    s6_c1: "Executar métricas de equidade (paridade demográfica, igualdade de oportunidades, calibração entre grupos) em todos os modelos que influenciam decisões sobre pessoas, incluindo contratação, crédito e avaliação de riscos.",
+    s6_c2: "Documentar a composição demográfica dos conjuntos de dados de treinamento e sinalizar qualquer sub-representação significativa de grupos protegidos.",
+    s6_c3: "Estabelecer um canal de relato de incidentes de viés e um fluxo de remediação com SLAs definidos para investigar e corrigir saídas discriminatórias dos modelos.",
+    s6_c4: "Realizar análise interseccional, não apenas testes de atributo único, para detectar viéses compostos que emergem através de múltiplas dimensões demográficas.",
+    s7_title: "Registro, monitoramento e detecção de desvio",
+    s7_c1: "Registrar todas as solicitações e respostas de inferência com carimbos de data/hora, identificadores de usuário/sessão, versão do modelo e pontuações de confiança. Reter registros conforme seus requisitos de conformidade.",
+    s7_c2: "Implantar monitoramento de desempenho do modelo para detectar desvio de dados, desvio conceitual e degradação de predições em tempo real. Configurar alertas automatizados quando as métricas ultrapassem os limiares estabelecidos.",
+    s7_c3: "Integrar os registros dos sistemas de IA à sua plataforma SIEM para correlacionar anomalias da camada de modelo com eventos de segurança mais amplos em seu ambiente.",
+    s7_c4: "Monitorar os padrões de consumo de recursos na infraestrutura GPU/TPU para detectar treinamento não autorizado de modelos, criptomineração ou sequestro de recursos.",
+    s8_title: "Resposta a incidentes para sistemas de IA",
+    s8_c1: "Estender seu plano de resposta a incidentes com manuais específicos de IA cobrindo comprometimento de modelos, envenenamento de dados de treinamento, ataques adversariais e saídas prejudiciais involuntárias.",
+    s8_c2: "Definir procedimentos de rollback: manter a capacidade de reverter qualquer modelo de produção para sua versão anterior em minutos, com verificações de saúde automatizadas após o rollback.",
+    s8_c3: "Conduzir exercícios de simulação pelo menos anualmente simulando cenários de incidentes específicos de IA, incluindo comprometimento da cadeia de suprimentos de um modelo de terceiros.",
+    s8_c4: "Estabelecer caminhos de escalonamento claros e modelos de comunicação para notificar clientes, reguladores e partes afetadas quando um sistema de IA produz resultados prejudiciais ou discriminatórios.",
+    s9_title: "Gestão de riscos de IA e API de terceiros",
+    s9_c1: "Inventariar todos os serviços de IA de terceiros, APIs e modelos fundacionais em uso. Documentar quais dados são enviados a cada fornecedor e qual processamento ocorre fora do seu perímetro.",
+    s9_c2: "Revisar os acordos com fornecedores sobre retenção de dados, treinamento de modelos com seus dados e cláusulas de subprocessadores. Garantir que seus dados não sejam usados para melhorar os modelos de propósito geral do fornecedor sem consentimento explícito.",
+    s9_c3: "Avaliar as certificações de segurança dos fornecedores (SOC 2 Tipo II, ISO 27001) e solicitar evidências de controles de segurança específicos de IA, incluindo resultados de testes adversariais.",
+    s9_c4: "Implementar disjuntores e lógica de fallback para fluxos de trabalho críticos que dependem de APIs de IA de terceiros, para que interrupções do fornecedor ou mudanças de modelo não se propaguem em interrupções de negócios.",
+    s10_title: "Conformidade regulatória e alinhamento com frameworks",
+    s10_c1: "Classificar seus sistemas de IA por nível de risco sob a Lei Europeia de IA (risco inaceitável, alto, limitado, mínimo). Sistemas de alto risco requerem avaliações de conformidade, documentação técnica e mecanismos de supervisão humana.",
+    s10_c2: "Mapear seus controles de segurança de IA para as funções do NIST AI RMF (Governar, Mapear, Medir, Gerenciar) e documentar lacunas. Usar este mapeamento como base para seu roteiro de remediação.",
+    s10_c3: "Se buscar certificação formal, alinhar seu sistema de gestão de IA com os requisitos da ISO/IEC 42001, incluindo compromisso da liderança, metodologia de avaliação de riscos e processos de melhoria contínua.",
+    s10_c4: "Manter documentação pronta para auditoria: cartões de modelo, fichas de dados para conjuntos de dados, avaliações de impacto e evidências de supervisão humana para cada sistema de IA de alto risco em produção.",
+    s10_c5: "Acompanhar a evolução das regulamentações entre jurisdições. Para organizações canadenses, monitorar a Lei de Inteligência Artificial e Dados (AIDA) e alinhar implantações de IA transfronteiriças com requisitos canadenses e internacionais.",
+    closing_1: "Completar esta auditoria não é um exercício único. Os sistemas de IA evoluem a cada ciclo de retreinamento, cada atualização de dados e cada versão de modelo. Os programas de segurança mais eficazes tratam a auditoria de IA como uma disciplina contínua, integrada ao ciclo de vida de MLOps junto com o monitoramento de desempenho e a validação de modelos.",
+    closing_2: "Para empresas de médio porte, a vantagem é a agilidade. Você pode implementar esses controles mais rápido do que uma grande empresa com milhares de modelos e anos de dívida técnica. O fundamental é começar agora, antes que reguladores, clientes ou um incidente o obriguem.",
+    cta_title: "Precisa de ajuda com sua auditoria de segurança de IA?",
+    cta_text: "Nossa equipe é especializada em avaliações de segurança de IA para organizações de médio porte. Podemos ajudá-lo a implementar esta lista de verificação, identificar lacunas e construir um roteiro alinhado com NIST AI RMF, a Lei Europeia de IA e ISO 42001.",
+    cta_btn: "Agendar uma consulta"
+  }
+};
+
+function applyLang(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      if (el.tagName === 'A' || el.tagName === 'BUTTON') {
+        el.textContent = t[key];
+      } else {
+        // Preserve child elements like framework tags
+        const tags = el.querySelectorAll('.framework-tag');
+        if (tags.length > 0) {
+          const tagHTML = Array.from(tags).map(tag => ' ' + tag.outerHTML).join('');
+          el.innerHTML = t[key] + tagHTML;
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    }
+  });
+  document.documentElement.lang = lang;
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let savedLang = 'en';
+  try { savedLang = localStorage.getItem('novawave_lang') || 'en'; } catch(e) {}
+  const switcher = document.getElementById('langSwitcher');
+  if (switcher) {
+    switcher.value = savedLang;
+    switcher.addEventListener('change', e => applyLang(e.target.value));
+  }
+  applyLang(savedLang);
+});
+</script>
+
+</body>
+</html>

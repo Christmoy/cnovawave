@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cnovawave.com/sitemap.xml
+
+# Netlify system files
+Disallow: /netlify/
+Disallow: /docs/

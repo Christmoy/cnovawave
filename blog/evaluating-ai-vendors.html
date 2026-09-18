@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Evaluate an AI Automation Vendor — 10 Questions to Ask | Consultations NovaWave</title>
+<meta name="description" content="A practical checklist for CTOs, CISOs, and procurement teams evaluating AI automation vendors. 10 critical questions covering data security, compliance, explainability, and operational resilience.">
+<link rel="canonical" href="https://cnovawave.com/blog/evaluating-ai-vendors.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Evaluate an AI Automation Vendor — 10 Questions to Ask",
+  "description": "A practical checklist for CTOs, CISOs, and procurement teams evaluating AI automation vendors. 10 critical questions covering data security, compliance, explainability, and operational resilience.",
+  "author": {
+    "@type": "Person",
+    "name": "Christian Antoine, PCIP"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Consultations NovaWave",
+    "url": "https://cnovawave.com"
+  },
+  "datePublished": "2026-09-18",
+  "dateModified": "2026-09-18",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cnovawave.com/blog/evaluating-ai-vendors.html"
+  },
+  "url": "https://cnovawave.com/blog/evaluating-ai-vendors.html",
+  "inLanguage": "en",
+  "keywords": ["AI vendor evaluation", "AI automation", "cybersecurity", "compliance", "enterprise AI", "vendor due diligence", "SOC 2", "GDPR", "PIPEDA"]
+}
+</script>
+<style>
+:root {
+  --dark: #04090f;
+  --dark2: #070f1e;
+  --cyan: #00d4f0;
+  --green: #00f0a0;
+  --amber: #f59e0b;
+  --off: #f2f6ff;
+  --muted: #a8b8d0;
+  --max-w: 760px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--dark);
+  color: var(--off);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; line-height: 1.25; }
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 48px);
+  background: rgba(4,9,15,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0,212,240,.1);
+}
+.nav-brand {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem;
+  color: var(--off); text-decoration: none; white-space: nowrap;
+}
+.nav-brand span {
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-right { display: flex; align-items: center; gap: 18px; }
+.lang-select {
+  background: transparent; color: var(--muted); border: 1px solid rgba(0,212,240,.25);
+  border-radius: 6px; padding: 4px 8px; font-size: .82rem; font-family: 'Inter', sans-serif;
+  cursor: pointer; outline: none;
+}
+.lang-select option { background: var(--dark2); color: var(--off); }
+.nav-back {
+  color: var(--cyan); text-decoration: none; font-size: .88rem; font-weight: 500;
+  transition: color .2s;
+}
+.nav-back:hover { color: var(--green); }
+
+/* ── ARTICLE ── */
+.article-wrapper {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 56px 16px 80px;
+}
+.article-tag {
+  display: inline-block; font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--dark); background: var(--cyan);
+  padding: 3px 10px; border-radius: 4px; margin-bottom: 20px;
+}
+.article-title {
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 800;
+  margin-bottom: 20px; color: var(--off);
+}
+.article-meta {
+  display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center;
+  color: var(--muted); font-size: .85rem; font-weight: 400;
+  padding-bottom: 28px; margin-bottom: 36px;
+  border-bottom: 1px solid rgba(0,212,240,.12);
+}
+.article-meta .sep { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--cyan); vertical-align: middle; }
+.article-intro {
+  font-size: 1.08rem; font-weight: 300; color: var(--muted); line-height: 1.85;
+  margin-bottom: 40px;
+}
+
+/* ── QUESTION CARDS ── */
+.q-card {
+  background: var(--dark2);
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 10px 10px 0;
+  padding: 28px 28px 24px;
+  margin-bottom: 32px;
+  transition: border-color .3s;
+}
+.q-card:hover { border-color: var(--green); }
+.q-number {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: .78rem;
+  color: var(--cyan); text-transform: uppercase; letter-spacing: .12em;
+  margin-bottom: 6px;
+}
+.q-card h2 {
+  font-size: 1.18rem; font-weight: 700; margin-bottom: 14px; color: var(--off);
+}
+.q-card p {
+  color: var(--muted); font-size: .94rem; margin-bottom: 12px; line-height: 1.75;
+}
+.q-card p:last-child { margin-bottom: 0; }
+.q-card strong { color: var(--off); font-weight: 600; }
+
+/* ── CTA ── */
+.cta-box {
+  text-align: center; margin-top: 56px; padding: 44px 24px;
+  border: 1px solid rgba(0,212,240,.15); border-radius: 14px;
+  background: linear-gradient(160deg, rgba(0,212,240,.04), rgba(0,240,160,.03));
+}
+.cta-box h3 {
+  font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--off);
+}
+.cta-box p { color: var(--muted); font-size: .95rem; margin-bottom: 24px; }
+.cta-btn {
+  display: inline-block; padding: 13px 36px; border-radius: 8px; font-weight: 600;
+  font-size: .95rem; text-decoration: none; color: var(--dark);
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  transition: opacity .25s;
+}
+.cta-btn:hover { opacity: .88; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center; padding: 36px 16px;
+  border-top: 1px solid rgba(0,212,240,.08);
+  color: var(--muted); font-size: .8rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .q-card { padding: 20px 18px 18px; }
+  .nav-brand { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-brand">Consultations <span>NovaWave</span></a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSelect" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+    </select>
+    <a href="/blog.html" class="nav-back" data-i18n="nav_back">&larr; Back to blog</a>
+  </div>
+</nav>
+
+<!-- ARTICLE -->
+<article class="article-wrapper">
+
+  <span class="article-tag" data-i18n="tag">Vendor Evaluation</span>
+
+  <h1 class="article-title" data-i18n="title">How to Evaluate an AI Automation Vendor &mdash; 10 Questions to Ask</h1>
+
+  <div class="article-meta">
+    <span data-i18n="author">By Christian Antoine, PCIP</span>
+    <span class="sep"></span>
+    <span data-i18n="date">September 18, 2026</span>
+    <span class="sep"></span>
+    <span data-i18n="read_time">7 min read</span>
+  </div>
+
+  <p class="article-intro" data-i18n="intro">Adopting AI-powered automation can transform how your organization operates, but choosing the wrong vendor introduces risk that extends far beyond a failed project. Data exposure, regulatory penalties, opaque decision-making, and vendor lock-in are real consequences of skipping due diligence. This checklist gives CTOs, CISOs, and procurement teams a structured framework for evaluating AI automation vendors before signing the contract.</p>
+
+  <!-- Q1 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q1_num">Question 01</div>
+    <h2 data-i18n="q1_title">Where is our data stored, and who has access to it?</h2>
+    <p data-i18n="q1_p1">Data residency is not just a technical detail &mdash; it is a legal and regulatory concern. You need to know whether your data stays on-premises, sits in a specific cloud region, or moves across jurisdictions. For Canadian organizations, data leaving the country may trigger obligations under PIPEDA and provincial privacy laws. For European clients, cross-border transfers implicate GDPR adequacy decisions and supplementary measures.</p>
+    <p data-i18n="q1_p2"><strong>What to look for:</strong> Ask for a data-flow diagram that maps where data is stored, processed, and cached. Confirm that the vendor supports regional data residency options. Verify that access controls follow the principle of least privilege, and that the vendor maintains logs of who accessed your data and when.</p>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q2_num">Question 02</div>
+    <h2 data-i18n="q2_title">What security certifications do you hold (SOC 2, ISO 27001)?</h2>
+    <p data-i18n="q2_p1">Certifications are not guarantees of security, but they demonstrate that a vendor submits to independent scrutiny. SOC 2 Type II reports cover a sustained observation period and provide assurance that controls operate effectively over time. ISO 27001 indicates a formal information security management system. The absence of either should prompt deeper questions about how the vendor manages security internally.</p>
+    <p data-i18n="q2_p2"><strong>What to look for:</strong> Request the most recent SOC 2 Type II report and verify the trust service criteria it covers &mdash; particularly security, availability, and confidentiality. Confirm whether the certification scope includes the specific product you are evaluating, not just the vendor's corporate infrastructure. Check the report date: a SOC 2 older than twelve months is a flag.</p>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q3_num">Question 03</div>
+    <h2 data-i18n="q3_title">How do you handle model training &mdash; is our data used to train your models?</h2>
+    <p data-i18n="q3_p1">Many AI vendors default to using customer data for model improvement unless the customer explicitly opts out. This creates intellectual property risk, potential competitive exposure, and privacy concerns. If your proprietary documents, customer records, or strategic communications are absorbed into a shared model, the information can surface in outputs delivered to other clients.</p>
+    <p data-i18n="q3_p2"><strong>What to look for:</strong> Get a clear, contractual commitment that your data will not be used for model training without explicit written consent. Ask whether the vendor offers dedicated or fine-tuned model instances that isolate your data entirely. Review the data processing agreement (DPA) for language around data use for &ldquo;service improvement&rdquo; &mdash; a common euphemism for model training.</p>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q4_num">Question 04</div>
+    <h2 data-i18n="q4_title">What&rsquo;s your incident response and breach notification process?</h2>
+    <p data-i18n="q4_p1">When a security incident occurs &mdash; and it eventually will &mdash; the speed and quality of the vendor's response directly affects your organization's exposure. A vendor without a documented, tested incident response plan becomes a liability multiplier. You need to know exactly how quickly you will be notified, what information the notification will contain, and what remediation steps the vendor will execute.</p>
+    <p data-i18n="q4_p2"><strong>What to look for:</strong> Request the vendor's incident response policy and ask about their notification SLA &mdash; 72 hours is the GDPR standard, but best-in-class vendors commit to 24 hours or less. Verify that the vendor has conducted tabletop exercises in the past year. Ask whether they maintain a dedicated security operations team or rely on outsourced monitoring.</p>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q5_num">Question 05</div>
+    <h2 data-i18n="q5_title">How do you ensure regulatory compliance (GDPR, PIPEDA, industry-specific)?</h2>
+    <p data-i18n="q5_p1">AI systems operate within a regulatory landscape that is shifting rapidly. A vendor that is compliant today but not tracking upcoming regulations &mdash; the EU AI Act, Canada's Artificial Intelligence and Data Act (AIDA), sector-specific rules in healthcare and finance &mdash; will become a compliance risk in short order. You need a vendor that treats regulatory compliance as a continuous process, not a one-time checkbox.</p>
+    <p data-i18n="q5_p2"><strong>What to look for:</strong> Ask the vendor to map their compliance posture to the regulations that govern your industry and jurisdictions. Request documentation of their privacy impact assessment (PIA) process. For organizations subject to PIPEDA, verify that the vendor can support data subject access requests and the right to erasure. Confirm whether the vendor has in-house legal counsel tracking AI-specific regulation.</p>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q6_num">Question 06</div>
+    <h2 data-i18n="q6_title">Can we audit your AI systems and see how decisions are made?</h2>
+    <p data-i18n="q6_p1">Explainability is not optional for enterprise AI &mdash; it is a governance requirement. If an AI system denies a loan, flags a transaction, or recommends terminating an employee, your organization must be able to explain why. A vendor that treats their model as a black box exposes you to regulatory penalties, legal liability, and reputational damage when decisions are challenged.</p>
+    <p data-i18n="q6_p2"><strong>What to look for:</strong> Ask whether the vendor provides model cards, decision audit trails, or feature-importance scoring for their outputs. Determine whether you can run independent audits or bring in third-party assessors. For high-stakes decisions, verify that the system can produce human-readable explanations that satisfy both regulators and affected individuals.</p>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q7_num">Question 07</div>
+    <h2 data-i18n="q7_title">What happens to our data if we terminate the contract?</h2>
+    <p data-i18n="q7_p1">Vendor lock-in is a strategic risk, and data portability is your primary safeguard. Before you sign, you need to understand exactly what happens to your data &mdash; training data, outputs, logs, configurations &mdash; when the relationship ends. A vendor that makes data extraction difficult or charges punitive fees for it is not a partner; they are a trap.</p>
+    <p data-i18n="q7_p2"><strong>What to look for:</strong> The contract should specify a data return period (typically 30 to 90 days), the format in which data will be exported, and a certified data destruction process after the return period expires. Ask for a written commitment that all copies, backups, and cached instances of your data will be permanently deleted and that you will receive a certificate of destruction.</p>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q8_num">Question 08</div>
+    <h2 data-i18n="q8_title">How do you handle model drift, retraining, and version control?</h2>
+    <p data-i18n="q8_p1">AI models degrade over time. As the data distribution shifts, a model that was accurate at deployment can become unreliable within months. If your vendor does not actively monitor for model drift and manage retraining cycles, you risk making business decisions based on stale or degraded predictions. Version control is equally important &mdash; you need to roll back to a known-good model if an update introduces regressions.</p>
+    <p data-i18n="q8_p2"><strong>What to look for:</strong> Ask about the vendor's model monitoring infrastructure &mdash; do they track accuracy, fairness, and performance metrics in production? Verify that they maintain a versioned model registry and can roll back to previous versions within a defined SLA. Understand who initiates retraining &mdash; is it automatic, scheduled, or triggered by performance thresholds &mdash; and whether you are notified before a new model version is deployed to your environment.</p>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q9_num">Question 09</div>
+    <h2 data-i18n="q9_title">What&rsquo;s your uptime SLA and disaster recovery plan?</h2>
+    <p data-i18n="q9_p1">When AI automation handles critical workflows &mdash; fraud detection, customer communications, compliance screening &mdash; downtime is not an inconvenience, it is an operational failure. A 99.9% uptime SLA sounds impressive until you realize it allows for nearly nine hours of downtime per year. You need to understand not just the percentage, but the vendor's actual recovery capabilities and what happens to in-flight processes when systems go down.</p>
+    <p data-i18n="q9_p2"><strong>What to look for:</strong> Request the vendor's disaster recovery and business continuity documentation. Key metrics include Recovery Time Objective (RTO) and Recovery Point Objective (RPO). Ask about geographic redundancy, failover automation, and whether the vendor conducts regular disaster recovery drills. Clarify what service credits or remedies apply when the SLA is breached.</p>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card">
+    <div class="q-number" data-i18n="q10_num">Question 10</div>
+    <h2 data-i18n="q10_title">Do you carry cyber insurance, and what does it cover?</h2>
+    <p data-i18n="q10_p1">Cyber insurance is a signal of maturity and risk awareness. A vendor that carries adequate coverage has submitted to an underwriter's security assessment and maintains controls sufficient to qualify for a policy. The absence of cyber insurance &mdash; or a policy that excludes AI-related claims &mdash; suggests either financial constraints or a risk posture that has not kept pace with the vendor's technology.</p>
+    <p data-i18n="q10_p2"><strong>What to look for:</strong> Ask for proof of coverage and review what the policy includes: data breach response, third-party liability, business interruption, and regulatory defense costs. Confirm that the coverage limits are proportional to the data volumes and sensitivity levels you will be entrusting to the vendor. A policy with a $1M cap may be insufficient for an enterprise handling millions of customer records.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3 data-i18n="cta_title">Need Help Evaluating AI Vendors?</h3>
+    <p data-i18n="cta_text">Our team helps enterprises in Canada and internationally conduct structured AI vendor assessments covering security, compliance, and operational risk. Let&rsquo;s talk about your requirements.</p>
+    <a href="/#contact" class="cta-btn" data-i18n="cta_btn">Book a Consultation</a>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>&copy; 2026 Consultations NovaWave &mdash; Gatineau, QC, Canada</p>
+</footer>
+
+<script>
+const translations = {
+  en: {
+    nav_back: "← Back to blog",
+    tag: "Vendor Evaluation",
+    title: "How to Evaluate an AI Automation Vendor — 10 Questions to Ask",
+    author: "By Christian Antoine, PCIP",
+    date: "September 18, 2026",
+    read_time: "7 min read",
+    intro: "Adopting AI-powered automation can transform how your organization operates, but choosing the wrong vendor introduces risk that extends far beyond a failed project. Data exposure, regulatory penalties, opaque decision-making, and vendor lock-in are real consequences of skipping due diligence. This checklist gives CTOs, CISOs, and procurement teams a structured framework for evaluating AI automation vendors before signing the contract.",
+    q1_num: "Question 01", q1_title: "Where is our data stored, and who has access to it?",
+    q1_p1: "Data residency is not just a technical detail — it is a legal and regulatory concern. You need to know whether your data stays on-premises, sits in a specific cloud region, or moves across jurisdictions. For Canadian organizations, data leaving the country may trigger obligations under PIPEDA and provincial privacy laws. For European clients, cross-border transfers implicate GDPR adequacy decisions and supplementary measures.",
+    q1_p2: "<strong>What to look for:</strong> Ask for a data-flow diagram that maps where data is stored, processed, and cached. Confirm that the vendor supports regional data residency options. Verify that access controls follow the principle of least privilege, and that the vendor maintains logs of who accessed your data and when.",
+    q2_num: "Question 02", q2_title: "What security certifications do you hold (SOC 2, ISO 27001)?",
+    q2_p1: "Certifications are not guarantees of security, but they demonstrate that a vendor submits to independent scrutiny. SOC 2 Type II reports cover a sustained observation period and provide assurance that controls operate effectively over time. ISO 27001 indicates a formal information security management system. The absence of either should prompt deeper questions about how the vendor manages security internally.",
+    q2_p2: "<strong>What to look for:</strong> Request the most recent SOC 2 Type II report and verify the trust service criteria it covers — particularly security, availability, and confidentiality. Confirm whether the certification scope includes the specific product you are evaluating, not just the vendor’s corporate infrastructure. Check the report date: a SOC 2 older than twelve months is a flag.",
+    q3_num: "Question 03", q3_title: "How do you handle model training — is our data used to train your models?",
+    q3_p1: "Many AI vendors default to using customer data for model improvement unless the customer explicitly opts out. This creates intellectual property risk, potential competitive exposure, and privacy concerns. If your proprietary documents, customer records, or strategic communications are absorbed into a shared model, the information can surface in outputs delivered to other clients.",
+    q3_p2: "<strong>What to look for:</strong> Get a clear, contractual commitment that your data will not be used for model training without explicit written consent. Ask whether the vendor offers dedicated or fine-tuned model instances that isolate your data entirely. Review the data processing agreement (DPA) for language around data use for “service improvement” — a common euphemism for model training.",
+    q4_num: "Question 04", q4_title: "What’s your incident response and breach notification process?",
+    q4_p1: "When a security incident occurs — and it eventually will — the speed and quality of the vendor’s response directly affects your organization’s exposure. A vendor without a documented, tested incident response plan becomes a liability multiplier. You need to know exactly how quickly you will be notified, what information the notification will contain, and what remediation steps the vendor will execute.",
+    q4_p2: "<strong>What to look for:</strong> Request the vendor’s incident response policy and ask about their notification SLA — 72 hours is the GDPR standard, but best-in-class vendors commit to 24 hours or less. Verify that the vendor has conducted tabletop exercises in the past year. Ask whether they maintain a dedicated security operations team or rely on outsourced monitoring.",
+    q5_num: "Question 05", q5_title: "How do you ensure regulatory compliance (GDPR, PIPEDA, industry-specific)?",
+    q5_p1: "AI systems operate within a regulatory landscape that is shifting rapidly. A vendor that is compliant today but not tracking upcoming regulations — the EU AI Act, Canada’s Artificial Intelligence and Data Act (AIDA), sector-specific rules in healthcare and finance — will become a compliance risk in short order. You need a vendor that treats regulatory compliance as a continuous process, not a one-time checkbox.",
+    q5_p2: "<strong>What to look for:</strong> Ask the vendor to map their compliance posture to the regulations that govern your industry and jurisdictions. Request documentation of their privacy impact assessment (PIA) process. For organizations subject to PIPEDA, verify that the vendor can support data subject access requests and the right to erasure. Confirm whether the vendor has in-house legal counsel tracking AI-specific regulation.",
+    q6_num: "Question 06", q6_title: "Can we audit your AI systems and see how decisions are made?",
+    q6_p1: "Explainability is not optional for enterprise AI — it is a governance requirement. If an AI system denies a loan, flags a transaction, or recommends terminating an employee, your organization must be able to explain why. A vendor that treats their model as a black box exposes you to regulatory penalties, legal liability, and reputational damage when decisions are challenged.",
+    q6_p2: "<strong>What to look for:</strong> Ask whether the vendor provides model cards, decision audit trails, or feature-importance scoring for their outputs. Determine whether you can run independent audits or bring in third-party assessors. For high-stakes decisions, verify that the system can produce human-readable explanations that satisfy both regulators and affected individuals.",
+    q7_num: "Question 07", q7_title: "What happens to our data if we terminate the contract?",
+    q7_p1: "Vendor lock-in is a strategic risk, and data portability is your primary safeguard. Before you sign, you need to understand exactly what happens to your data — training data, outputs, logs, configurations — when the relationship ends. A vendor that makes data extraction difficult or charges punitive fees for it is not a partner; they are a trap.",
+    q7_p2: "<strong>What to look for:</strong> The contract should specify a data return period (typically 30 to 90 days), the format in which data will be exported, and a certified data destruction process after the return period expires. Ask for a written commitment that all copies, backups, and cached instances of your data will be permanently deleted and that you will receive a certificate of destruction.",
+    q8_num: "Question 08", q8_title: "How do you handle model drift, retraining, and version control?",
+    q8_p1: "AI models degrade over time. As the data distribution shifts, a model that was accurate at deployment can become unreliable within months. If your vendor does not actively monitor for model drift and manage retraining cycles, you risk making business decisions based on stale or degraded predictions. Version control is equally important — you need to roll back to a known-good model if an update introduces regressions.",
+    q8_p2: "<strong>What to look for:</strong> Ask about the vendor’s model monitoring infrastructure — do they track accuracy, fairness, and performance metrics in production? Verify that they maintain a versioned model registry and can roll back to previous versions within a defined SLA. Understand who initiates retraining — is it automatic, scheduled, or triggered by performance thresholds — and whether you are notified before a new model version is deployed to your environment.",
+    q9_num: "Question 09", q9_title: "What’s your uptime SLA and disaster recovery plan?",
+    q9_p1: "When AI automation handles critical workflows — fraud detection, customer communications, compliance screening — downtime is not an inconvenience, it is an operational failure. A 99.9% uptime SLA sounds impressive until you realize it allows for nearly nine hours of downtime per year. You need to understand not just the percentage, but the vendor’s actual recovery capabilities and what happens to in-flight processes when systems go down.",
+    q9_p2: "<strong>What to look for:</strong> Request the vendor’s disaster recovery and business continuity documentation. Key metrics include Recovery Time Objective (RTO) and Recovery Point Objective (RPO). Ask about geographic redundancy, failover automation, and whether the vendor conducts regular disaster recovery drills. Clarify what service credits or remedies apply when the SLA is breached.",
+    q10_num: "Question 10", q10_title: "Do you carry cyber insurance, and what does it cover?",
+    q10_p1: "Cyber insurance is a signal of maturity and risk awareness. A vendor that carries adequate coverage has submitted to an underwriter’s security assessment and maintains controls sufficient to qualify for a policy. The absence of cyber insurance — or a policy that excludes AI-related claims — suggests either financial constraints or a risk posture that has not kept pace with the vendor’s technology.",
+    q10_p2: "<strong>What to look for:</strong> Ask for proof of coverage and review what the policy includes: data breach response, third-party liability, business interruption, and regulatory defense costs. Confirm that the coverage limits are proportional to the data volumes and sensitivity levels you will be entrusting to the vendor. A policy with a $1M cap may be insufficient for an enterprise handling millions of customer records.",
+    cta_title: "Need Help Evaluating AI Vendors?",
+    cta_text: "Our team helps enterprises in Canada and internationally conduct structured AI vendor assessments covering security, compliance, and operational risk. Let’s talk about your requirements.",
+    cta_btn: "Book a Consultation"
+  },
+  fr: {
+    nav_back: "← Retour au blogue",
+    tag: "Évaluation de fournisseurs",
+    title: "Comment évaluer un fournisseur d’automatisation IA — 10 questions à poser",
+    author: "Par Christian Antoine, PCIP",
+    date: "18 septembre 2026",
+    read_time: "7 min de lecture",
+    intro: "L’adoption de l’automatisation par IA peut transformer le fonctionnement de votre organisation, mais choisir le mauvais fournisseur introduit des risques qui dépassent largement un projet échoué. Exposition des données, sanctions réglementaires, prise de décision opaque et dépendance au fournisseur sont des conséquences réelles d’une diligence raisonnable insuffisante. Cette liste de contrôle offre aux directeurs techniques, RSSI et équipes d’approvisionnement un cadre structuré pour évaluer les fournisseurs d’automatisation IA avant de signer le contrat.",
+    q1_num: "Question 01", q1_title: "Où nos données sont-elles stockées et qui y a accès ?",
+    q1_p1: "La résidence des données n’est pas qu’un détail technique — c’est une préoccupation juridique et réglementaire. Vous devez savoir si vos données restent sur site, dans une région cloud spécifique ou si elles traversent des juridictions. Pour les organisations canadiennes, le transfert de données hors du pays peut déclencher des obligations en vertu de la LPRPDE et des lois provinciales sur la vie privée.",
+    q1_p2: "<strong>À vérifier :</strong> Demandez un diagramme de flux de données indiquant où les données sont stockées, traitées et mises en cache. Confirmez que le fournisseur prend en charge les options de résidence régionale des données. Vérifiez que les contrôles d’accès suivent le principe du moindre privilège.",
+    q2_num: "Question 02", q2_title: "Quelles certifications de sécurité détenez-vous (SOC 2, ISO 27001) ?",
+    q2_p1: "Les certifications ne sont pas des garanties de sécurité, mais elles démontrent qu’un fournisseur se soumet à un examen indépendant. Les rapports SOC 2 Type II couvrent une période d’observation soutenue et fournissent l’assurance que les contrôles fonctionnent efficacement au fil du temps.",
+    q2_p2: "<strong>À vérifier :</strong> Demandez le rapport SOC 2 Type II le plus récent et vérifiez les critères qu’il couvre. Confirmez si le périmètre de certification inclut le produit spécifique que vous évaluez. Vérifiez la date du rapport : un SOC 2 de plus de douze mois est un signal d’alerte.",
+    q3_num: "Question 03", q3_title: "Comment gérez-vous l’entraînement des modèles — nos données servent-elles à entraîner vos modèles ?",
+    q3_p1: "De nombreux fournisseurs d’IA utilisent par défaut les données client pour améliorer les modèles, sauf refus explicite du client. Cela crée un risque de propriété intellectuelle, une exposition concurrentielle potentielle et des préoccupations en matière de confidentialité.",
+    q3_p2: "<strong>À vérifier :</strong> Obtenez un engagement contractuel clair stipulant que vos données ne seront pas utilisées pour l’entraînement des modèles sans consentement écrit explicite. Demandez si le fournisseur propose des instances de modèles dédiées qui isolent entièrement vos données.",
+    q4_num: "Question 04", q4_title: "Quel est votre processus de réponse aux incidents et de notification de violation ?",
+    q4_p1: "Lorsqu’un incident de sécurité survient — et cela arrivera inévitablement — la rapidité et la qualité de la réponse du fournisseur affectent directement l’exposition de votre organisation.",
+    q4_p2: "<strong>À vérifier :</strong> Demandez la politique de réponse aux incidents du fournisseur et renseignez-vous sur leur SLA de notification. Vérifiez que le fournisseur a réalisé des exercices de simulation au cours de la dernière année.",
+    q5_num: "Question 05", q5_title: "Comment assurez-vous la conformité réglementaire (RGPD, LPRPDE, règles sectorielles) ?",
+    q5_p1: "Les systèmes d’IA opèrent dans un paysage réglementaire en évolution rapide. Un fournisseur conforme aujourd’hui mais qui ne suit pas les réglementations à venir deviendra un risque de conformité à court terme.",
+    q5_p2: "<strong>À vérifier :</strong> Demandez au fournisseur de cartographier sa posture de conformité par rapport aux réglementations qui régissent votre secteur. Demandez la documentation de leur processus d’évaluation d’impact sur la vie privée.",
+    q6_num: "Question 06", q6_title: "Pouvons-nous auditer vos systèmes d’IA et voir comment les décisions sont prises ?",
+    q6_p1: "L’explicabilité n’est pas optionnelle pour l’IA d’entreprise — c’est une exigence de gouvernance. Si un système d’IA refuse un prêt ou signale une transaction, votre organisation doit pouvoir expliquer pourquoi.",
+    q6_p2: "<strong>À vérifier :</strong> Demandez si le fournisseur fournit des fiches de modèle, des pistes d’audit décisionnelles ou un score d’importance des caractéristiques. Déterminez si vous pouvez effectuer des audits indépendants.",
+    q7_num: "Question 07", q7_title: "Qu’advient-il de nos données si nous résilions le contrat ?",
+    q7_p1: "La dépendance au fournisseur est un risque stratégique et la portabilité des données est votre principale protection. Avant de signer, vous devez comprendre exactement ce qui arrive à vos données lorsque la relation prend fin.",
+    q7_p2: "<strong>À vérifier :</strong> Le contrat doit spécifier une période de restitution des données, le format d’exportation et un processus certifié de destruction des données après la période de restitution.",
+    q8_num: "Question 08", q8_title: "Comment gérez-vous la dérive des modèles, le réentraînement et le contrôle de version ?",
+    q8_p1: "Les modèles d’IA se dégradent avec le temps. Si votre fournisseur ne surveille pas activement la dérive des modèles et ne gère pas les cycles de réentraînement, vous risquez de prendre des décisions basées sur des prédictions obsolètes.",
+    q8_p2: "<strong>À vérifier :</strong> Renseignez-vous sur l’infrastructure de surveillance des modèles du fournisseur. Vérifiez qu’il maintient un registre de modèles versionné et peut revenir aux versions précédentes.",
+    q9_num: "Question 09", q9_title: "Quel est votre SLA de disponibilité et votre plan de reprise après sinistre ?",
+    q9_p1: "Lorsque l’automatisation IA gère des flux de travail critiques, les temps d’arrêt ne sont pas un inconvénient mais une défaillance opérationnelle.",
+    q9_p2: "<strong>À vérifier :</strong> Demandez la documentation de reprise après sinistre et de continuité d’activité du fournisseur. Les indicateurs clés incluent le RTO et le RPO. Renseignez-vous sur la redondance géographique et l’automatisation du basculement.",
+    q10_num: "Question 10", q10_title: "Avez-vous une cyberassurance et que couvre-t-elle ?",
+    q10_p1: "La cyberassurance est un signal de maturité et de conscience du risque. Un fournisseur qui dispose d’une couverture adéquate a soumis ses pratiques à l’évaluation d’un assureur.",
+    q10_p2: "<strong>À vérifier :</strong> Demandez une preuve de couverture et examinez ce que la police inclut : réponse aux violations de données, responsabilité civile, interruption d’activité et coûts de défense réglementaire.",
+    cta_title: "Besoin d’aide pour évaluer des fournisseurs IA ?",
+    cta_text: "Notre équipe aide les entreprises au Canada et à l’international à mener des évaluations structurées de fournisseurs IA couvrant la sécurité, la conformité et le risque opérationnel.",
+    cta_btn: "Réserver une consultation"
+  },
+  es: {
+    nav_back: "← Volver al blog",
+    tag: "Evaluación de proveedores",
+    title: "Cómo evaluar un proveedor de automatización con IA — 10 preguntas clave",
+    author: "Por Christian Antoine, PCIP",
+    date: "18 de septiembre de 2026",
+    read_time: "7 min de lectura",
+    intro: "Adoptar la automatización impulsada por IA puede transformar las operaciones de su organización, pero elegir al proveedor equivocado introduce riesgos que van mucho más allá de un proyecto fallido. Exposición de datos, sanciones regulatorias, toma de decisiones opaca y dependencia del proveedor son consecuencias reales de omitir la debida diligencia. Esta lista de verificación ofrece a directores de tecnología, CISOs y equipos de adquisiciones un marco estructurado para evaluar proveedores de automatización con IA antes de firmar el contrato.",
+    q1_num: "Pregunta 01", q1_title: "¿Dónde se almacenan nuestros datos y quién tiene acceso?",
+    q1_p1: "La residencia de datos no es solo un detalle técnico — es una preocupación legal y regulatoria. Necesita saber si sus datos permanecen en sus instalaciones, en una región de nube específica o si cruzan jurisdicciones.",
+    q1_p2: "<strong>Qué buscar:</strong> Solicite un diagrama de flujo de datos que mapee dónde se almacenan, procesan y almacenan en caché los datos. Confirme que el proveedor admite opciones de residencia regional de datos.",
+    q2_num: "Pregunta 02", q2_title: "¿Qué certificaciones de seguridad posee (SOC 2, ISO 27001)?",
+    q2_p1: "Las certificaciones no son garantías de seguridad, pero demuestran que un proveedor se somete a escrutinio independiente.",
+    q2_p2: "<strong>Qué buscar:</strong> Solicite el informe SOC 2 Tipo II más reciente y verifique los criterios que cubre. Confirme si el alcance de la certificación incluye el producto específico que está evaluando.",
+    q3_num: "Pregunta 03", q3_title: "¿Cómo manejan el entrenamiento de modelos — se usan nuestros datos para entrenar sus modelos?",
+    q3_p1: "Muchos proveedores de IA utilizan datos de clientes para mejorar modelos de forma predeterminada. Esto crea riesgos de propiedad intelectual, exposición competitiva y preocupaciones de privacidad.",
+    q3_p2: "<strong>Qué buscar:</strong> Obtenga un compromiso contractual claro de que sus datos no se utilizarán para el entrenamiento de modelos sin consentimiento escrito explícito.",
+    q4_num: "Pregunta 04", q4_title: "¿Cuál es su proceso de respuesta a incidentes y notificación de brechas?",
+    q4_p1: "Cuando ocurre un incidente de seguridad, la velocidad y calidad de la respuesta del proveedor afecta directamente la exposición de su organización.",
+    q4_p2: "<strong>Qué buscar:</strong> Solicite la política de respuesta a incidentes del proveedor y pregunte sobre su SLA de notificación.",
+    q5_num: "Pregunta 05", q5_title: "¿Cómo garantizan el cumplimiento regulatorio (RGPD, PIPEDA, normas sectoriales)?",
+    q5_p1: "Los sistemas de IA operan en un panorama regulatorio que cambia rápidamente. Un proveedor que cumple hoy pero no sigue las regulaciones venideras se convertirá en un riesgo de cumplimiento a corto plazo.",
+    q5_p2: "<strong>Qué buscar:</strong> Pida al proveedor que mapee su postura de cumplimiento con las regulaciones que rigen su industria.",
+    q6_num: "Pregunta 06", q6_title: "¿Podemos auditar sus sistemas de IA y ver cómo se toman las decisiones?",
+    q6_p1: "La explicabilidad no es opcional para la IA empresarial — es un requisito de gobernanza.",
+    q6_p2: "<strong>Qué buscar:</strong> Pregunte si el proveedor proporciona fichas de modelo, pistas de auditoría de decisiones o puntuaciones de importancia de características.",
+    q7_num: "Pregunta 07", q7_title: "¿Qué sucede con nuestros datos si terminamos el contrato?",
+    q7_p1: "La dependencia del proveedor es un riesgo estratégico y la portabilidad de datos es su principal protección.",
+    q7_p2: "<strong>Qué buscar:</strong> El contrato debe especificar un período de devolución de datos, el formato de exportación y un proceso certificado de destrucción de datos.",
+    q8_num: "Pregunta 08", q8_title: "¿Cómo manejan la deriva del modelo, el reentrenamiento y el control de versiones?",
+    q8_p1: "Los modelos de IA se degradan con el tiempo. Si su proveedor no monitorea activamente la deriva del modelo, corre el riesgo de tomar decisiones basadas en predicciones obsoletas.",
+    q8_p2: "<strong>Qué buscar:</strong> Pregunte sobre la infraestructura de monitoreo de modelos del proveedor. Verifique que mantengan un registro de modelos versionado.",
+    q9_num: "Pregunta 09", q9_title: "¿Cuál es su SLA de disponibilidad y plan de recuperación ante desastres?",
+    q9_p1: "Cuando la automatización con IA maneja flujos de trabajo críticos, el tiempo de inactividad no es una molestia, es una falla operativa.",
+    q9_p2: "<strong>Qué buscar:</strong> Solicite la documentación de recuperación ante desastres y continuidad del negocio del proveedor.",
+    q10_num: "Pregunta 10", q10_title: "¿Tienen seguro cibernético y qué cubre?",
+    q10_p1: "El seguro cibernético es una señal de madurez y conciencia del riesgo.",
+    q10_p2: "<strong>Qué buscar:</strong> Solicite prueba de cobertura y revise lo que incluye la póliza: respuesta a brechas de datos, responsabilidad ante terceros, interrupción del negocio y costos de defensa regulatoria.",
+    cta_title: "¿Necesita ayuda para evaluar proveedores de IA?",
+    cta_text: "Nuestro equipo ayuda a empresas en Canadá e internacionalmente a realizar evaluaciones estructuradas de proveedores de IA que cubren seguridad, cumplimiento y riesgo operativo.",
+    cta_btn: "Reservar una consulta"
+  },
+  pt: {
+    nav_back: "← Voltar ao blog",
+    tag: "Avaliação de fornecedores",
+    title: "Como avaliar um fornecedor de automação com IA — 10 perguntas essenciais",
+    author: "Por Christian Antoine, PCIP",
+    date: "18 de setembro de 2026",
+    read_time: "7 min de leitura",
+    intro: "Adotar a automação com IA pode transformar as operações da sua organização, mas escolher o fornecedor errado introduz riscos que vão muito além de um projeto fracassado. Exposição de dados, penalidades regulatórias, tomada de decisão opaca e dependência do fornecedor são consequências reais de pular a devida diligência. Esta lista de verificação oferece a CTOs, CISOs e equipes de compras um framework estruturado para avaliar fornecedores de automação com IA antes de assinar o contrato.",
+    q1_num: "Pergunta 01", q1_title: "Onde nossos dados são armazenados e quem tem acesso?",
+    q1_p1: "A residência de dados não é apenas um detalhe técnico — é uma preocupação jurídica e regulatória. Você precisa saber se seus dados permanecem no local, em uma região de nuvem específica ou se cruzam jurisdições.",
+    q1_p2: "<strong>O que verificar:</strong> Solicite um diagrama de fluxo de dados que mapeie onde os dados são armazenados, processados e armazenados em cache. Confirme que o fornecedor suporta opções de residência regional de dados.",
+    q2_num: "Pergunta 02", q2_title: "Quais certificações de segurança você possui (SOC 2, ISO 27001)?",
+    q2_p1: "Certificações não são garantias de segurança, mas demonstram que um fornecedor se submete a escrutínio independente.",
+    q2_p2: "<strong>O que verificar:</strong> Solicite o relatório SOC 2 Tipo II mais recente e verifique os critérios que ele cobre. Confirme se o escopo da certificação inclui o produto específico que você está avaliando.",
+    q3_num: "Pergunta 03", q3_title: "Como você lida com o treinamento de modelos — nossos dados são usados para treinar seus modelos?",
+    q3_p1: "Muitos fornecedores de IA usam dados de clientes para melhoria de modelos por padrão. Isso cria riscos de propriedade intelectual, exposição competitiva e preocupações com privacidade.",
+    q3_p2: "<strong>O que verificar:</strong> Obtenha um compromisso contratual claro de que seus dados não serão usados para treinamento de modelos sem consentimento escrito explícito.",
+    q4_num: "Pergunta 04", q4_title: "Qual é o processo de resposta a incidentes e notificação de violação?",
+    q4_p1: "Quando um incidente de segurança ocorre, a velocidade e qualidade da resposta do fornecedor afeta diretamente a exposição da sua organização.",
+    q4_p2: "<strong>O que verificar:</strong> Solicite a política de resposta a incidentes do fornecedor e pergunte sobre o SLA de notificação.",
+    q5_num: "Pergunta 05", q5_title: "Como você garante a conformidade regulatória (LGPD, GDPR, PIPEDA)?",
+    q5_p1: "Os sistemas de IA operam em um cenário regulatório que muda rapidamente. Um fornecedor que está em conformidade hoje, mas não acompanha as regulamentações futuras, se tornará um risco de conformidade em breve.",
+    q5_p2: "<strong>O que verificar:</strong> Peça ao fornecedor para mapear sua postura de conformidade em relação às regulamentações que regem seu setor.",
+    q6_num: "Pergunta 06", q6_title: "Podemos auditar seus sistemas de IA e ver como as decisões são tomadas?",
+    q6_p1: "A explicabilidade não é opcional para IA empresarial — é um requisito de governança.",
+    q6_p2: "<strong>O que verificar:</strong> Pergunte se o fornecedor fornece fichas de modelo, trilhas de auditoria de decisões ou pontuações de importância de características.",
+    q7_num: "Pergunta 07", q7_title: "O que acontece com nossos dados se rescindirmos o contrato?",
+    q7_p1: "A dependência do fornecedor é um risco estratégico e a portabilidade de dados é sua principal proteção.",
+    q7_p2: "<strong>O que verificar:</strong> O contrato deve especificar um período de devolução de dados, o formato de exportação e um processo certificado de destruição de dados.",
+    q8_num: "Pergunta 08", q8_title: "Como você lida com a deriva do modelo, retreinamento e controle de versão?",
+    q8_p1: "Os modelos de IA se degradam ao longo do tempo. Se seu fornecedor não monitora ativamente a deriva do modelo, você corre o risco de tomar decisões baseadas em predições obsoletas.",
+    q8_p2: "<strong>O que verificar:</strong> Pergunte sobre a infraestrutura de monitoramento de modelos do fornecedor. Verifique se eles mantêm um registro de modelos versionado.",
+    q9_num: "Pergunta 09", q9_title: "Qual é o SLA de disponibilidade e o plano de recuperação de desastres?",
+    q9_p1: "Quando a automação com IA lida com fluxos de trabalho críticos, o tempo de inatividade não é um inconvêniente, é uma falha operacional.",
+    q9_p2: "<strong>O que verificar:</strong> Solicite a documentação de recuperação de desastres e continuidade de negócios do fornecedor.",
+    q10_num: "Pergunta 10", q10_title: "Você possui seguro cibernético e o que ele cobre?",
+    q10_p1: "O seguro cibernético é um sinal de maturidade e consciência de risco.",
+    q10_p2: "<strong>O que verificar:</strong> Solicite prova de cobertura e analise o que a apólice inclui: resposta a violações de dados, responsabilidade perante terceiros, interrupção de negócios e custos de defesa regulatória.",
+    cta_title: "Precisa de ajuda para avaliar fornecedores de IA?",
+    cta_text: "Nossa equipe ajuda empresas no Canadá e internacionalmente a realizar avaliações estruturadas de fornecedores de IA cobrindo segurança, conformidade e risco operacional.",
+    cta_btn: "Agendar uma consulta"
+  }
+};
+
+function applyLang(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = t[key];
+      } else {
+        el.innerHTML = t[key];
+      }
+    }
+  });
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sel = document.getElementById('langSelect');
+  let saved = 'en';
+  try { saved = localStorage.getItem('novawave_lang') || 'en'; } catch(e) {}
+  if (!translations[saved]) saved = 'en';
+  sel.value = saved;
+  applyLang(saved);
+  sel.addEventListener('change', () => applyLang(sel.value));
+});
+</script>
+</body>
+</html>

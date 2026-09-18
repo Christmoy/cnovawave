@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Prepare for Québec Law 25 Compliance in 2026 | Consultations NovaWave</title>
+  <meta name="description" content="A comprehensive guide to Québec Law 25 compliance in 2026. Learn about privacy officer obligations, consent requirements, breach notification, penalties up to $25M, and a practical compliance checklist for CTOs and CISOs.">
+  <link rel="canonical" href="https://cnovawave.com/blog/law25-compliance-guide.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Prepare for Québec Law 25 Compliance in 2026",
+    "author": {
+      "@type": "Person",
+      "name": "Christian Antoine, PCIP"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Consultations NovaWave",
+      "url": "https://cnovawave.com"
+    },
+    "datePublished": "2026-09-18",
+    "dateModified": "2026-09-18",
+    "description": "A comprehensive guide to Québec Law 25 compliance in 2026, covering privacy officer obligations, consent requirements, breach notification, penalties, and a practical compliance checklist.",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://cnovawave.com/blog/law25-compliance-guide.html"
+    },
+    "inLanguage": "en",
+    "keywords": ["Law 25", "Québec privacy law", "compliance", "PIPEDA", "data protection", "CAI", "privacy impact assessment"]
+  }
+  </script>
+  <style>
+    :root {
+      --dark: #04090f;
+      --dark2: #070f1e;
+      --cyan: #00d4f0;
+      --green: #00f0a0;
+      --off: #f2f6ff;
+      --muted: #a8b8d0;
+      --max-w: 760px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      background: var(--dark);
+      color: var(--off);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    a { color: var(--cyan); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--green); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(16px, 4vw, 48px);
+      background: rgba(4, 9, 15, .92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 212, 240, .08);
+    }
+
+    .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--off);
+      white-space: nowrap;
+    }
+
+    .nav-brand span {
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-right a {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .nav-right a:hover { color: var(--cyan); }
+
+    .lang-select {
+      background: rgba(0, 212, 240, .08);
+      border: 1px solid rgba(0, 212, 240, .2);
+      color: var(--off);
+      font-family: 'Inter', sans-serif;
+      font-size: .82rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      outline: none;
+    }
+    .lang-select:focus { border-color: var(--cyan); }
+    .lang-select option { background: var(--dark2); color: var(--off); }
+
+    /* ── Article ── */
+    .article-wrapper {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 56px 16px 80px;
+    }
+
+    .article-meta {
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(0, 212, 240, .12);
+    }
+
+    .article-meta h1 {
+      font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--off) 60%, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      font-size: .88rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .meta-row .author { font-weight: 500; color: var(--cyan); }
+
+    /* ── Content ── */
+    .article-body h2 {
+      font-size: 1.45rem;
+      margin: 48px 0 16px;
+      color: var(--off);
+    }
+
+    .article-body h3 {
+      font-size: 1.15rem;
+      margin: 32px 0 12px;
+      color: var(--cyan);
+    }
+
+    .article-body p {
+      margin-bottom: 18px;
+      color: var(--off);
+      font-weight: 300;
+    }
+
+    .article-body ul, .article-body ol {
+      margin: 0 0 20px 24px;
+      color: var(--off);
+      font-weight: 300;
+    }
+    .article-body li { margin-bottom: 8px; }
+    .article-body li::marker { color: var(--cyan); }
+
+    .article-body strong { font-weight: 600; color: var(--off); }
+
+    .article-body em { color: var(--muted); }
+
+    .highlight-box {
+      background: rgba(0, 212, 240, .06);
+      border-left: 3px solid var(--cyan);
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .highlight-box p { margin-bottom: 0; }
+
+    .penalty-box {
+      background: rgba(255, 60, 60, .06);
+      border-left: 3px solid #ff4444;
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .penalty-box p { margin-bottom: 0; }
+    .penalty-box strong { color: #ff8888; }
+
+    .checklist {
+      list-style: none;
+      margin-left: 0;
+      padding: 0;
+    }
+    .checklist li {
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 14px;
+    }
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--cyan);
+      border-radius: 4px;
+    }
+
+    .cta-section {
+      text-align: center;
+      margin: 56px 0 0;
+      padding: 40px 24px;
+      background: linear-gradient(135deg, rgba(0, 212, 240, .06), rgba(0, 240, 160, .04));
+      border: 1px solid rgba(0, 212, 240, .12);
+      border-radius: 12px;
+    }
+
+    .cta-section h3 {
+      color: var(--off) !important;
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-size: .95rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      color: var(--dark);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      border-radius: 8px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 212, 240, .25);
+      color: var(--dark);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid rgba(0, 212, 240, .08);
+      padding: 40px 16px;
+      text-align: center;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+    .footer a { color: var(--muted); }
+    .footer a:hover { color: var(--cyan); }
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      color: var(--off);
+      margin-bottom: 8px;
+    }
+    .footer-brand span {
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @media (max-width: 600px) {
+      .nav-right { gap: 10px; }
+      .nav-right a { font-size: .8rem; }
+      .meta-row { font-size: .82rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <a href="https://cnovawave.com" class="nav-brand">Consultations <span>NovaWave</span></a>
+    <div class="nav-right">
+      <select class="lang-select" id="langSelect" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="fr">FR</option>
+        <option value="es">ES</option>
+        <option value="pt">PT</option>
+      </select>
+      <a href="https://cnovawave.com/blog" data-i18n="nav_back">&larr; Back to blog</a>
+    </div>
+  </nav>
+
+  <!-- ── ARTICLE ── -->
+  <article class="article-wrapper">
+    <header class="article-meta">
+      <h1 data-i18n="title">How to Prepare for Qu&eacute;bec Law 25 Compliance in 2026</h1>
+      <div class="meta-row">
+        <span class="author">Christian Antoine, PCIP</span>
+        <span data-i18n="date">September 18, 2026</span>
+        <span data-i18n="readtime">8 min read</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <p data-i18n="intro">Qu&eacute;bec's <em>Act respecting the protection of personal information in the private sector</em>, commonly known as <strong>Law 25</strong> (formerly Bill 64), represents the most significant privacy law reform in Canadian history. With its phased implementation now fully in effect, organizations operating in or serving clients in Qu&eacute;bec face a regulatory landscape that rivals the European GDPR in both scope and severity. If your organization has not yet achieved full compliance, 2026 is the year to close every remaining gap &mdash; the Commission d'acc&egrave;s &agrave; l'information du Qu&eacute;bec (CAI) has made clear that enforcement actions are accelerating.</p>
+
+      <h2 data-i18n="h_what">What Is Law 25?</h2>
+      <p data-i18n="what_p1">Law 25 modernizes Qu&eacute;bec's existing privacy framework by amending the <em>Act respecting the protection of personal information in the private sector</em> (originally enacted in 1994) and the <em>Act respecting access to documents held by public bodies and the protection of personal information</em>. The law was adopted on September 22, 2021, with provisions phased in over three years: September 2022, September 2023, and September 2024.</p>
+      <p data-i18n="what_p2">The legislation applies to every private-sector organization that collects, holds, uses, or communicates personal information in Qu&eacute;bec &mdash; regardless of where the organization is headquartered. This extraterritorial reach means that a company based in Ontario, New York, or Paris that processes personal data of Qu&eacute;bec residents must comply. The law operates alongside the federal <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and, where applicable, Canada's Anti-Spam Legislation (CASL).</p>
+
+      <h2 data-i18n="h_obligations">Key Obligations Under Law 25</h2>
+
+      <h3 data-i18n="h_officer">1. Privacy Officer Designation</h3>
+      <p data-i18n="officer_p">Every organization must designate a person responsible for the protection of personal information. By default, this role falls to the highest-ranking authority within the enterprise (typically the CEO), but it can be delegated in writing to any qualified individual. The designated officer's title and contact information must be published on the organization's website. This role carries genuine accountability &mdash; the privacy officer oversees compliance, manages breach response, and serves as the primary point of contact for the CAI.</p>
+
+      <h3 data-i18n="h_pia">2. Privacy Impact Assessments (PIAs)</h3>
+      <p data-i18n="pia_p">Organizations must conduct a privacy impact assessment before initiating any project involving the acquisition, development, or redesign of an information system or electronic service delivery method that involves the collection, use, communication, retention, or destruction of personal information. PIAs must also be completed before personal information is communicated outside Qu&eacute;bec, assessing whether the receiving jurisdiction provides adequate protection. The PIA must evaluate the sensitivity of the information, the purposes of its use, the protection measures applied, and the rights of the individuals concerned.</p>
+
+      <h3 data-i18n="h_consent">3. Consent Requirements</h3>
+      <p data-i18n="consent_p">Law 25 imposes a heightened standard of consent. Consent must be <strong>manifest, free, informed, and given for specific purposes</strong>. It must be requested in clear and simple language, separately from any other information communicated to the individual. For sensitive personal information &mdash; including biometric data, health records, and financial information &mdash; consent must be <strong>express</strong>. Organizations cannot refuse to provide a product or service to someone who declines to consent to the collection of information beyond what is strictly necessary for the transaction. The law also introduces strict rules for obtaining valid consent for profiling and automated decision-making.</p>
+
+      <h3 data-i18n="h_breach">4. Breach Notification &mdash; 72-Hour Window</h3>
+      <div class="highlight-box">
+        <p data-i18n="breach_p">When a confidentiality incident occurs &mdash; any unauthorized access to, use, or communication of personal information, or loss of personal information &mdash; the organization must notify the <strong>CAI</strong> and the affected individuals <strong>within 72 hours</strong> if the incident presents a risk of serious injury. The organization must also maintain a register of all confidentiality incidents, regardless of severity, and provide it to the CAI upon request.</p>
+      </div>
+
+      <h3 data-i18n="h_deident">5. De-Identification and Anonymization Rules</h3>
+      <p data-i18n="deident_p">Law 25 draws a critical distinction between <strong>de-identification</strong> (rendering data so that it no longer directly identifies an individual, while remaining reversible) and <strong>anonymization</strong> (irreversibly preventing identification by any means). Organizations that destroy personal information must do so by anonymizing it rather than simply deleting it, whenever the information could serve a legitimate purpose in anonymized form. Anonymization must be carried out according to generally accepted best practices, and the organization must have reasonable grounds to believe the process is irreversible.</p>
+
+      <h3 data-i18n="h_transparency">6. Transparency Obligations</h3>
+      <p data-i18n="transparency_p">Organizations must publish a clear and accessible <strong>privacy policy</strong> detailing: the personal information collected, the purposes of collection, the means of collection, the rights of individuals, and whether the information is communicated outside Qu&eacute;bec. When automated decision-making is used to render a decision about an individual, the organization must inform the person at the time the decision is made, explain the factors and parameters that led to the decision, and inform them of their right to have the decision reviewed by a human being.</p>
+
+      <h3 data-i18n="h_portability">7. Right to Data Portability</h3>
+      <p data-i18n="portability_p">Individuals have the right to request that their personal information be communicated to them in a structured, commonly used technological format, or that it be transferred directly to another organization authorized to collect it. This portability right applies to information collected from the individual directly and does not extend to information generated or inferred by the organization. Organizations must respond to portability requests within 30 days.</p>
+
+      <h2 data-i18n="h_penalties">Penalties and Enforcement</h2>
+      <div class="penalty-box">
+        <p data-i18n="penalties_p">The enforcement provisions of Law 25 are among the most severe in North America. <strong>Administrative monetary penalties</strong> can reach <strong>$10 million</strong> or <strong>2% of worldwide turnover</strong>, whichever is greater. <strong>Penal fines</strong> for offences can reach <strong>$25 million</strong> or <strong>4% of worldwide turnover</strong>. These thresholds mirror the upper band of the European GDPR. Additionally, Law 25 introduces a <strong>private right of action</strong> enabling individuals to claim damages &mdash; including punitive damages &mdash; for privacy violations. The CAI has the authority to conduct investigations, issue orders, and impose sanctions, and has publicly stated that it intends to exercise these powers actively.</p>
+      </div>
+
+      <h2 data-i18n="h_checklist">Practical Compliance Checklist for 2026</h2>
+      <ul class="checklist">
+        <li data-i18n="cl_1"><strong>Appoint and register a privacy officer.</strong> Publish their title and contact details on your website. Ensure they have the resources, authority, and training to fulfill the role.</li>
+        <li data-i18n="cl_2"><strong>Audit all personal information holdings.</strong> Map every data flow: what you collect, where it is stored, who has access, and whether it crosses provincial or national borders.</li>
+        <li data-i18n="cl_3"><strong>Review and update your privacy policy.</strong> Ensure it meets Law 25's transparency requirements, including automated decision-making disclosures and cross-border transfer notifications.</li>
+        <li data-i18n="cl_4"><strong>Implement a consent management framework.</strong> Review every consent mechanism for compliance with the manifest, free, informed, and specific standard. Separate consent requests from other communications.</li>
+        <li data-i18n="cl_5"><strong>Establish a PIA process.</strong> Create templates and governance workflows for conducting privacy impact assessments before launching new projects or systems.</li>
+        <li data-i18n="cl_6"><strong>Build a breach response plan.</strong> Document procedures for detecting, containing, and reporting confidentiality incidents within 72 hours. Maintain a breach register.</li>
+        <li data-i18n="cl_7"><strong>Develop data portability capabilities.</strong> Ensure you can export personal information in machine-readable formats within the 30-day response window.</li>
+        <li data-i18n="cl_8"><strong>Review de-identification and anonymization practices.</strong> Validate that your anonymization methods meet the standard of irreversibility using generally accepted best practices.</li>
+        <li data-i18n="cl_9"><strong>Train your teams.</strong> Conduct mandatory privacy training for all employees who handle personal information. Document training completion.</li>
+        <li data-i18n="cl_10"><strong>Assess cross-border transfers.</strong> Conduct PIAs for every international data transfer. Evaluate the adequacy of the destination jurisdiction's privacy protections.</li>
+      </ul>
+
+      <h2 data-i18n="h_context">Law 25 in the Broader Canadian and Global Context</h2>
+      <p data-i18n="context_p1">Law 25 does not operate in isolation. It exists alongside PIPEDA at the federal level and privacy statutes in other provinces, such as British Columbia's <em>Personal Information Protection Act</em> (PIPA) and Alberta's equivalent. The federal government's proposed <em>Consumer Privacy Protection Act</em> (CPPA) under Bill C-27, if enacted, would further reshape the landscape. Organizations should design their compliance programs to satisfy the most demanding requirements across all applicable jurisdictions.</p>
+      <p data-i18n="context_p2">Globally, Law 25 aligns closely with the GDPR in many respects &mdash; including the penalty structure, the emphasis on consent, and the introduction of data portability. Organizations that have already achieved GDPR compliance will find significant overlap, but must not assume equivalence: Law 25 has distinct requirements around de-identification, automated decision-making disclosure, and the role of the privacy officer that require specific attention.</p>
+
+      <div class="cta-section">
+        <h3 data-i18n="cta_title">Need Help with Law 25 Compliance?</h3>
+        <p data-i18n="cta_p">Our team specializes in privacy compliance, data governance, and regulatory readiness for Canadian and international organizations. We can help you close the gaps and build a defensible compliance posture.</p>
+        <a href="https://cnovawave.com/#contact" class="cta-btn" data-i18n="cta_btn">Get in Touch</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-brand">Consultations <span>NovaWave</span></div>
+    <p data-i18n="footer_copy">&copy; 2026 Consultations NovaWave &mdash; Gatineau, QC, Canada. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="https://cnovawave.com/privacy" data-i18n="footer_privacy">Privacy Policy</a> &nbsp;|&nbsp;
+      <a href="https://cnovawave.com/terms" data-i18n="footer_terms">Terms of Service</a>
+    </p>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        nav_back: "← Back to blog",
+        title: "How to Prepare for Québec Law 25 Compliance in 2026",
+        date: "September 18, 2026",
+        readtime: "8 min read",
+        intro: "Québec’s <em>Act respecting the protection of personal information in the private sector</em>, commonly known as <strong>Law 25</strong> (formerly Bill 64), represents the most significant privacy law reform in Canadian history. With its phased implementation now fully in effect, organizations operating in or serving clients in Québec face a regulatory landscape that rivals the European GDPR in both scope and severity. If your organization has not yet achieved full compliance, 2026 is the year to close every remaining gap — the Commission d’accès à l’information du Québec (CAI) has made clear that enforcement actions are accelerating.",
+        h_what: "What Is Law 25?",
+        what_p1: "Law 25 modernizes Québec’s existing privacy framework by amending the <em>Act respecting the protection of personal information in the private sector</em> (originally enacted in 1994) and the <em>Act respecting access to documents held by public bodies and the protection of personal information</em>. The law was adopted on September 22, 2021, with provisions phased in over three years: September 2022, September 2023, and September 2024.",
+        what_p2: "The legislation applies to every private-sector organization that collects, holds, uses, or communicates personal information in Québec — regardless of where the organization is headquartered. This extraterritorial reach means that a company based in Ontario, New York, or Paris that processes personal data of Québec residents must comply. The law operates alongside the federal <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and, where applicable, Canada’s Anti-Spam Legislation (CASL).",
+        h_obligations: "Key Obligations Under Law 25",
+        h_officer: "1. Privacy Officer Designation",
+        officer_p: "Every organization must designate a person responsible for the protection of personal information. By default, this role falls to the highest-ranking authority within the enterprise (typically the CEO), but it can be delegated in writing to any qualified individual. The designated officer’s title and contact information must be published on the organization’s website. This role carries genuine accountability — the privacy officer oversees compliance, manages breach response, and serves as the primary point of contact for the CAI.",
+        h_pia: "2. Privacy Impact Assessments (PIAs)",
+        pia_p: "Organizations must conduct a privacy impact assessment before initiating any project involving the acquisition, development, or redesign of an information system or electronic service delivery method that involves the collection, use, communication, retention, or destruction of personal information. PIAs must also be completed before personal information is communicated outside Québec, assessing whether the receiving jurisdiction provides adequate protection. The PIA must evaluate the sensitivity of the information, the purposes of its use, the protection measures applied, and the rights of the individuals concerned.",
+        h_consent: "3. Consent Requirements",
+        consent_p: "Law 25 imposes a heightened standard of consent. Consent must be <strong>manifest, free, informed, and given for specific purposes</strong>. It must be requested in clear and simple language, separately from any other information communicated to the individual. For sensitive personal information — including biometric data, health records, and financial information — consent must be <strong>express</strong>. Organizations cannot refuse to provide a product or service to someone who declines to consent to the collection of information beyond what is strictly necessary for the transaction. The law also introduces strict rules for obtaining valid consent for profiling and automated decision-making.",
+        h_breach: "4. Breach Notification — 72-Hour Window",
+        breach_p: "When a confidentiality incident occurs — any unauthorized access to, use, or communication of personal information, or loss of personal information — the organization must notify the <strong>CAI</strong> and the affected individuals <strong>within 72 hours</strong> if the incident presents a risk of serious injury. The organization must also maintain a register of all confidentiality incidents, regardless of severity, and provide it to the CAI upon request.",
+        h_deident: "5. De-Identification and Anonymization Rules",
+        deident_p: "Law 25 draws a critical distinction between <strong>de-identification</strong> (rendering data so that it no longer directly identifies an individual, while remaining reversible) and <strong>anonymization</strong> (irreversibly preventing identification by any means). Organizations that destroy personal information must do so by anonymizing it rather than simply deleting it, whenever the information could serve a legitimate purpose in anonymized form. Anonymization must be carried out according to generally accepted best practices, and the organization must have reasonable grounds to believe the process is irreversible.",
+        h_transparency: "6. Transparency Obligations",
+        transparency_p: "Organizations must publish a clear and accessible <strong>privacy policy</strong> detailing: the personal information collected, the purposes of collection, the means of collection, the rights of individuals, and whether the information is communicated outside Québec. When automated decision-making is used to render a decision about an individual, the organization must inform the person at the time the decision is made, explain the factors and parameters that led to the decision, and inform them of their right to have the decision reviewed by a human being.",
+        h_portability: "7. Right to Data Portability",
+        portability_p: "Individuals have the right to request that their personal information be communicated to them in a structured, commonly used technological format, or that it be transferred directly to another organization authorized to collect it. This portability right applies to information collected from the individual directly and does not extend to information generated or inferred by the organization. Organizations must respond to portability requests within 30 days.",
+        h_penalties: "Penalties and Enforcement",
+        penalties_p: "The enforcement provisions of Law 25 are among the most severe in North America. <strong>Administrative monetary penalties</strong> can reach <strong>$10 million</strong> or <strong>2% of worldwide turnover</strong>, whichever is greater. <strong>Penal fines</strong> for offences can reach <strong>$25 million</strong> or <strong>4% of worldwide turnover</strong>. These thresholds mirror the upper band of the European GDPR. Additionally, Law 25 introduces a <strong>private right of action</strong> enabling individuals to claim damages — including punitive damages — for privacy violations. The CAI has the authority to conduct investigations, issue orders, and impose sanctions, and has publicly stated that it intends to exercise these powers actively.",
+        h_checklist: "Practical Compliance Checklist for 2026",
+        cl_1: "<strong>Appoint and register a privacy officer.</strong> Publish their title and contact details on your website. Ensure they have the resources, authority, and training to fulfill the role.",
+        cl_2: "<strong>Audit all personal information holdings.</strong> Map every data flow: what you collect, where it is stored, who has access, and whether it crosses provincial or national borders.",
+        cl_3: "<strong>Review and update your privacy policy.</strong> Ensure it meets Law 25’s transparency requirements, including automated decision-making disclosures and cross-border transfer notifications.",
+        cl_4: "<strong>Implement a consent management framework.</strong> Review every consent mechanism for compliance with the manifest, free, informed, and specific standard. Separate consent requests from other communications.",
+        cl_5: "<strong>Establish a PIA process.</strong> Create templates and governance workflows for conducting privacy impact assessments before launching new projects or systems.",
+        cl_6: "<strong>Build a breach response plan.</strong> Document procedures for detecting, containing, and reporting confidentiality incidents within 72 hours. Maintain a breach register.",
+        cl_7: "<strong>Develop data portability capabilities.</strong> Ensure you can export personal information in machine-readable formats within the 30-day response window.",
+        cl_8: "<strong>Review de-identification and anonymization practices.</strong> Validate that your anonymization methods meet the standard of irreversibility using generally accepted best practices.",
+        cl_9: "<strong>Train your teams.</strong> Conduct mandatory privacy training for all employees who handle personal information. Document training completion.",
+        cl_10: "<strong>Assess cross-border transfers.</strong> Conduct PIAs for every international data transfer. Evaluate the adequacy of the destination jurisdiction’s privacy protections.",
+        h_context: "Law 25 in the Broader Canadian and Global Context",
+        context_p1: "Law 25 does not operate in isolation. It exists alongside PIPEDA at the federal level and privacy statutes in other provinces, such as British Columbia’s <em>Personal Information Protection Act</em> (PIPA) and Alberta’s equivalent. The federal government’s proposed <em>Consumer Privacy Protection Act</em> (CPPA) under Bill C-27, if enacted, would further reshape the landscape. Organizations should design their compliance programs to satisfy the most demanding requirements across all applicable jurisdictions.",
+        context_p2: "Globally, Law 25 aligns closely with the GDPR in many respects — including the penalty structure, the emphasis on consent, and the introduction of data portability. Organizations that have already achieved GDPR compliance will find significant overlap, but must not assume equivalence: Law 25 has distinct requirements around de-identification, automated decision-making disclosure, and the role of the privacy officer that require specific attention.",
+        cta_title: "Need Help with Law 25 Compliance?",
+        cta_p: "Our team specializes in privacy compliance, data governance, and regulatory readiness for Canadian and international organizations. We can help you close the gaps and build a defensible compliance posture.",
+        cta_btn: "Get in Touch",
+        footer_copy: "© 2026 Consultations NovaWave — Gatineau, QC, Canada. All rights reserved.",
+        footer_privacy: "Privacy Policy",
+        footer_terms: "Terms of Service"
+      },
+      fr: {
+        nav_back: "← Retour au blogue",
+        title: "Comment se préparer à la conformité à la Loi 25 du Québec en 2026",
+        date: "18 septembre 2026",
+        readtime: "8 min de lecture",
+        intro: "La <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> du Québec, communément appelée <strong>Loi 25</strong> (anciennement projet de loi 64), représente la réforme la plus importante en matière de protection de la vie privée de l’histoire du Canada. Avec sa mise en œuvre progressive maintenant pleinement en vigueur, les organisations qui exercent leurs activités au Québec ou qui desservent des clients québécois font face à un cadre réglementaire comparable au RGPD européen en termes de portée et de sévérité. Si votre organisation n’a pas encore atteint la pleine conformité, 2026 est l’année pour combler toutes les lacunes restantes — la Commission d’accès à l’information du Québec (CAI) a clairement indiqué que les mesures d’application s’accélèrent.",
+        h_what: "Qu’est-ce que la Loi 25 ?",
+        what_p1: "La Loi 25 modernise le cadre québécois existant en matière de protection de la vie privée en modifiant la <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> (adoptée initialement en 1994) et la <em>Loi sur l’accès aux documents des organismes publics et sur la protection des renseignements personnels</em>. La loi a été adoptée le 22 septembre 2021, avec des dispositions mises en œuvre progressivement sur trois ans : septembre 2022, septembre 2023 et septembre 2024.",
+        what_p2: "La législation s’applique à toute organisation du secteur privé qui recueille, détient, utilise ou communique des renseignements personnels au Québec — indépendamment de l’endroit où l’organisation a son siège social. Cette portée extraterritoriale signifie qu’une entreprise basée en Ontario, à New York ou à Paris qui traite des données personnelles de résidents québécois doit s’y conformer. La loi s’applique conjointement avec la <em>Loi sur la protection des renseignements personnels et les documents électroniques</em> (LPRPDE) fédérale et, le cas échéant, la Loi canadienne anti-pourriel (LCAP).",
+        h_obligations: "Principales obligations en vertu de la Loi 25",
+        h_officer: "1. Désignation d’un responsable de la protection des renseignements personnels",
+        officer_p: "Toute organisation doit désigner une personne responsable de la protection des renseignements personnels. Par défaut, ce rôle incombe à la personne ayant la plus haute autorité au sein de l’entreprise (généralement le PDG), mais il peut être délégué par écrit à toute personne qualifiée. Le titre et les coordonnées du responsable désigné doivent être publiés sur le site Web de l’organisation. Ce rôle comporte une véritable responsabilité — le responsable supervise la conformité, gère les réponses aux incidents et sert de point de contact principal avec la CAI.",
+        h_pia: "2. Évaluations des facteurs relatifs à la vie privée (ÉFVP)",
+        pia_p: "Les organisations doivent réaliser une évaluation des facteurs relatifs à la vie privée avant de lancer tout projet impliquant l’acquisition, le développement ou la refonte d’un système d’information ou d’un mode de prestation de services électroniques impliquant la collecte, l’utilisation, la communication, la conservation ou la destruction de renseignements personnels. Des ÉFVP doivent également être réalisées avant toute communication de renseignements personnels à l’extérieur du Québec, afin d’évaluer si la juridiction de destination offre une protection adéquate.",
+        h_consent: "3. Exigences en matière de consentement",
+        consent_p: "La Loi 25 impose une norme de consentement renforcée. Le consentement doit être <strong>manifeste, libre, éclairé et donné à des fins spécifiques</strong>. Il doit être demandé en termes clairs et simples, séparément de toute autre information communiquée à la personne concernée. Pour les renseignements personnels sensibles — notamment les données biométriques, les dossiers médicaux et les informations financières — le consentement doit être <strong>expres</strong>. Les organisations ne peuvent refuser de fournir un produit ou un service à une personne qui refuse de consentir à la collecte de renseignements au-delà de ce qui est strictement nécessaire à la transaction.",
+        h_breach: "4. Notification des incidents — Fenêtre de 72 heures",
+        breach_p: "Lorsqu’un incident de confidentialité survient — tout accès non autorisé, utilisation ou communication de renseignements personnels, ou perte de renseignements personnels — l’organisation doit aviser la <strong>CAI</strong> et les personnes concernées <strong>dans les 72 heures</strong> si l’incident présente un risque de préjudice sérieux. L’organisation doit également tenir un registre de tous les incidents de confidentialité, peu importe leur gravité, et le fournir à la CAI sur demande.",
+        h_deident: "5. Règles de désidentification et d’anonymisation",
+        deident_p: "La Loi 25 établit une distinction cruciale entre la <strong>désidentification</strong> (rendre les données de sorte qu’elles n’identifient plus directement une personne, tout en demeurant réversible) et l’<strong>anonymisation</strong> (empêcher irréversiblement l’identification par quelque moyen que ce soit). Les organisations qui détruisent des renseignements personnels doivent le faire par anonymisation plutôt que par simple suppression, chaque fois que les renseignements pourraient servir à une fin légitime sous forme anonymisée.",
+        h_transparency: "6. Obligations de transparence",
+        transparency_p: "Les organisations doivent publier une <strong>politique de confidentialité</strong> claire et accessible détaillant : les renseignements personnels recueillis, les fins de la collecte, les moyens de collecte, les droits des personnes et si les renseignements sont communiqués à l’extérieur du Québec. Lorsque la prise de décision automatisée est utilisée pour rendre une décision concernant une personne, l’organisation doit l’informer au moment de la décision, expliquer les facteurs et paramètres ayant mené à la décision, et l’informer de son droit de faire réviser la décision par un être humain.",
+        h_portability: "7. Droit à la portabilité des données",
+        portability_p: "Les personnes ont le droit de demander que leurs renseignements personnels leur soient communiqués dans un format technologique structuré et couramment utilisé, ou qu’ils soient transférés directement à une autre organisation autorisée à les recueillir. Ce droit à la portabilité s’applique aux renseignements recueillis directement auprès de la personne et ne s’étend pas aux renseignements générés ou déduits par l’organisation. Les organisations doivent répondre aux demandes de portabilité dans les 30 jours.",
+        h_penalties: "Sanctions et application",
+        penalties_p: "Les dispositions d’application de la Loi 25 comptent parmi les plus sévères en Amérique du Nord. Les <strong>sanctions administratives pécuniaires</strong> peuvent atteindre <strong>10 millions de dollars</strong> ou <strong>2 % du chiffre d’affaires mondial</strong>, selon le montant le plus élevé. Les <strong>amendes pénales</strong> pour les infractions peuvent atteindre <strong>25 millions de dollars</strong> ou <strong>4 % du chiffre d’affaires mondial</strong>. Ces seuils sont comparables à la fourchette supérieure du RGPD européen. De plus, la Loi 25 introduit un <strong>droit d’action privé</strong> permettant aux personnes de réclamer des dommages — y compris des dommages punitifs — pour les violations de la vie privée.",
+        h_checklist: "Liste de contrôle pratique pour la conformité en 2026",
+        cl_1: "<strong>Nommer et enregistrer un responsable de la protection des renseignements personnels.</strong> Publier son titre et ses coordonnées sur votre site Web. S’assurer qu’il dispose des ressources, de l’autorité et de la formation nécessaires.",
+        cl_2: "<strong>Auditer tous les fonds de renseignements personnels.</strong> Cartographier chaque flux de données : ce que vous recueillez, où c’est stocké, qui y a accès et si les données traversent les frontières provinciales ou nationales.",
+        cl_3: "<strong>Réviser et mettre à jour votre politique de confidentialité.</strong> S’assurer qu’elle respecte les exigences de transparence de la Loi 25, incluant les divulgations sur la prise de décision automatisée.",
+        cl_4: "<strong>Mettre en place un cadre de gestion du consentement.</strong> Réviser chaque mécanisme de consentement pour sa conformité à la norme manifeste, libre, éclairé et spécifique.",
+        cl_5: "<strong>Établir un processus d’ÉFVP.</strong> Créer des gabarits et des flux de gouvernance pour réaliser des évaluations des facteurs relatifs à la vie privée avant le lancement de nouveaux projets.",
+        cl_6: "<strong>Élaborer un plan de réponse aux incidents.</strong> Documenter les procédures de détection, de confinement et de signalement des incidents de confidentialité dans les 72 heures. Tenir un registre des incidents.",
+        cl_7: "<strong>Développer des capacités de portabilité des données.</strong> S’assurer de pouvoir exporter les renseignements personnels dans des formats lisibles par machine dans le délai de réponse de 30 jours.",
+        cl_8: "<strong>Réviser les pratiques de désidentification et d’anonymisation.</strong> Valider que vos méthodes d’anonymisation respectent la norme d’irréversibilité selon les meilleures pratiques généralement reconnues.",
+        cl_9: "<strong>Former vos équipes.</strong> Mener des formations obligatoires sur la protection de la vie privée pour tous les employés qui traitent des renseignements personnels. Documenter les formations complétées.",
+        cl_10: "<strong>Évaluer les transferts transfrontaliers.</strong> Réaliser des ÉFVP pour chaque transfert international de données. Évaluer l’adéquation des protections de la vie privée de la juridiction de destination.",
+        h_context: "La Loi 25 dans le contexte canadien et mondial",
+        context_p1: "La Loi 25 n’opère pas en vase clos. Elle coexiste avec la LPRPDE au niveau fédéral et les lois provinciales sur la protection de la vie privée, comme la <em>Personal Information Protection Act</em> (PIPA) de la Colombie-Britannique et son équivalent albertain. Le projet de <em>Loi sur la protection de la vie privée des consommateurs</em> (LPVPC) du gouvernement fédéral en vertu du projet de loi C-27, s’il est adopté, transformerait davantage le paysage.",
+        context_p2: "Au niveau mondial, la Loi 25 s’aligne étroitement sur le RGPD à plusieurs égards — notamment la structure des sanctions, l’accent sur le consentement et l’introduction de la portabilité des données. Les organisations qui ont déjà atteint la conformité au RGPD trouveront un chevauchement significatif, mais ne doivent pas présumer de l’équivalence : la Loi 25 comporte des exigences distinctes en matière de désidentification, de divulgation de la prise de décision automatisée et du rôle du responsable de la protection des renseignements personnels.",
+        cta_title: "Besoin d’aide pour la conformité à la Loi 25 ?",
+        cta_p: "Notre équipe se spécialise en conformité en matière de vie privée, gouvernance des données et préparation réglementaire pour les organisations canadiennes et internationales. Nous pouvons vous aider à combler les lacunes et à bâtir une posture de conformité défendable.",
+        cta_btn: "Contactez-nous",
+        footer_copy: "© 2026 Consultations NovaWave — Gatineau, QC, Canada. Tous droits réservés.",
+        footer_privacy: "Politique de confidentialité",
+        footer_terms: "Conditions d’utilisation"
+      },
+      es: {
+        nav_back: "← Volver al blog",
+        title: "Cómo prepararse para el cumplimiento de la Ley 25 de Quebec en 2026",
+        date: "18 de septiembre de 2026",
+        readtime: "8 min de lectura",
+        intro: "La <em>Ley de protección de la información personal en el sector privado</em> de Quebec, comúnmente conocida como <strong>Ley 25</strong> (anteriormente Proyecto de Ley 64), representa la reforma más significativa en materia de privacidad en la historia de Canadá. Con su implementación escalonada ahora completamente vigente, las organizaciones que operan en Quebec o atienden clientes en dicha provincia enfrentan un panorama regulatorio comparable al RGPD europeo tanto en alcance como en severidad. Si su organización aún no ha alcanzado el pleno cumplimiento, 2026 es el año para cerrar todas las brechas restantes — la Commission d’accès à l’information du Québec (CAI) ha dejado claro que las acciones de aplicación se están acelerando.",
+        h_what: "¿Qué es la Ley 25?",
+        what_p1: "La Ley 25 moderniza el marco de privacidad existente de Quebec modificando la <em>Ley de protección de la información personal en el sector privado</em> (promulgada originalmente en 1994) y la <em>Ley de acceso a los documentos de los organismos públicos y de protección de la información personal</em>. La ley fue adoptada el 22 de septiembre de 2021, con disposiciones implementadas en tres fases: septiembre de 2022, septiembre de 2023 y septiembre de 2024.",
+        what_p2: "La legislación se aplica a toda organización del sector privado que recopile, posea, utilice o comunique información personal en Quebec — independientemente de dónde tenga su sede la organización. Este alcance extraterritorial significa que una empresa con sede en Ontario, Nueva York o París que procese datos personales de residentes de Quebec debe cumplir. La ley opera junto con la <em>Ley de Protección de Información Personal y Documentos Electrónicos</em> (PIPEDA) federal y, cuando corresponda, la Legislación Anti-Spam de Canadá (CASL).",
+        h_obligations: "Principales obligaciones bajo la Ley 25",
+        h_officer: "1. Designación de un oficial de privacidad",
+        officer_p: "Toda organización debe designar a una persona responsable de la protección de la información personal. Por defecto, este rol recae en la máxima autoridad de la empresa (típicamente el CEO), pero puede delegarse por escrito a cualquier persona calificada. El título y la información de contacto del oficial designado deben publicarse en el sitio web de la organización.",
+        h_pia: "2. Evaluaciones de impacto en la privacidad (EIP)",
+        pia_p: "Las organizaciones deben realizar una evaluación de impacto en la privacidad antes de iniciar cualquier proyecto que implique la adquisición, desarrollo o rediseño de un sistema de información que involucre la recolección, uso, comunicación, retención o destrucción de información personal. Las EIP también deben completarse antes de comunicar información personal fuera de Quebec.",
+        h_consent: "3. Requisitos de consentimiento",
+        consent_p: "La Ley 25 impone un estándar elevado de consentimiento. El consentimiento debe ser <strong>manifiesto, libre, informado y otorgado para fines específicos</strong>. Debe solicitarse en un lenguaje claro y simple, separado de cualquier otra información comunicada al individuo. Para la información personal sensible — incluidos datos biométricos, registros médicos e información financiera — el consentimiento debe ser <strong>expreso</strong>.",
+        h_breach: "4. Notificación de incidentes — Ventana de 72 horas",
+        breach_p: "Cuando ocurre un incidente de confidencialidad, la organización debe notificar a la <strong>CAI</strong> y a las personas afectadas <strong>dentro de las 72 horas</strong> si el incidente presenta un riesgo de perjuicio grave. La organización también debe mantener un registro de todos los incidentes de confidencialidad y proporcionarlo a la CAI cuando lo solicite.",
+        h_deident: "5. Reglas de desidentificación y anonimización",
+        deident_p: "La Ley 25 establece una distinción crítica entre <strong>desidentificación</strong> (hacer que los datos ya no identifiquen directamente a un individuo, permaneciendo reversible) y <strong>anonimización</strong> (prevenir irreversiblemente la identificación por cualquier medio). Las organizaciones que destruyen información personal deben hacerlo mediante anonimización en lugar de simplemente eliminarla.",
+        h_transparency: "6. Obligaciones de transparencia",
+        transparency_p: "Las organizaciones deben publicar una <strong>política de privacidad</strong> clara y accesible que detalle: la información personal recopilada, los fines de la recolección, los medios de recolección, los derechos de los individuos y si la información se comunica fuera de Quebec. Cuando se utiliza la toma de decisiones automatizada, la organización debe informar a la persona e indicarle su derecho a la revisión humana.",
+        h_portability: "7. Derecho a la portabilidad de datos",
+        portability_p: "Las personas tienen derecho a solicitar que su información personal les sea comunicada en un formato tecnológico estructurado y comúnmente utilizado, o que se transfiera directamente a otra organización autorizada. Las organizaciones deben responder a las solicitudes de portabilidad dentro de los 30 días.",
+        h_penalties: "Sanciones y aplicación",
+        penalties_p: "Las disposiciones de aplicación de la Ley 25 se encuentran entre las más severas de América del Norte. Las <strong>sanciones monetarias administrativas</strong> pueden alcanzar <strong>$10 millones</strong> o <strong>2% de la facturación mundial</strong>. Las <strong>multas penales</strong> pueden alcanzar <strong>$25 millones</strong> o <strong>4% de la facturación mundial</strong>. Además, la Ley 25 introduce un <strong>derecho de acción privada</strong> que permite a las personas reclamar daños, incluidos daños punitivos.",
+        h_checklist: "Lista de verificación práctica para el cumplimiento en 2026",
+        cl_1: "<strong>Designar y registrar un oficial de privacidad.</strong> Publicar su título y datos de contacto en su sitio web.",
+        cl_2: "<strong>Auditar todos los fondos de información personal.</strong> Mapear cada flujo de datos: qué recopila, dónde se almacena, quién tiene acceso y si cruza fronteras.",
+        cl_3: "<strong>Revisar y actualizar su política de privacidad.</strong> Asegurar que cumpla con los requisitos de transparencia de la Ley 25.",
+        cl_4: "<strong>Implementar un marco de gestión del consentimiento.</strong> Revisar cada mecanismo de consentimiento para cumplir con el estándar manifiesto, libre, informado y específico.",
+        cl_5: "<strong>Establecer un proceso de EIP.</strong> Crear plantillas y flujos de gobernanza para evaluaciones de impacto en la privacidad.",
+        cl_6: "<strong>Construir un plan de respuesta a incidentes.</strong> Documentar procedimientos para detectar, contener y reportar incidentes dentro de 72 horas.",
+        cl_7: "<strong>Desarrollar capacidades de portabilidad de datos.</strong> Asegurar la exportación de información personal en formatos legibles por máquina dentro de los 30 días.",
+        cl_8: "<strong>Revisar las prácticas de desidentificación y anonimización.</strong> Validar que sus métodos de anonimización cumplan con el estándar de irreversibilidad.",
+        cl_9: "<strong>Capacitar a sus equipos.</strong> Realizar capacitación obligatoria en privacidad para todos los empleados que manejen información personal.",
+        cl_10: "<strong>Evaluar transferencias transfronterizas.</strong> Realizar EIP para cada transferencia internacional de datos.",
+        h_context: "La Ley 25 en el contexto canadiense y global",
+        context_p1: "La Ley 25 no opera de forma aislada. Coexiste con PIPEDA a nivel federal y estatutos de privacidad en otras provincias. Las organizaciones deben diseñar sus programas de cumplimiento para satisfacer los requisitos más exigentes de todas las jurisdicciones aplicables.",
+        context_p2: "A nivel global, la Ley 25 se alinea estrechamente con el RGPD en muchos aspectos. Las organizaciones que ya han logrado el cumplimiento del RGPD encontrarán una superposición significativa, pero no deben asumir equivalencia: la Ley 25 tiene requisitos distintos en materia de desidentificación, divulgación de toma de decisiones automatizada y el rol del oficial de privacidad.",
+        cta_title: "¿Necesita ayuda con el cumplimiento de la Ley 25?",
+        cta_p: "Nuestro equipo se especializa en cumplimiento de privacidad, gobernanza de datos y preparación regulatoria para organizaciones canadienses e internacionales.",
+        cta_btn: "Contáctenos",
+        footer_copy: "© 2026 Consultations NovaWave — Gatineau, QC, Canadá. Todos los derechos reservados.",
+        footer_privacy: "Política de privacidad",
+        footer_terms: "Términos de servicio"
+      },
+      pt: {
+        nav_back: "← Voltar ao blog",
+        title: "Como se preparar para a conformidade com a Lei 25 do Québec em 2026",
+        date: "18 de setembro de 2026",
+        readtime: "8 min de leitura",
+        intro: "A <em>Lei de proteção de informações pessoais no setor privado</em> do Québec, comumente conhecida como <strong>Lei 25</strong> (anteriormente Projeto de Lei 64), representa a reforma mais significativa em matéria de privacidade na história do Canadá. Com sua implementação faseada agora totalmente em vigor, organizações que operam no Québec ou atendem clientes na província enfrentam um cenário regulatório comparável ao RGPD europeu tanto em escopo quanto em severidade. Se sua organização ainda não alcançou plena conformidade, 2026 é o ano para fechar todas as lacunas restantes — a Commission d’accès à l’information du Québec (CAI) deixou claro que as ações de fiscalização estão se acelerando.",
+        h_what: "O que é a Lei 25?",
+        what_p1: "A Lei 25 moderniza o quadro de privacidade existente do Québec, alterando a <em>Lei de proteção de informações pessoais no setor privado</em> (promulgada originalmente em 1994) e a <em>Lei de acesso a documentos de órgãos públicos e proteção de informações pessoais</em>. A lei foi adotada em 22 de setembro de 2021, com disposições implementadas em três fases: setembro de 2022, setembro de 2023 e setembro de 2024.",
+        what_p2: "A legislação se aplica a toda organização do setor privado que coleta, detém, utiliza ou comunica informações pessoais no Québec — independentemente de onde a organização está sediada. Esse alcance extraterritorial significa que uma empresa sediada em Ontário, Nova York ou Paris que processa dados pessoais de residentes do Québec deve cumprir. A lei opera juntamente com a <em>Lei de Proteção de Informações Pessoais e Documentos Eletrônicos</em> (PIPEDA) federal e, quando aplicável, a Legislação Anti-Spam do Canadá (CASL).",
+        h_obligations: "Principais obrigações sob a Lei 25",
+        h_officer: "1. Designação de um encarregado de privacidade",
+        officer_p: "Toda organização deve designar uma pessoa responsável pela proteção de informações pessoais. Por padrão, esse papel cabe à mais alta autoridade da empresa (tipicamente o CEO), mas pode ser delegado por escrito a qualquer indivíduo qualificado. O título e as informações de contato do encarregado devem ser publicados no site da organização.",
+        h_pia: "2. Avaliações de impacto na privacidade (AIP)",
+        pia_p: "As organizações devem realizar uma avaliação de impacto na privacidade antes de iniciar qualquer projeto envolvendo a aquisição, desenvolvimento ou redesenho de um sistema de informação que envolva a coleta, uso, comunicação, retenção ou destruição de informações pessoais.",
+        h_consent: "3. Requisitos de consentimento",
+        consent_p: "A Lei 25 impõe um padrão elevado de consentimento. O consentimento deve ser <strong>manifesto, livre, informado e dado para fins específicos</strong>. Deve ser solicitado em linguagem clara e simples, separadamente de qualquer outra informação comunicada ao indivíduo. Para informações pessoais sensíveis, o consentimento deve ser <strong>expresso</strong>.",
+        h_breach: "4. Notificação de incidentes — Janela de 72 horas",
+        breach_p: "Quando ocorre um incidente de confidencialidade, a organização deve notificar a <strong>CAI</strong> e os indivíduos afetados <strong>dentro de 72 horas</strong> se o incidente apresentar risco de prejuízo grave. A organização também deve manter um registro de todos os incidentes de confidencialidade.",
+        h_deident: "5. Regras de desidentificação e anonimização",
+        deident_p: "A Lei 25 estabelece uma distinção crítica entre <strong>desidentificação</strong> (tornar os dados não diretamente identificáveis, de forma reversível) e <strong>anonimização</strong> (prevenir irreversivelmente a identificação por qualquer meio). As organizações devem anonimizar em vez de simplesmente excluir.",
+        h_transparency: "6. Obrigações de transparência",
+        transparency_p: "As organizações devem publicar uma <strong>política de privacidade</strong> clara e acessível detalhando as informações pessoais coletadas, os fins da coleta, os meios de coleta, os direitos dos indivíduos e se as informações são comunicadas fora do Québec.",
+        h_portability: "7. Direito à portabilidade de dados",
+        portability_p: "Os indivíduos têm o direito de solicitar que suas informações pessoais sejam comunicadas em formato tecnológico estruturado e comumente utilizado, ou transferidas diretamente a outra organização. As organizações devem responder dentro de 30 dias.",
+        h_penalties: "Sanções e aplicação",
+        penalties_p: "As disposições de aplicação da Lei 25 estão entre as mais severas da América do Norte. <strong>Sanções monetárias administrativas</strong> podem alcançar <strong>$10 milhões</strong> ou <strong>2% do faturamento mundial</strong>. <strong>Multas penais</strong> podem alcançar <strong>$25 milhões</strong> ou <strong>4% do faturamento mundial</strong>. A Lei 25 também introduz um <strong>direito de ação privada</strong> para danos, incluindo danos punitivos.",
+        h_checklist: "Lista de verificação prática para conformidade em 2026",
+        cl_1: "<strong>Nomear e registrar um encarregado de privacidade.</strong> Publicar seu título e dados de contato no seu site.",
+        cl_2: "<strong>Auditar todos os acervos de informações pessoais.</strong> Mapear cada fluxo de dados: o que coleta, onde armazena, quem tem acesso e se cruza fronteiras.",
+        cl_3: "<strong>Revisar e atualizar sua política de privacidade.</strong> Garantir que atenda aos requisitos de transparência da Lei 25.",
+        cl_4: "<strong>Implementar um framework de gestão de consentimento.</strong> Revisar cada mecanismo para conformidade com o padrão manifesto, livre, informado e específico.",
+        cl_5: "<strong>Estabelecer um processo de AIP.</strong> Criar modelos e fluxos de governança para avaliações de impacto na privacidade.",
+        cl_6: "<strong>Construir um plano de resposta a incidentes.</strong> Documentar procedimentos para detectar, conter e reportar incidentes dentro de 72 horas.",
+        cl_7: "<strong>Desenvolver capacidades de portabilidade de dados.</strong> Garantir a exportação em formatos legíveis por máquina dentro de 30 dias.",
+        cl_8: "<strong>Revisar práticas de desidentificação e anonimização.</strong> Validar que seus métodos atendam ao padrão de irreversibilidade.",
+        cl_9: "<strong>Treinar suas equipes.</strong> Realizar treinamento obrigatório em privacidade para todos os funcionários que lidam com informações pessoais.",
+        cl_10: "<strong>Avaliar transferências transfronteiriças.</strong> Realizar AIP para cada transferência internacional de dados.",
+        h_context: "A Lei 25 no contexto canadense e global",
+        context_p1: "A Lei 25 não opera isoladamente. Coexiste com a PIPEDA em nível federal e estatutos de privacidade em outras províncias. As organizações devem projetar seus programas de conformidade para satisfazer os requisitos mais exigentes de todas as jurisdições aplicáveis.",
+        context_p2: "Globalmente, a Lei 25 se alinha estreitamente com o RGPD em muitos aspectos. Organizações que já alcançaram conformidade com o RGPD encontrarão sobreposição significativa, mas não devem assumir equivalência: a Lei 25 tem requisitos distintos em matéria de desidentificação, divulgação de tomada de decisão automatizada e o papel do encarregado de privacidade.",
+        cta_title: "Precisa de ajuda com a conformidade da Lei 25?",
+        cta_p: "Nossa equipe é especializada em conformidade de privacidade, governança de dados e preparação regulatória para organizações canadenses e internacionais.",
+        cta_btn: "Entre em contato",
+        footer_copy: "© 2026 Consultations NovaWave — Gatineau, QC, Canadá. Todos os direitos reservados.",
+        footer_privacy: "Política de privacidade",
+        footer_terms: "Termos de serviço"
+      }
+    };
+
+    function applyLang(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerHTML = t[key];
+      });
+      document.documentElement.lang = lang;
+      try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+    }
+
+    (function init() {
+      const select = document.getElementById('langSelect');
+      let saved = 'en';
+      try { saved = localStorage.getItem('novawave_lang') || 'en'; } catch(e) {}
+      if (!translations[saved]) saved = 'en';
+      select.value = saved;
+      applyLang(saved);
+      select.addEventListener('change', function() { applyLang(this.value); });
+    })();
+  </script>
+</body>
+</html>

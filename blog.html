@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="meta.title">Insights &amp; Resources — Consultations NovaWave Inc.</title>
+<meta name="description" content="Expert insights on cybersecurity, AI governance, compliance frameworks, and regulatory strategy from Consultations NovaWave Inc.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cnovawave.com/blog.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpolygon points='30,2 52,14 52,40 30,52 8,40 8,14' fill='%2304090f' stroke='%2300d4f0' stroke-width='2.5'/%3E%3Cpath d='M13 34 Q18 27 23 31 Q28 34 30 28 Q33 21 38 26 Q44 30 49 24' fill='none' stroke='%2300d4f0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--dark:#04090f;--dark2:#070f1e;--dark3:#0b1628;--cyan:#00d4f0;--green:#00f0a0;--purple:#8b5cf6;--amber:#f59e0b;--off:#f2f6ff;--muted:#a8b8d0;--border:rgba(0,212,240,0.13)}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--off);line-height:1.7}
+h1,h2,h3{font-family:'Syne',sans-serif}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+nav{position:sticky;top:0;z-index:50;padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(4,9,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nb{display:flex;flex-direction:column;gap:1px}
+.nb-main{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:#fff}
+.nb-main span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nb-url{font-size:0.6rem;color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:1.4rem}
+.back{font-size:0.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.back:hover{color:#fff;text-decoration:none}
+.lang-select{background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,240,0.2);color:var(--off);font-family:'Inter',sans-serif;font-size:0.76rem;font-weight:600;padding:0.4rem 0.7rem;border-radius:8px;cursor:pointer}
+.lang-select:focus{outline:none;border-color:var(--cyan)}
+.lang-select option{background:#070f1e;color:var(--off)}
+
+.hero-section{padding:7rem 3rem 4rem;text-align:center;position:relative;overflow:hidden}
+.hero-noise{position:absolute;inset:0;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:150px;pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,240,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,240,0.03) 1px,transparent 1px);background-size:70px 70px;pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:800px;margin:0 auto}
+.eyebrow{font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:1rem}
+h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:0.8rem;letter-spacing:-0.02em}
+h1 .grad{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:var(--muted);max-width:600px;margin:0 auto;line-height:1.8}
+
+.articles-section{padding:0 3rem 6rem;max-width:1100px;margin:0 auto}
+.articles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.article-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:2rem;transition:border-color .25s,transform .25s;position:relative;overflow:hidden}
+.article-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--green));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.article-card:hover{border-color:rgba(0,212,240,0.25);transform:translateY(-3px)}
+.article-card:hover::before{transform:scaleX(1)}
+.article-card a{text-decoration:none}
+.article-tag{display:inline-block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:1rem}
+.tag-compliance{background:rgba(139,92,246,0.12);color:var(--purple);border:1px solid rgba(139,92,246,0.2)}
+.tag-security{background:rgba(0,212,240,0.1);color:var(--cyan);border:1px solid rgba(0,212,240,0.18)}
+.tag-privacy{background:rgba(0,240,160,0.1);color:var(--green);border:1px solid rgba(0,240,160,0.18)}
+.tag-advisory{background:rgba(245,158,11,0.1);color:var(--amber);border:1px solid rgba(245,158,11,0.18)}
+.article-card h3{font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:0.7rem;line-height:1.35}
+.article-card p{font-size:0.88rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem}
+.article-meta{display:flex;align-items:center;gap:1rem;font-size:0.75rem;color:var(--muted)}
+.article-meta .read-time{display:flex;align-items:center;gap:4px}
+.read-more{display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:600;color:var(--cyan);margin-top:0.8rem}
+.read-more:hover{text-decoration:none;color:var(--green)}
+
+.cta-section{padding:4rem 3rem;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.cta-box{max-width:600px;margin:0 auto;background:rgba(0,212,240,0.04);border:1px solid rgba(0,212,240,0.15);border-radius:16px;padding:3rem 2rem}
+.cta-box h2{font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:0.8rem}
+.cta-box p{font-size:0.92rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
+.btn-main{display:inline-block;background:linear-gradient(135deg,var(--cyan),var(--green));color:#04090f;font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;padding:0.9rem 2rem;border-radius:999px;transition:transform .2s,box-shadow .2s;text-decoration:none}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,212,240,0.32);text-decoration:none}
+
+footer{background:rgba(4,9,15,0.98);border-top:1px solid rgba(255,255,255,0.08);padding:2.5rem 1.5rem;text-align:center;font-size:0.78rem;color:var(--muted)}
+footer a{margin:0 0.6rem}
+
+@media(max-width:768px){
+  nav{padding:0 1rem}
+  .hero-section{padding:5rem 1.5rem 3rem}
+  .articles-section{padding:0 1.5rem 4rem}
+  .articles-grid{grid-template-columns:1fr}
+  .cta-section{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" style="text-decoration:none">
+    <div class="nb">
+      <div class="nb-main">Consultations <span>NovaWave</span></div>
+      <div class="nb-url">cnovawave.com</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <select class="lang-select" id="langSelect" aria-label="Language">
+      <option value="en">EN — English</option>
+      <option value="fr">FR — Français</option>
+      <option value="es">ES — Español</option>
+      <option value="pt">PT — Português</option>
+    </select>
+    <a href="/" class="back" data-i18n="nav.back">← Back to cnovawave.com</a>
+  </div>
+</nav>
+
+<section class="hero-section">
+  <div class="hero-noise"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="eyebrow" data-i18n="eyebrow">Insights &amp; Resources</div>
+    <h1><span data-i18n="h1.line1">Expert Perspectives on</span><br><span class="grad" data-i18n="h1.line2">Security, Compliance &amp; AI</span></h1>
+    <p class="hero-desc" data-i18n="hero.desc">Practical guidance from the team at Consultations NovaWave Inc. — helping regulated organizations navigate compliance, secure their AI deployments, and stay ahead of evolving regulatory frameworks.</p>
+  </div>
+</section>
+
+<section class="articles-section">
+  <div class="articles-grid">
+
+    <div class="article-card">
+      <a href="/blog/law25-compliance-guide.html">
+        <span class="article-tag tag-compliance" data-i18n="tag.compliance">Compliance</span>
+        <h3 data-i18n="a1.title">How to Prepare for Québec Law 25 Compliance in 2026</h3>
+        <p data-i18n="a1.excerpt">A practical roadmap for organizations subject to Québec's privacy legislation — what Law 25 requires, key deadlines, and the steps to get your privacy program audit-ready.</p>
+        <div class="article-meta">
+          <span data-i18n="a1.date">September 18, 2026</span>
+          <span class="read-time">·&nbsp; <span data-i18n="a1.read">8 min read</span></span>
+        </div>
+        <div class="read-more" data-i18n="readmore">Read Article →</div>
+      </a>
+    </div>
+
+    <div class="article-card">
+      <a href="/blog/ai-security-audit-checklist.html">
+        <span class="article-tag tag-security" data-i18n="tag.security">AI Security</span>
+        <h3 data-i18n="a2.title">AI Security Audit Checklist for Mid-Market Companies</h3>
+        <p data-i18n="a2.excerpt">A comprehensive checklist covering model governance, data protection, access controls, and incident response for organizations deploying AI at scale.</p>
+        <div class="article-meta">
+          <span data-i18n="a2.date">September 18, 2026</span>
+          <span class="read-time">·&nbsp; <span data-i18n="a2.read">10 min read</span></span>
+        </div>
+        <div class="read-more" data-i18n="readmore">Read Article →</div>
+      </a>
+    </div>
+
+    <div class="article-card">
+      <a href="/blog/pipeda-vs-gdpr.html">
+        <span class="article-tag tag-privacy" data-i18n="tag.privacy">Privacy</span>
+        <h3 data-i18n="a3.title">PIPEDA vs GDPR: What Canadian Companies Serving EU Clients Need to Know</h3>
+        <p data-i18n="a3.excerpt">A side-by-side comparison of Canada's federal privacy law and the EU's GDPR — where they align, where they diverge, and what cross-border compliance actually requires.</p>
+        <div class="article-meta">
+          <span data-i18n="a3.date">September 18, 2026</span>
+          <span class="read-time">·&nbsp; <span data-i18n="a3.read">9 min read</span></span>
+        </div>
+        <div class="read-more" data-i18n="readmore">Read Article →</div>
+      </a>
+    </div>
+
+    <div class="article-card">
+      <a href="/blog/evaluating-ai-vendors.html">
+        <span class="article-tag tag-advisory" data-i18n="tag.advisory">Advisory</span>
+        <h3 data-i18n="a4.title">How to Evaluate an AI Automation Vendor — 10 Questions to Ask</h3>
+        <p data-i18n="a4.excerpt">Before you sign with an AI vendor, ask these ten questions about security, compliance, data handling, and operational maturity. A decision framework from our advisory practice.</p>
+        <div class="article-meta">
+          <span data-i18n="a4.date">September 18, 2026</span>
+          <span class="read-time">·&nbsp; <span data-i18n="a4.read">7 min read</span></span>
+        </div>
+        <div class="read-more" data-i18n="readmore">Read Article →</div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-box">
+    <h2 data-i18n="cta.h2">Need Expert Guidance?</h2>
+    <p data-i18n="cta.p">Whether you're navigating a new regulation, planning an AI deployment, or preparing for an audit — we're here to help.</p>
+    <a href="/#contact" class="btn-main" data-i18n="cta.btn">Book a Free Consultation →</a>
+  </div>
+</section>
+
+<footer>
+  <span data-i18n="footer.copyright">© 2025 Consultations NovaWave Inc.</span> &nbsp;·&nbsp;
+  <a href="/privacy.html" data-i18n="footer.privacy">Privacy Policy</a> &nbsp;·&nbsp;
+  <a href="/terms.html" data-i18n="footer.terms">Terms of Service</a> &nbsp;·&nbsp;
+  <a href="/" data-i18n="footer.home">Home</a>
+</footer>
+
+<script>
+var translations = {
+"en":{
+  "meta.title":"Insights & Resources — Consultations NovaWave Inc.",
+  "nav.back":"← Back to cnovawave.com",
+  "eyebrow":"Insights & Resources",
+  "h1.line1":"Expert Perspectives on",
+  "h1.line2":"Security, Compliance & AI",
+  "hero.desc":"Practical guidance from the team at Consultations NovaWave Inc. — helping regulated organizations navigate compliance, secure their AI deployments, and stay ahead of evolving regulatory frameworks.",
+  "tag.compliance":"Compliance",
+  "tag.security":"AI Security",
+  "tag.privacy":"Privacy",
+  "tag.advisory":"Advisory",
+  "a1.title":"How to Prepare for Québec Law 25 Compliance in 2026",
+  "a1.excerpt":"A practical roadmap for organizations subject to Québec's privacy legislation — what Law 25 requires, key deadlines, and the steps to get your privacy program audit-ready.",
+  "a1.date":"September 18, 2026",
+  "a1.read":"8 min read",
+  "a2.title":"AI Security Audit Checklist for Mid-Market Companies",
+  "a2.excerpt":"A comprehensive checklist covering model governance, data protection, access controls, and incident response for organizations deploying AI at scale.",
+  "a2.date":"September 18, 2026",
+  "a2.read":"10 min read",
+  "a3.title":"PIPEDA vs GDPR: What Canadian Companies Serving EU Clients Need to Know",
+  "a3.excerpt":"A side-by-side comparison of Canada's federal privacy law and the EU's GDPR — where they align, where they diverge, and what cross-border compliance actually requires.",
+  "a3.date":"September 18, 2026",
+  "a3.read":"9 min read",
+  "a4.title":"How to Evaluate an AI Automation Vendor — 10 Questions to Ask",
+  "a4.excerpt":"Before you sign with an AI vendor, ask these ten questions about security, compliance, data handling, and operational maturity. A decision framework from our advisory practice.",
+  "a4.date":"September 18, 2026",
+  "a4.read":"7 min read",
+  "readmore":"Read Article →",
+  "cta.h2":"Need Expert Guidance?",
+  "cta.p":"Whether you're navigating a new regulation, planning an AI deployment, or preparing for an audit — we're here to help.",
+  "cta.btn":"Book a Free Consultation →",
+  "footer.copyright":"© 2025 Consultations NovaWave Inc.",
+  "footer.privacy":"Privacy Policy",
+  "footer.terms":"Terms of Service",
+  "footer.home":"Home"
+},
+"fr":{
+  "meta.title":"Perspectives et Ressources — Consultations NovaWave Inc.",
+  "nav.back":"← Retour à cnovawave.com",
+  "eyebrow":"Perspectives et Ressources",
+  "h1.line1":"Perspectives d'experts en",
+  "h1.line2":"Sécurité, Conformité et IA",
+  "hero.desc":"Des conseils pratiques de l'équipe de Consultations NovaWave Inc. — nous aidons les organisations réglementées à naviguer la conformité, sécuriser leurs déploiements d'IA et anticiper l'évolution des cadres réglementaires.",
+  "tag.compliance":"Conformité",
+  "tag.security":"Sécurité IA",
+  "tag.privacy":"Vie privée",
+  "tag.advisory":"Conseil",
+  "a1.title":"Comment se préparer à la conformité à la Loi 25 du Québec en 2026",
+  "a1.excerpt":"Une feuille de route pratique pour les organisations assujetties à la législation québécoise sur la vie privée — ce que la Loi 25 exige, les échéances clés et les étapes pour préparer votre programme à un audit.",
+  "a1.date":"18 septembre 2026",
+  "a1.read":"8 min de lecture",
+  "a2.title":"Liste de vérification de sécurité IA pour les entreprises de taille moyenne",
+  "a2.excerpt":"Une liste complète couvrant la gouvernance des modèles, la protection des données, les contrôles d'accès et la réponse aux incidents pour les organisations déployant l'IA à grande échelle.",
+  "a2.date":"18 septembre 2026",
+  "a2.read":"10 min de lecture",
+  "a3.title":"LPRPDE vs RGPD : Ce que les entreprises canadiennes servant des clients européens doivent savoir",
+  "a3.excerpt":"Une comparaison côte à côte de la loi fédérale canadienne sur la vie privée et du RGPD européen — où elles convergent, où elles divergent, et ce que la conformité transfrontalière exige réellement.",
+  "a3.date":"18 septembre 2026",
+  "a3.read":"9 min de lecture",
+  "a4.title":"Comment évaluer un fournisseur d'automatisation IA — 10 questions à poser",
+  "a4.excerpt":"Avant de signer avec un fournisseur d'IA, posez ces dix questions sur la sécurité, la conformité, le traitement des données et la maturité opérationnelle. Un cadre décisionnel de notre pratique de conseil.",
+  "a4.date":"18 septembre 2026",
+  "a4.read":"7 min de lecture",
+  "readmore":"Lire l'article →",
+  "cta.h2":"Besoin de conseils d'experts ?",
+  "cta.p":"Que vous naviguiez un nouveau règlement, planifiiez un déploiement d'IA ou vous prépariez à un audit — nous sommes là pour vous aider.",
+  "cta.btn":"Réserver une consultation gratuite →",
+  "footer.copyright":"© 2025 Consultations NovaWave Inc.",
+  "footer.privacy":"Politique de confidentialité",
+  "footer.terms":"Conditions d'utilisation",
+  "footer.home":"Accueil"
+},
+"es":{
+  "meta.title":"Perspectivas y Recursos — Consultations NovaWave Inc.",
+  "nav.back":"← Volver a cnovawave.com",
+  "eyebrow":"Perspectivas y Recursos",
+  "h1.line1":"Perspectivas expertas en",
+  "h1.line2":"Seguridad, Cumplimiento e IA",
+  "hero.desc":"Orientación práctica del equipo de Consultations NovaWave Inc. — ayudamos a organizaciones reguladas a navegar el cumplimiento, asegurar sus implementaciones de IA y anticiparse a los marcos regulatorios en evolución.",
+  "tag.compliance":"Cumplimiento",
+  "tag.security":"Seguridad IA",
+  "tag.privacy":"Privacidad",
+  "tag.advisory":"Asesoría",
+  "a1.title":"Cómo prepararse para el cumplimiento de la Ley 25 de Québec en 2026",
+  "a1.excerpt":"Una hoja de ruta práctica para organizaciones sujetas a la legislación de privacidad de Québec — qué exige la Ley 25, plazos clave y los pasos para preparar su programa de privacidad para una auditoría.",
+  "a1.date":"18 de septiembre de 2026",
+  "a1.read":"8 min de lectura",
+  "a2.title":"Lista de verificación de seguridad IA para empresas medianas",
+  "a2.excerpt":"Una lista integral que cubre gobernanza de modelos, protección de datos, controles de acceso y respuesta a incidentes para organizaciones que despliegan IA a escala.",
+  "a2.date":"18 de septiembre de 2026",
+  "a2.read":"10 min de lectura",
+  "a3.title":"PIPEDA vs RGPD: Lo que las empresas canadienses que sirven a clientes de la UE necesitan saber",
+  "a3.excerpt":"Una comparación lado a lado de la ley federal de privacidad de Canadá y el RGPD de la UE — dónde coinciden, dónde divergen y qué requiere realmente el cumplimiento transfronterizo.",
+  "a3.date":"18 de septiembre de 2026",
+  "a3.read":"9 min de lectura",
+  "a4.title":"Cómo evaluar un proveedor de automatización IA — 10 preguntas que hacer",
+  "a4.excerpt":"Antes de firmar con un proveedor de IA, haga estas diez preguntas sobre seguridad, cumplimiento, manejo de datos y madurez operativa. Un marco de decisión de nuestra práctica de asesoría.",
+  "a4.date":"18 de septiembre de 2026",
+  "a4.read":"7 min de lectura",
+  "readmore":"Leer artículo →",
+  "cta.h2":"¿Necesita orientación experta?",
+  "cta.p":"Ya sea que esté navegando una nueva regulación, planificando una implementación de IA o preparándose para una auditoría — estamos aquí para ayudar.",
+  "cta.btn":"Reservar una consulta gratuita →",
+  "footer.copyright":"© 2025 Consultations NovaWave Inc.",
+  "footer.privacy":"Política de privacidad",
+  "footer.terms":"Términos de servicio",
+  "footer.home":"Inicio"
+},
+"pt":{
+  "meta.title":"Perspectivas e Recursos — Consultations NovaWave Inc.",
+  "nav.back":"← Voltar para cnovawave.com",
+  "eyebrow":"Perspectivas e Recursos",
+  "h1.line1":"Perspectivas especializadas em",
+  "h1.line2":"Segurança, Conformidade e IA",
+  "hero.desc":"Orientação prática da equipa da Consultations NovaWave Inc. — ajudamos organizações reguladas a navegar a conformidade, proteger as suas implementações de IA e antecipar a evolução dos quadros regulamentares.",
+  "tag.compliance":"Conformidade",
+  "tag.security":"Segurança IA",
+  "tag.privacy":"Privacidade",
+  "tag.advisory":"Consultoria",
+  "a1.title":"Como preparar-se para a conformidade com a Lei 25 do Québec em 2026",
+  "a1.excerpt":"Um roteiro prático para organizações sujeitas à legislação de privacidade do Québec — o que a Lei 25 exige, prazos-chave e os passos para preparar o seu programa de privacidade para auditoria.",
+  "a1.date":"18 de setembro de 2026",
+  "a1.read":"8 min de leitura",
+  "a2.title":"Lista de verificação de segurança IA para empresas de médio porte",
+  "a2.excerpt":"Uma lista abrangente cobrindo governança de modelos, proteção de dados, controlos de acesso e resposta a incidentes para organizações que implementam IA em escala.",
+  "a2.date":"18 de setembro de 2026",
+  "a2.read":"10 min de leitura",
+  "a3.title":"PIPEDA vs RGPD: O que as empresas canadenses que servem clientes da UE precisam saber",
+  "a3.excerpt":"Uma comparação lado a lado da lei federal de privacidade do Canadá e do RGPD da UE — onde convergem, onde divergem e o que a conformidade transfronteiriça realmente exige.",
+  "a3.date":"18 de setembro de 2026",
+  "a3.read":"9 min de leitura",
+  "a4.title":"Como avaliar um fornecedor de automação IA — 10 perguntas a fazer",
+  "a4.excerpt":"Antes de assinar com um fornecedor de IA, faça estas dez perguntas sobre segurança, conformidade, tratamento de dados e maturidade operacional. Um quadro de decisão da nossa prática de consultoria.",
+  "a4.date":"18 de setembro de 2026",
+  "a4.read":"7 min de leitura",
+  "readmore":"Ler artigo →",
+  "cta.h2":"Precisa de orientação especializada?",
+  "cta.p":"Quer esteja a navegar uma nova regulamentação, a planear uma implementação de IA ou a preparar-se para uma auditoria — estamos aqui para ajudar.",
+  "cta.btn":"Reservar uma consulta gratuita →",
+  "footer.copyright":"© 2025 Consultations NovaWave Inc.",
+  "footer.privacy":"Política de Privacidade",
+  "footer.terms":"Termos de Serviço",
+  "footer.home":"Início"
+}
+};
+
+(function(){
+  var lang = 'en';
+  try {
+    var saved = localStorage.getItem('novawave_lang');
+    if (saved && translations[saved]) lang = saved;
+  } catch(e) {}
+  applyTranslations(lang);
+  var sel = document.getElementById('langSelect');
+  if (sel) {
+    sel.value = lang;
+    sel.addEventListener('change', function(){ applyTranslations(this.value); });
+  }
+})();
+
+function applyTranslations(lang) {
+  if (!translations[lang]) lang = 'en';
+  var t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      if (el.getAttribute('data-i18n-html') === '1') {
+        el.innerHTML = t[key];
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+  var titleEl = document.querySelector('title[data-i18n]');
+  if (titleEl && t[titleEl.getAttribute('data-i18n')]) {
+    document.title = t[titleEl.getAttribute('data-i18n')];
+  }
+  try { document.documentElement.setAttribute('lang', lang); } catch(e) {}
+  try { localStorage.setItem('novawave_lang', lang); } catch(e) {}
+  var sel = document.getElementById('langSelect');
+  if (sel) sel.value = lang;
+}
+</script>
+
+</body>
+</html>
